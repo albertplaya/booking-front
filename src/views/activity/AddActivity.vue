@@ -1,7 +1,7 @@
 <template>
-  <h3 class="ml-2">Add activity</h3>
+  <h3 class="text-2xl ml-2">Add activity</h3>
   <div class="q-pa-md" style="max-width: 400px">
-    <q-form @submit="onSubmit" @reset="onReset" class="q-gutter-md">
+    <q-form @submit="saveActivity" class="q-gutter-md">
       <q-input
         filled
         v-model="title"
@@ -20,11 +20,10 @@
       />
 
       <div>
-        <q-btn label="Submit" type="submit" color="primary" />
+        <q-btn class="float-right" label="Save" type="submit" color="primary" />
       </div>
     </q-form>
   </div>
-  <va-button class="float-right" @click="saveActivity">Save</va-button>
 </template>
 
 <script lang="ts">
