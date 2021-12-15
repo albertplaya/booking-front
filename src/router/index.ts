@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
 import Home from '../views/Home.vue';
 import AddActivity from '../views/activity/AddActivity.vue';
+import AddEvent from '../views/event/AddEvent.vue';
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -12,6 +13,12 @@ const routes: Array<RouteRecordRaw> = [
     path: '/activity/add',
     name: 'activity-add',
     component: AddActivity
+  },
+  {
+    path: '/event/add/:activityId',
+    name: 'event-add',
+    component: AddEvent,
+    props: true
   } /*
   {
     path: '/external-api',

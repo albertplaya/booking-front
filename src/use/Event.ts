@@ -1,8 +1,8 @@
 import { ref } from 'vue';
-import { Activity } from '@/types/Activity';
+import { Event } from '@/types/Event';
 import { endpoints } from '@/config/endpoints';
 
-export function useActivity() {
+export function useEvent() {
   async function postData(url = '', data = {}) {
     const domain: string = 'http://localhost:3000';
     const response = await fetch(domain + url, {
@@ -19,15 +19,16 @@ export function useActivity() {
     return response.json();
   }
 
-  const create = (activity: Activity): Promise<Activity> => {
+  const create = (event: Event): Promise<Event> => {
     const payload = {
-      partner_id: activity.partner_id,
-      title: activity.title,
-      description: activity.description
+      start_date: event.start_date,
+      duration: event.duration,
+      capacity: event.capacity,
+      activity_id: event.activity_id
     };
 
-    const activity_res: Promise<Activity> = postData(
-      endpoints.v1.activity_create,
+    const activity_res: Promise<Event> = postData(
+      endpoints.v1.event_create,
       payload
     );
     return activity_res;
