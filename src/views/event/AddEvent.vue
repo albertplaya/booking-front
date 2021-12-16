@@ -1,8 +1,11 @@
 <template>
   <q-page padding>
     <h3 class="text-2xl ml-2">Add event</h3>
-    <div class="q-pa-md" style="max-width: 400px">
-      <q-form @submit="saveEvent" class="q-gutter-md">
+    <div
+      class="q-pa-md m-2 border border-solid rounded-md border-gray-200"
+      style="max-width: 400px"
+    >
+      <q-form class="q-gutter-md">
         <q-input filled v-model="date">
           <template v-slot:prepend>
             <q-icon name="event" class="cursor-pointer">
@@ -61,16 +64,16 @@
           autogrow
           :rules="[(val) => (val && val.length > 0) || 'Please type something']"
         />
-
-        <div>
-          <q-btn
-            class="float-right"
-            label="Save"
-            type="submit"
-            color="primary"
-          />
-        </div>
       </q-form>
+    </div>
+    <div style="max-width: 400px">
+      <q-btn
+        @click="saveEvent"
+        class="float-right"
+        label="Save"
+        type="submit"
+        color="primary"
+      />
     </div>
   </q-page>
 </template>
