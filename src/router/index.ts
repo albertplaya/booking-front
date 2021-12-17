@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
-import Home from '@/views/Home.vue';
+import { AuthenticationGuard } from 'vue-auth0-plugin';
 import AddActivity from '@/views/activity/AddActivity.vue';
 import ListActivity from '@/views/activity/ListActivity.vue';
 import AddEvent from '@/views/event/AddEvent.vue';
@@ -7,9 +7,9 @@ import ListEvent from '@/views/event/ListEvent.vue';
 
 const routes: Array<RouteRecordRaw> = [
   {
-    path: '/home',
+    path: '/  ',
     name: 'home',
-    component: Home
+    component: AddActivity
   },
   {
     path: '/activity/add',
@@ -19,7 +19,8 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/activity',
     name: 'activity-list',
-    component: ListActivity
+    component: ListActivity,
+    beforeEnter: AuthenticationGuard
   },
   {
     path: '/event/add/:activityId',
@@ -32,12 +33,7 @@ const routes: Array<RouteRecordRaw> = [
     name: 'event-list',
     component: ListEvent,
     props: true
-  } /*
-  {
-    path: '/external-api',
-    component: ExternalApi,
-    beforeEnter: Auth0.routeGuard
-  }*/
+  }
 ];
 
 const router = createRouter({

@@ -5,13 +5,13 @@
         <q-btn flat @click="drawer = !drawer" round dense icon="menu" />
         <q-toolbar-title>Header</q-toolbar-title>
       </q-toolbar>
-
-      <q-toolbar-title>
-        <q-avatar>
-          <img src="https://cdn.quasar.dev/logo-v2/svg/logo-mono-white.svg" />
-        </q-avatar>
-        Title
-      </q-toolbar-title>
+      <q-btn
+        v-if="auth.authenticated"
+        @click="logout"
+        color="primary"
+        label="logout"
+      />
+      <q-btn v-else @click="login" color="primary" label="login" />
     </q-toolbar>
   </q-header>
 </template>
@@ -34,6 +34,8 @@ export default defineComponent({
         returnTo: window.location.origin
       });
     };
+
+    console.log(auth.authenticated);
     return { login, logout, auth };
   }
 });

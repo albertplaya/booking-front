@@ -3,7 +3,12 @@
     <div class="flex justify-between">
       <h3 class="text-2xl ml-2">Activities</h3>
       <q-separator />
-      <q-btn label="Add" type="submit" color="primary" />
+      <q-btn
+        :to="{ name: 'activity-add' }"
+        label="Add"
+        type="submit"
+        color="primary"
+      />
     </div>
     <div class="flex row-auto">
       <q-card
@@ -24,9 +29,17 @@
         </q-card-section>
 
         <q-separator />
-
         <q-card-actions>
-          <q-btn flat color="primary"> Events </q-btn>
+          <q-btn
+            flat
+            color="primary"
+            :to="{
+              name: 'event-add',
+              params: { activityId: activity.activity_id.value }
+            }"
+          >
+            Events
+          </q-btn>
           <q-space />
           <q-btn flat class color="primary"> Update </q-btn>
         </q-card-actions>
@@ -50,7 +63,6 @@ export default defineComponent({
     const activities = ref<Activity[]>([]);
 
     const listActivities = async () => {
-      console.log('listActivities');
       activities.value = await list(localStorage.partner_id as string);
     };
     return { activities, listActivities };
