@@ -3,7 +3,15 @@
     <div class="flex justify-between">
       <h3 class="text-2xl ml-2">Events</h3>
       <q-separator />
-      <q-btn label="Add" type="submit" color="primary" />
+      <q-btn
+        label="Add"
+        type="submit"
+        color="primary"
+        :to="{
+          name: 'event-add',
+          params: { activityId: activityId }
+        }"
+      />
     </div>
     <div class="flex row-auto">
       <q-card

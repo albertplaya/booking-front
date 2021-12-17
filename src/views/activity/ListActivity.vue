@@ -34,7 +34,7 @@
             flat
             color="primary"
             :to="{
-              name: 'event-add',
+              name: 'event-list',
               params: { activityId: activity.activity_id.value }
             }"
           >
