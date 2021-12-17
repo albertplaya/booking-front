@@ -1,8 +1,9 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
-import Home from '../views/Home.vue';
-import AddActivity from '../views/activity/AddActivity.vue';
-import ListActivity from '../views/activity/ListActivity.vue';
-import AddEvent from '../views/event/AddEvent.vue';
+import Home from '@/views/Home.vue';
+import AddActivity from '@/views/activity/AddActivity.vue';
+import ListActivity from '@/views/activity/ListActivity.vue';
+import AddEvent from '@/views/event/AddEvent.vue';
+import ListEvent from '@/views/event/ListEvent.vue';
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -24,6 +25,12 @@ const routes: Array<RouteRecordRaw> = [
     path: '/event/add/:activityId',
     name: 'event-add',
     component: AddEvent,
+    props: true
+  },
+  {
+    path: '/events/:activityId',
+    name: 'event-list',
+    component: ListEvent,
     props: true
   } /*
   {

@@ -1,5 +1,5 @@
 <template>
-  <q-page padding style="max-width: 864px">
+  <q-page padding style="max-width: 880px">
     <div class="flex justify-between">
       <h3 class="text-2xl ml-2">Activities</h3>
       <q-separator />

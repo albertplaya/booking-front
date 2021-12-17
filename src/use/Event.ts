@@ -15,7 +15,20 @@ export function useEvent() {
       redirect: 'follow',
       body: JSON.stringify(data)
     });
-    console.log(response);
+    return response.json();
+  }
+
+  async function getData(url = ''): Promise<any> {
+    const domain: string = 'http://localhost:3000';
+    const response = await fetch(domain + url, {
+      method: 'GET',
+      mode: 'cors',
+      cache: 'no-cache',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      redirect: 'follow'
+    });
     return response.json();
   }
 
@@ -34,7 +47,15 @@ export function useEvent() {
     return activity_res;
   };
 
+  const list = async (activityId: string): Promise<Event[]> => {
+    const events = await getData(
+      endpoints.v1.event_list.replace('{activityId}', activityId)
+    );
+    return events.data as Event[];
+  };
+
   return {
-    create
+    create,
+    list
   };
 }
