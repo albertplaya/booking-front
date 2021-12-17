@@ -1,46 +1,7 @@
 <template>
   <q-layout view="hHh LpR fFf">
-    <q-header elevated class="bg-primary text-white">
-      <q-toolbar>
-        <q-toolbar>
-          <q-btn flat @click="drawer = !drawer" round dense icon="menu" />
-          <q-toolbar-title>Header</q-toolbar-title>
-        </q-toolbar>
-
-        <q-toolbar-title>
-          <q-avatar>
-            <img src="https://cdn.quasar.dev/logo-v2/svg/logo-mono-white.svg" />
-          </q-avatar>
-          Title
-        </q-toolbar-title>
-      </q-toolbar>
-    </q-header>
-
-    <q-drawer
-      v-model="drawer"
-      show-if-above
-      :width="200"
-      :breakpoint="500"
-      bordered
-      class="bg-grey-3"
-    >
-      <q-scroll-area class="fit">
-        <q-list>
-          <template v-for="(menuItem, index) in menuList" :key="index">
-            <q-item clickable :active="menuItem.label === 'Outbox'" v-ripple>
-              <q-item-section avatar>
-                <q-icon :name="menuItem.icon" />
-              </q-item-section>
-              <q-item-section>
-                {{ menuItem.label }}
-              </q-item-section>
-            </q-item>
-            <q-separator :key="'sep' + index" v-if="menuItem.separator" />
-          </template>
-        </q-list>
-      </q-scroll-area>
-    </q-drawer>
-
+    <Header />
+    <Sidebar />
     <q-page-container>
       <router-view />
     </q-page-container>
@@ -49,8 +10,10 @@
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
+import Header from '@/components/layout/Header.vue';
+import Sidebar from '@/components/layout/Sidebar.vue';
 export default defineComponent({
-  components: {},
+  components: { Header, Sidebar },
   setup() {
     const menuList = [
       {
@@ -92,7 +55,9 @@ export default defineComponent({
     ];
     return {
       drawer: ref(false),
-      menuList
+      menuList,
+      Header,
+      Sidebar
     };
   }
 });

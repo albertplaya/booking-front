@@ -1,15 +1,19 @@
 <template>
-  <va-navbar class="mb-4">
-    <template #left>
-      <va-navbar-item>Left</va-navbar-item>
-    </template>
-    <template #center>
-      <va-navbar-item>Center</va-navbar-item>
-    </template>
-    <template #right>
-      <va-navbar-item>Right</va-navbar-item>
-    </template>
-  </va-navbar>
+  <q-header elevated class="bg-primary text-white">
+    <q-toolbar>
+      <q-toolbar>
+        <q-btn flat @click="drawer = !drawer" round dense icon="menu" />
+        <q-toolbar-title>Header</q-toolbar-title>
+      </q-toolbar>
+
+      <q-toolbar-title>
+        <q-avatar>
+          <img src="https://cdn.quasar.dev/logo-v2/svg/logo-mono-white.svg" />
+        </q-avatar>
+        Title
+      </q-toolbar-title>
+    </q-toolbar>
+  </q-header>
 </template>
 
 <script lang="ts">
