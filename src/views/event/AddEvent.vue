@@ -1,6 +1,9 @@
 <template>
   <q-page padding>
-    <h3 class="text-2xl ml-2">Add event</h3>
+    <div class="pb-4 flex row-auto justify-between" style="max-width: 400px">
+      <h3 class="text-2xl">Add activity</h3>
+      <BackButton />
+    </div>
     <div
       class="q-pa-md m-2 border border-solid rounded-md border-gray-200"
       style="max-width: 400px"
@@ -81,9 +84,10 @@
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
 import { useEvent } from '@/use/Event';
+import BackButton from '@/components/button/Back.vue';
 
 export default defineComponent({
-  components: {},
+  components: { BackButton },
   props: {
     activityId: {
       type: String,

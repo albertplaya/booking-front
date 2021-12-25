@@ -1,7 +1,10 @@
 <template>
   <q-page padding>
-    <h3 class="text-2xl ml-2">Add activity</h3>
     <div class="q-pa-md" style="max-width: 400px">
+      <div class="pb-4 flex row-auto justify-between">
+        <h3 class="text-2xl ml-2">Add activity</h3>
+        <BackButton />
+      </div>
       <q-form @submit="saveActivity" class="q-gutter-md">
         <q-input
           filled
@@ -36,9 +39,10 @@
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
 //import { useActivity } from '@/use/Activity';
+import BackButton from '@/components/button/Back.vue';
 
 export default defineComponent({
-  components: {},
+  components: { BackButton },
   setup() {
     //const { create } = useActivity();
 
