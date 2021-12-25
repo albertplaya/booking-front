@@ -2,7 +2,7 @@
   <q-header elevated class="bg-primary text-white">
     <q-toolbar>
       <q-toolbar>
-        <q-btn flat @click="drawer = !drawer" round dense icon="menu" />
+        <q-btn flat @click="updateSidebar" round dense icon="menu" />
         <q-toolbar-title>Header</q-toolbar-title>
       </q-toolbar>
       <q-btn
@@ -18,11 +18,13 @@
 
 <script lang="ts">
 import { defineComponent, inject } from 'vue';
+import { useStore } from 'vuex';
 
 export default defineComponent({
   name: 'HeaderApp',
   setup() {
     const auth: any = inject('auth');
+    const store = useStore();
 
     const login = () => {
       auth.loginWithPopup({
@@ -35,8 +37,11 @@ export default defineComponent({
       });
     };
 
-    console.log(auth.authenticated);
-    return { login, logout, auth };
+    const updateSidebar = () => {
+      store.dispatch('app/toggleSideBar');
+    };
+
+    return { login, logout, updateSidebar, auth };
   }
 });
 </script>

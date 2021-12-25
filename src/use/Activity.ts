@@ -2,7 +2,7 @@ import { Activity } from '@/types/Activity';
 import { endpoints } from '@/config/endpoints';
 
 export function useActivity() {
-  async function postData(url = '', data = {}) {
+  async function postData(url: string = '', data = {}) {
     const domain: string = 'http://localhost:3000';
     const response = await fetch(domain + url, {
       method: 'POST',
@@ -17,7 +17,7 @@ export function useActivity() {
     console.log(response);
     return response.json();
   }
-  async function getData(url = ''): Promise<any> {
+  async function getData(url: string = ''): Promise<any> {
     const domain: string = 'http://localhost:3000';
     const response = await fetch(domain + url, {
       method: 'GET',
