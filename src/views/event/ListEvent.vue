@@ -13,7 +13,12 @@
         }"
       />
     </div>
-    <div class="flex row-auto">
+    <AddWhenEmptyList
+      v-if="!events.length"
+      label="Add new event"
+      to="event-add"
+    />
+    <div v-else class="flex row-auto">
       <q-card
         class="my-card m-2"
         flat
@@ -39,9 +44,10 @@ import { defineComponent, ref } from 'vue';
 import { useEvent } from '@/use/Event';
 import { Event } from '@/types/Event';
 import { date } from 'quasar';
+import AddWhenEmptyList from '@/components/button/AddWhenEmptyList.vue';
 
 export default defineComponent({
-  components: {},
+  components: { AddWhenEmptyList },
   props: {
     activityId: {
       type: String,

@@ -5,12 +5,17 @@
       <q-separator />
       <q-btn
         :to="{ name: 'activity-add' }"
-        label="Add"
+        label="Add new activity"
         type="submit"
         color="primary"
       />
     </div>
-    <div class="flex row-auto">
+    <AddWhenEmptyList
+      v-if="!activities.length"
+      label="Add new activity"
+      to="activity-add"
+    />
+    <div v-else class="flex row-auto">
       <q-card
         class="my-card m-2"
         flat
@@ -52,9 +57,10 @@
 import { defineComponent, ref } from 'vue';
 import { useActivity } from '@/use/Activity';
 import { Activity } from '@/types/Activity';
+import AddWhenEmptyList from '@/components/button/AddWhenEmptyList.vue';
 
 export default defineComponent({
-  components: {},
+  components: { AddWhenEmptyList },
   mounted() {
     this.listActivities();
   },

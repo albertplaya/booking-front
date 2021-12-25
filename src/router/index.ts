@@ -19,8 +19,8 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/activity',
     name: 'activity-list',
-    component: ListActivity,
-    beforeEnter: AuthenticationGuard
+    component: ListActivity
+    //beforeEnter: AuthenticationGuard
   },
   {
     path: '/event/add/:activityId',
