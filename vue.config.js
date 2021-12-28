@@ -6,7 +6,5 @@ module.exports = {
     }
   },
 
-  transpileDependencies: [
-    'quasar'
-  ]
+  transpileDependencies: ['quasar']
 };

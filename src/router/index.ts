@@ -4,6 +4,7 @@ import AddActivity from '@/views/activity/AddActivity.vue';
 import ListActivity from '@/views/activity/ListActivity.vue';
 import AddEvent from '@/views/event/AddEvent.vue';
 import ListEvent from '@/views/event/ListEvent.vue';
+import GetBookingEvent from '@/views/booking/GetBookingEvent.vue';
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -33,9 +34,16 @@ const routes: Array<RouteRecordRaw> = [
     name: 'event-list',
     component: ListEvent,
     props: true
+  },
+
+  //Booking
+  {
+    path: '/booking/event/:eventId',
+    name: 'booking-event',
+    component: GetBookingEvent,
+    props: true
   }
 ];
-
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes

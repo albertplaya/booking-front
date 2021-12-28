@@ -9,7 +9,7 @@ const state: AppState = {
 const getters = {};
 
 const actions = {
-  toggleSideBar({ commit }) {
+  toggleSideBar({ commit }: any) {
     commit('toggleSideBar');
   }
 };
