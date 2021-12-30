@@ -48,7 +48,15 @@
       </q-card-section>
 
       <q-card-actions class="m-2">
-        <q-btn class="full-width" color="primary">Book </q-btn>
+        <q-btn
+          class="full-width"
+          color="primary"
+          :to="{
+            name: 'booking-guest',
+            params: { eventId: eventBooking.data.event.event_id.value }
+          }"
+          >Book
+        </q-btn>
       </q-card-actions>
     </q-card>
   </q-page>
@@ -56,7 +64,7 @@
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
-import { useBooking } from '@/use/Booking';
+import { useBookingSession } from '@/use/BookingSession';
 import { EventBooking } from '@/types/EventBooking';
 import { date } from 'quasar';
 
@@ -72,7 +80,7 @@ export default defineComponent({
     this.getEventBookingDetails();
   },
   setup(props) {
-    const { getEvent } = useBooking();
+    const { getEvent } = useBookingSession();
     const eventBooking = ref<EventBooking>();
 
     const getEventBookingDetails = async () => {

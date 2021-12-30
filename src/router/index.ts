@@ -5,6 +5,7 @@ import ListActivity from '@/views/activity/ListActivity.vue';
 import AddEvent from '@/views/event/AddEvent.vue';
 import ListEvent from '@/views/event/ListEvent.vue';
 import GetBookingEvent from '@/views/booking/GetBookingEvent.vue';
+import AddGuest from '@/views/booking/AddGuest.vue';
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -41,6 +42,12 @@ const routes: Array<RouteRecordRaw> = [
     path: '/booking/event/:eventId',
     name: 'booking-event',
     component: GetBookingEvent,
+    props: true
+  },
+  {
+    path: '/booking/guest/:eventId',
+    name: 'booking-guest',
+    component: AddGuest,
     props: true
   }
 ];
