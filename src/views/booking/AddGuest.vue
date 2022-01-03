@@ -71,6 +71,7 @@
 import { defineComponent, onMounted, ref } from 'vue';
 import { useBookingSession } from '@/use/BookingSession';
 import BackButton from '@/components/button/Back.vue';
+import router from '@/router';
 
 export default defineComponent({
   components: { BackButton },
@@ -98,6 +99,10 @@ export default defineComponent({
         email: email.value,
         phone: phone.value
       });
+      router.push({
+        name: 'booking-thankyou',
+        params: { eventId: props.eventId }
+      });
     };
 
     return {
@@ -105,7 +110,6 @@ export default defineComponent({
       lastName,
       email,
       phone,
-      initBookingSession,
       addGuestSession
     };
   }

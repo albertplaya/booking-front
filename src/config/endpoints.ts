@@ -7,6 +7,7 @@ export const endpoints = {
     booking_event: '/booking/event/{eventId}',
     booking_init: '/booking/init',
     booking_add_guest: '/booking/guest',
-    booking_finish: '/booking/finish'
+    booking_finish: '/booking/finish',
+    booking_get: '/booking/{bookingId}'
   }
 };
