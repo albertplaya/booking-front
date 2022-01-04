@@ -1,54 +1,56 @@
 <template>
-  <q-page padding style="max-width: 880px">
-    <div class="flex justify-between">
-      <h3 class="text-2xl ml-2">Activities</h3>
-      <q-separator />
-      <q-btn
-        :to="{ name: 'activity-add' }"
-        label="Add new activity"
-        type="submit"
-        color="primary"
-      />
-    </div>
-    <AddWhenEmptyList
-      v-if="!activities.length"
-      label="Add new activity"
-      to="activity-add"
-    />
-    <div v-else class="flex row-auto">
-      <q-card
-        class="my-card m-2"
-        flat
-        bordered
-        v-for="activity in activities"
-        :key="activity.activity_id"
-        style="width: 400px"
-      >
-        <q-card-section horizontal>
-          <q-card-section class="q-pt-xs">
-            <div class="text-h5 q-mt-sm q-mb-xs">{{ activity.title }}</div>
-            <div class="text-caption text-grey description">
-              {{ activity.description }}
-            </div>
-          </q-card-section>
-        </q-card-section>
-
+  <q-page class="flex justify-center bg-gray-50" padding>
+    <div style="width: 895px">
+      <div class="flex justify-between">
+        <h3 class="text-2xl ml-2">Activities</h3>
         <q-separator />
-        <q-card-actions>
-          <q-btn
-            flat
-            color="primary"
-            :to="{
-              name: 'event-list',
-              params: { activityId: activity.activity_id.value }
-            }"
-          >
-            Events
-          </q-btn>
-          <q-space />
-          <q-btn flat class color="primary"> Update </q-btn>
-        </q-card-actions>
-      </q-card>
+        <q-btn
+          :to="{ name: 'activity-add' }"
+          label="Add new activity"
+          type="submit"
+          color="primary"
+        />
+      </div>
+      <AddWhenEmptyList
+        v-if="!activities.length"
+        label="Add new activity"
+        to="activity-add"
+      />
+      <div v-else class="flex row-auto">
+        <q-card
+          class="my-card m-2"
+          flat
+          bordered
+          v-for="activity in activities"
+          :key="activity.activity_id"
+          style="width: 400px"
+        >
+          <q-card-section horizontal>
+            <q-card-section class="q-pt-xs">
+              <div class="text-h5 q-mt-sm q-mb-xs">{{ activity.title }}</div>
+              <div class="text-caption text-grey description">
+                {{ activity.description }}
+              </div>
+            </q-card-section>
+          </q-card-section>
+
+          <q-separator />
+          <q-card-actions>
+            <q-btn
+              flat
+              color="primary"
+              :to="{
+                name: 'event-list',
+                params: { activityId: activity.activity_id.value }
+              }"
+            >
+              Events
+            </q-btn>
+            <q-space />
+            <q-btn flat class color="primary"> Update </q-btn>
+          </q-card-actions>
+        </q-card>
+      </div>
     </div>
   </q-page>
 </template>

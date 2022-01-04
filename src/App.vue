@@ -10,7 +10,7 @@
   </div>
   <div v-else>
     <q-layout view="hHh lpR fFf">
-      <q-page-container>
+      <q-page-container class="a flex justify-center">
         <router-view />
       </q-page-container>
     </q-layout>
