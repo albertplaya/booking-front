@@ -4,9 +4,10 @@ import AddActivity from '@/views/activity/AddActivity.vue';
 import ListActivity from '@/views/activity/ListActivity.vue';
 import AddEvent from '@/views/event/AddEvent.vue';
 import ListEvent from '@/views/event/ListEvent.vue';
-import GetBookingEvent from '@/views/booking/GetBookingEvent.vue';
-import AddGuest from '@/views/booking/AddGuest.vue';
-import ThankYou from '@/views/booking/ThankYou.vue';
+import ListBooking from '@/views/booking/ListBooking.vue';
+import GetBookingEvent from '@/views/bookingSession/GetBookingEvent.vue';
+import AddGuest from '@/views/bookingSession/AddGuest.vue';
+import ThankYou from '@/views/bookingSession/ThankYou.vue';
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -38,7 +39,7 @@ const routes: Array<RouteRecordRaw> = [
     props: true
   },
 
-  //Booking
+  //Booking session
   {
     path: '/booking/event/:eventId',
     name: 'booking-event',
@@ -55,6 +56,14 @@ const routes: Array<RouteRecordRaw> = [
     path: '/booking/thankyou/:eventId',
     name: 'booking-thankyou',
     component: ThankYou,
+    props: true
+  },
+
+  //Bookings
+  {
+    path: '/bookings/:eventId',
+    name: 'booking-list',
+    component: ListBooking,
     props: true
   }
 ];

@@ -8,6 +8,7 @@ export const endpoints = {
     booking_init: '/booking/init',
     booking_add_guest: '/booking/guest',
     booking_finish: '/booking/finish',
-    booking_get: '/booking/{bookingId}'
+    booking_get: '/booking/{bookingId}',
+    booking_list_by_event: '/bookings/event/{eventId}'
   }
 };
