@@ -1,5 +1,5 @@
 <template>
-  <q-btn flat color="primary" @click="back">
+  <q-btn no-caps flat color="primary" @click="back">
     <q-icon left size="2em" name="arrow_back" />
     <div>Back</div>
   </q-btn>

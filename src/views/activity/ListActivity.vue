@@ -5,10 +5,13 @@
         <h3 class="text-2xl ml-2">Activities</h3>
         <q-separator />
         <q-btn
+          no-caps
           :to="{ name: 'activity-add' }"
-          label="Add new activity"
+          label="Add Activity"
           type="submit"
-          color="primary"
+          color="teal"
+          icon="add"
+          style="color: typography-primary-inverted"
         />
       </div>
       <AddWhenEmptyList

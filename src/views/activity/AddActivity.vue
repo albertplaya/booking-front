@@ -1,6 +1,6 @@
 <template>
-  <q-page padding>
-    <div class="q-pa-md" style="max-width: 400px">
+  <q-page class="flex justify-center bg-gray-50" padding>
+    <div class="q-pa-md flex-grow" style="max-width: 400px">
       <div class="pb-4 flex row-auto justify-between">
         <h3 class="text-2xl ml-2">Add activity</h3>
         <BackButton />
@@ -25,10 +25,12 @@
 
         <div>
           <q-btn
+            no-caps
+            style="color: typography-primary-inverted"
             class="float-right"
             label="Save"
             type="submit"
-            color="primary"
+            color="teal"
           />
         </div>
       </q-form>

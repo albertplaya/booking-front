@@ -5,9 +5,10 @@
         <h3 class="text-2xl ml-2">Events</h3>
         <q-separator />
         <q-btn
-          label="Add"
+          no-caps
+          label="Add Event"
           type="submit"
-          color="primary"
+          color="teal"
           :to="{
             name: 'event-add',
             params: { activityId: activityId }
