@@ -22,7 +22,7 @@
       />
       <div v-else class="flex flex-col">
         <div
-          class="flex justify-around m-2 bg-white rounded-md p-2 items-center border-gray-200 border-2"
+          class="grid grid-cols-5 gap-4 center m-2 bg-white rounded-md p-2 items-center border-gray-200 border-2"
           flat
           bordered
           v-for="event in events"
@@ -36,14 +36,30 @@
               {{ date.formatDate(event.start_date, 'MMM') }}
             </div>
           </div>
-          <div class="text-lg">
+          <div class="text-center text-lg">
             {{ date.formatDate(event.start_date, 'HH:mm A') }}
           </div>
-          <div class="text-lg" style="width: 100px">
-            {{ event.duration }} min
+          <div class="flex justify-center">
+            <q-icon size="2em" name="access_time" />
+            <div class="text-lg pl-1">{{ event.duration }} min</div>
           </div>
-          <div class="diagonal-fractions text-3xl" style="width: 80px">
-            {{ event.current_capacity }}/{{ event.capacity }}
+          <div class="flex justify-center">
+            <router-link
+              :to="{
+                name: 'booking-list',
+                params: { eventId: event.event_id.value }
+              }"
+            >
+              <div
+                class="flex justify-center diagonal-fractions text-3xl text-teal px-2 py-1 rounded-md"
+                style="width: 80px; background: #e8f2ed; cursor: pointer"
+              >
+                {{ event.current_capacity }}/{{ event.capacity }}
+              </div>
+            </router-link>
+          </div>
+          <div class="text-center">
+            <q-icon size="2em" name="ios_share" />
           </div>
         </div>
       </div>
