@@ -1,16 +1,17 @@
 <template>
-  <q-header elevated class="bg-primary text-white">
+  <q-header class="bg-gray-50 text-black">
     <q-toolbar>
-      <q-toolbar>
-        <q-btn flat @click="updateSidebar" round dense icon="menu" />
-        <q-toolbar-title>Header</q-toolbar-title>
-      </q-toolbar>
-      <q-btn
-        v-if="auth.authenticated"
-        @click="logout"
-        color="primary"
-        label="logout"
-      />
+      <q-toolbar-title style="width: 300px">Header</q-toolbar-title>
+      <div v-if="auth.authenticated" class="flex flex-row visible-custom">
+        <q-btn flat icon="insert_invitation" label="Activities" />
+        <q-btn
+          flat
+          color=""
+          icon="confirmation_number_outline"
+          label="Bookings"
+        />
+        <q-btn flat color="" icon="account_circle" label="Account" />
+      </div>
       <q-btn v-else @click="login" color="primary" label="login" />
     </q-toolbar>
   </q-header>
@@ -45,3 +46,14 @@ export default defineComponent({
   }
 });
 </script>
+
+<style scoped>
+.visible-custom {
+  visibility: hidden;
+}
+@media only screen and (min-width: 640px) {
+  .visible-custom {
+    visibility: visible !important;
+  }
+}
+</style>

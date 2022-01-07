@@ -1,24 +1,12 @@
-interface AppState {
-  sidebar: boolean;
-}
+interface AppState {}
 
-const state: AppState = {
-  sidebar: false
-};
+const state: AppState = {};
 
 const getters = {};
 
-const actions = {
-  toggleSideBar({ commit }: any) {
-    commit('toggleSideBar');
-  }
-};
+const actions = {};
 
-const mutations = {
-  toggleSideBar(state: AppState) {
-    state.sidebar = !state.sidebar;
-  }
-};
+const mutations = {};
 
 export default {
   namespaced: true,
