@@ -1,18 +1,20 @@
 <template>
   <q-header class="bg-gray-50 text-black">
-    <q-toolbar>
-      <q-toolbar-title style="width: 300px">Header</q-toolbar-title>
-      <div v-if="auth.authenticated" class="flex flex-row visible-custom">
-        <q-btn no-caps flat icon="insert_invitation" label="Activities" />
-        <q-btn
-          no-caps
-          flat
-          icon="confirmation_number_outline"
-          label="Bookings"
-        />
-        <q-btn no-caps flat color="" icon="account_circle" label="Account" />
+    <q-toolbar class="flex justify-between">
+      <div class="text-2xl">Header</div>
+      <div>
+        <div v-if="auth.authenticated" class="flex flex-row visible-custom">
+          <q-btn no-caps flat icon="insert_invitation" label="Activities" />
+          <q-btn
+            no-caps
+            flat
+            icon="confirmation_number_outline"
+            label="Bookings"
+          />
+          <q-btn no-caps flat color="" icon="account_circle" label="Account" />
+        </div>
+        <q-btn v-else @click="login" color="primary" label="login" />
       </div>
-      <q-btn v-else @click="login" color="primary" label="login" />
     </q-toolbar>
   </q-header>
 </template>
