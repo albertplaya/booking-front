@@ -59,7 +59,7 @@
             </router-link>
           </div>
           <div class="text-center">
-            <q-icon size="2em" name="ios_share" />
+            <ShareBooking />
           </div>
         </div>
       </div>
@@ -73,9 +73,10 @@ import { useEvent } from '@/use/Event';
 import { Event } from '@/types/Event';
 import { date } from 'quasar';
 import AddWhenEmptyList from '@/components/button/AddWhenEmptyList.vue';
+import ShareBooking from '@/components/social/ShareBooking.vue';
 
 export default defineComponent({
-  components: { AddWhenEmptyList },
+  components: { AddWhenEmptyList, ShareBooking },
   props: {
     activityId: {
       type: String,
