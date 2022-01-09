@@ -1,37 +1,8 @@
-import { ref } from 'vue';
 import { Event } from '@/types/Event';
 import { endpoints } from '@/config/endpoints';
+import { postData, getData } from '@/infrastructure/ApiHandler';
 
 export function useEvent() {
-  async function postData(url = '', data = {}) {
-    const domain: string = 'http://localhost:3000';
-    const response = await fetch(domain + url, {
-      method: 'POST',
-      mode: 'cors',
-      cache: 'no-cache',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      redirect: 'follow',
-      body: JSON.stringify(data)
-    });
-    return response.json();
-  }
-
-  async function getData(url = ''): Promise<any> {
-    const domain: string = 'http://localhost:3000';
-    const response = await fetch(domain + url, {
-      method: 'GET',
-      mode: 'cors',
-      cache: 'no-cache',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      redirect: 'follow'
-    });
-    return response.json();
-  }
-
   const create = (event: Event): Promise<Event> => {
     const payload = {
       start_date: event.start_date,
