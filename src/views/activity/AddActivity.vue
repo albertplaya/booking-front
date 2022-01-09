@@ -5,7 +5,8 @@
         <h3 class="text-2xl ml-2">Add activity</h3>
         <BackButton />
       </div>
-      <q-form @submit="saveActivity" class="q-gutter-md">
+      <ErrorNotification :error="error" />
+      <q-form @submit="saveActivity" class="q-gutter-md pt-4">
         <q-input
           filled
           v-model="title"
@@ -40,26 +41,33 @@
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
-//import { useActivity } from '@/use/Activity';
+import { useActivity } from '@/use/Activity';
 import BackButton from '@/components/button/Back.vue';
+import ErrorNotification from '@/components/notification/Error.vue';
+import { Activity } from '@/types/Activity';
+import router from '@/router';
 
 export default defineComponent({
-  components: { BackButton },
+  components: { BackButton, ErrorNotification },
   setup() {
-    //const { create } = useActivity();
+    const { create } = useActivity();
 
     const title = ref<string>('');
     const description = ref<string>('');
-    const triggerNegative = ref<boolean>(false);
+    const error = ref<any>('');
+
     const saveActivity = () => {
-      triggerNegative.value = true;
-      /*create({
+      create({
         partner_id: localStorage.partner_id as string,
         title: title.value,
         description: description.value
-      });*/
+      } as Activity)
+        .then(() => router.push('/activity'))
+        .catch((err) => {
+          error.value = err;
+        });
     };
-    return { title, description, saveActivity, triggerNegative };
+    return { title, description, saveActivity, error };
   }
 });
 </script>

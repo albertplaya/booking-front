@@ -14,7 +14,12 @@ export function useActivity() {
       redirect: 'follow',
       body: JSON.stringify(data)
     });
-    console.log(response);
+
+    if (response.status !== 200) {
+      const result = await response.json();
+      return Promise.reject(result.errors[0].msg);
+    }
+
     return response.json();
   }
   async function getData(url: string = ''): Promise<any> {
@@ -28,17 +33,23 @@ export function useActivity() {
       },
       redirect: 'follow'
     });
+
+    if (response.status !== 200) {
+      const result = await response.json();
+      return Promise.reject(result.errors[0].msg);
+    }
+
     return response.json();
   }
 
-  const create = (activity: Activity): Promise<Activity> => {
+  const create = async (activity: Activity): Promise<Activity> => {
     const payload = {
       partner_id: activity.partner_id,
       title: activity.title,
       description: activity.description
     };
 
-    const activity_res: Promise<Activity> = postData(
+    const activity_res: Promise<Activity> = await postData(
       endpoints.v1.activity_create,
       payload
     );
