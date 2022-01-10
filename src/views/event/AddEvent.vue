@@ -5,11 +5,12 @@
         <h3 class="text-2xl">Add event</h3>
         <BackButton />
       </div>
+      <ErrorNotification :error="error" />
       <div
-        class="q-pa-md m-2 border border-solid rounded-md border-gray-200"
+        class="q-pa-md pt-4 border border-solid rounded-md border-gray-200"
         style="max-width: 400px"
       >
-        <q-form class="q-gutter-md">
+        <q-form class="q-gutter-md pt-4">
           <q-input filled v-model="date">
             <template v-slot:prepend>
               <q-icon name="event" class="cursor-pointer">
@@ -74,10 +75,11 @@
           />
         </q-form>
       </div>
-      <div style="max-width: 400px">
+      <div class="pt-4" style="max-width: 400px">
         <q-btn
           @click="saveEvent"
           no-caps
+          style="color: typography-primary-inverted"
           class="float-right"
           label="Save"
           type="submit"
@@ -92,9 +94,11 @@
 import { defineComponent, ref } from 'vue';
 import { useEvent } from '@/use/Event';
 import BackButton from '@/components/button/Back.vue';
+import ErrorNotification from '@/components/notification/Error.vue';
+import router from '@/router';
 
 export default defineComponent({
-  components: { BackButton },
+  components: { BackButton, ErrorNotification },
   props: {
     activityId: {
       type: String,
@@ -108,15 +112,21 @@ export default defineComponent({
     const time = ref<string>('12:44');
     const duration = ref<string>('30');
     const capacity = ref<string>('10');
+    const error = ref<any>('');
+
     const saveEvent = () => {
       create({
         start_date: date.value + ' ' + time.value,
         duration: duration.value,
         capacity: capacity.value,
         activity_id: props.activityId
-      });
+      })
+        .then(() => router.push({ name: 'event-list' }))
+        .catch((err) => {
+          error.value = err;
+        });
     };
-    return { date, time, duration, capacity, saveEvent };
+    return { date, time, duration, capacity, error, saveEvent };
   }
 });
 </script>

@@ -74,6 +74,7 @@ import { Event } from '@/types/Event';
 import { date } from 'quasar';
 import AddWhenEmptyList from '@/components/button/AddWhenEmptyList.vue';
 import ShareBooking from '@/components/social/ShareBooking.vue';
+import router from '@/router';
 
 export default defineComponent({
   components: { AddWhenEmptyList, ShareBooking },
@@ -91,7 +92,11 @@ export default defineComponent({
     const events = ref<Event[]>([]);
 
     const listEvents = async () => {
-      events.value = await list(props.activityId);
+      list(props.activityId)
+        .then((result) => (events.value = result))
+        .catch(() => {
+          return router.push({ name: 'not-found' });
+        });
     };
     return { events, listEvents, date };
   }

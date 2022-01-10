@@ -63,6 +63,7 @@ import { defineComponent, ref } from 'vue';
 import { useActivity } from '@/use/Activity';
 import { Activity } from '@/types/Activity';
 import AddWhenEmptyList from '@/components/button/AddWhenEmptyList.vue';
+import router from '@/router';
 
 export default defineComponent({
   components: { AddWhenEmptyList },
@@ -74,7 +75,11 @@ export default defineComponent({
     const activities = ref<Activity[]>([]);
 
     const listActivities = async () => {
-      activities.value = await list(localStorage.partner_id as string);
+      list(localStorage.partner_id as string)
+        .then((result) => (activities.value = result))
+        .catch(() => {
+          return router.push({ name: 'not-found' });
+        });
     };
     return { activities, listActivities };
   }

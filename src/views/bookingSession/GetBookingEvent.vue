@@ -67,6 +67,7 @@ import { defineComponent, ref } from 'vue';
 import { useBookingSession } from '@/use/BookingSession';
 import { EventBooking } from '@/types/EventBooking';
 import { date } from 'quasar';
+import router from '@/router';
 
 export default defineComponent({
   components: {},
@@ -84,7 +85,11 @@ export default defineComponent({
     const eventBooking = ref<EventBooking>();
 
     const getEventBookingDetails = async () => {
-      eventBooking.value = await getEvent(props.eventId);
+      getEvent(props.eventId)
+        .then((result) => (eventBooking.value = result))
+        .catch(() => {
+          return router.push({ name: 'not-found' });
+        });
     };
     return { date, eventBooking, getEventBookingDetails };
   }

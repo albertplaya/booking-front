@@ -76,7 +76,7 @@ const routes: Array<RouteRecordRaw> = [
   },
   {
     path: '/:catchAll(.*)',
-    name: 'not-found',
+    name: 'not-found-catch-all',
     component: NotFoundPage
   }
 ];

@@ -58,6 +58,7 @@ import { date } from 'quasar';
 import BackButton from '@/components/button/Back.vue';
 import { useBooking } from '@/use/Booking';
 import { Booking } from '@/types/Booking';
+import router from '@/router';
 
 export default defineComponent({
   components: { BackButton },
@@ -75,7 +76,11 @@ export default defineComponent({
     const bookings = ref<Booking[]>([]);
 
     const listBookings = async () => {
-      bookings.value = await listByEventId(props.eventId);
+      listByEventId(props.eventId)
+        .then((result) => (bookings.value = result))
+        .catch(() => {
+          return router.push({ name: 'not-found' });
+        });
     };
     return { bookings, listBookings, date };
   }
