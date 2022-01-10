@@ -8,6 +8,7 @@ import ListBooking from '@/views/booking/ListBooking.vue';
 import GetBookingEvent from '@/views/bookingSession/GetBookingEvent.vue';
 import AddGuest from '@/views/bookingSession/AddGuest.vue';
 import ThankYou from '@/views/bookingSession/ThankYou.vue';
+import NotFoundPage from '@/views/error/NotFoundPage.vue';
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -65,6 +66,18 @@ const routes: Array<RouteRecordRaw> = [
     name: 'booking-list',
     component: ListBooking,
     props: true
+  },
+
+  //Error
+  {
+    path: '/404',
+    name: 'not-found',
+    component: NotFoundPage
+  },
+  {
+    path: '/:catchAll(.*)',
+    name: 'not-found',
+    component: NotFoundPage
   }
 ];
 const router = createRouter({
