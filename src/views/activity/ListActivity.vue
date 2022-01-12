@@ -19,14 +19,14 @@
         label="Add new activity"
         to="activity-add"
       />
-      <div v-else class="flex row-auto">
+      <div v-else class="flex row-auto justify-around mt-4">
         <q-card
           class="my-card m-2"
           flat
           bordered
           v-for="activity in activities"
           :key="activity.activity_id"
-          style="width: 400px"
+          style="width: 350px"
         >
           <q-card-section horizontal>
             <q-card-section class="q-pt-xs">
