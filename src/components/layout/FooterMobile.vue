@@ -6,7 +6,12 @@
       style="height: 52.8px"
       v-if="auth.authenticated"
     >
-      <q-btn flat round icon="insert_invitation" />
+      <q-btn
+        :color="currentRoute == 'activity-list' ? 'teal' : 'black'"
+        flat
+        round
+        icon="insert_invitation"
+      />
       <q-btn flat round icon="confirmation_number_outline" />
       <q-btn flat round icon="account_circle" />
     </q-footer>
@@ -14,13 +19,23 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, inject } from 'vue';
+import { defineComponent, inject, onMounted, ref } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
 
 export default defineComponent({
   name: 'FooterMobile',
   setup() {
+    onMounted(async () => {
+      router.isReady().then(() => {
+        currentRoute.value = route.name as string;
+      });
+    });
+
+    const route = useRoute();
+    const router = useRouter();
+    const currentRoute = ref<string>('');
     const auth: any = inject('auth');
-    return { auth };
+    return { auth, currentRoute };
   }
 });
 </script>
