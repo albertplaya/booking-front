@@ -3,7 +3,7 @@
     <q-footer
       elevated
       class="bg-gray-50 text-black flex justify-around"
-      style="height: 52.8px"
+      style="height: 60px"
       v-if="auth.authenticated"
     >
       <q-btn
@@ -11,9 +11,15 @@
         flat
         round
         icon="insert_invitation"
+        style="font-size: 1.2rem"
       />
-      <q-btn flat round icon="confirmation_number_outline" />
-      <q-btn flat round icon="account_circle" />
+      <q-btn
+        flat
+        round
+        icon="confirmation_number_outline"
+        style="font-size: 1.2rem"
+      />
+      <q-btn flat round icon="account_circle" style="font-size: 1.2rem" />
     </q-footer>
   </div>
 </template>
