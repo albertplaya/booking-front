@@ -12,6 +12,7 @@
         round
         icon="insert_invitation"
         style="font-size: 1.2rem"
+        :to="{ name: 'activity-list' }"
       />
       <q-btn
         flat
@@ -25,22 +26,23 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, inject, onMounted, ref } from 'vue';
-import { useRoute, useRouter } from 'vue-router';
+import { watch, defineComponent, inject, ref } from 'vue';
+import { useRoute } from 'vue-router';
 
 export default defineComponent({
   name: 'FooterMobile',
   setup() {
-    onMounted(async () => {
-      router.isReady().then(() => {
-        currentRoute.value = route.name as string;
-      });
-    });
-
     const route = useRoute();
-    const router = useRouter();
-    const currentRoute = ref<string>('');
     const auth: any = inject('auth');
+
+    const currentRoute = ref<string>('');
+    watch(
+      () => route.name,
+      () => {
+        currentRoute.value = route.name as string;
+      }
+    );
+
     return { auth, currentRoute };
   }
 });

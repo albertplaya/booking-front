@@ -27,23 +27,16 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, inject, onMounted, ref } from 'vue';
+import { defineComponent, inject, watch, ref } from 'vue';
 import { useStore } from 'vuex';
-import { useRoute, useRouter } from 'vue-router';
+import { useRoute } from 'vue-router';
 
 export default defineComponent({
   name: 'HeaderApp',
   setup() {
-    onMounted(async () => {
-      router.isReady().then(() => {
-        currentRoute.value = route.name as string;
-      });
-    });
-
     const auth: any = inject('auth');
     const store = useStore();
     const route = useRoute();
-    const router = useRouter();
     const currentRoute = ref<string>('');
 
     const login = () => {
@@ -60,6 +53,13 @@ export default defineComponent({
     const updateSidebar = () => {
       store.dispatch('app/toggleSideBar');
     };
+
+    watch(
+      () => route.name,
+      () => {
+        currentRoute.value = route.name as string;
+      }
+    );
 
     return { login, logout, updateSidebar, auth, currentRoute };
   }

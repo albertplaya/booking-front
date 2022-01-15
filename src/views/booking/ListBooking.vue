@@ -34,7 +34,7 @@
               {{ booking.guest.first_name }}
               {{ booking.guest.last_name }}
             </div>
-            <div class="text-sm">
+            <div class="text-xs sm:text-sm">
               {{ booking.email }}
             </div>
           </div>
