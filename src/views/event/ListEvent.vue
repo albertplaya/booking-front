@@ -22,7 +22,7 @@
       />
       <div v-else class="flex flex-col">
         <div
-          class="grid grid-cols-5 gap-4 center m-2 bg-white rounded-md p-2 items-center border-gray-200 border-2"
+          class="flex justify-around m-2 bg-white rounded-md p-2 items-center border-gray-200 border-2"
           flat
           bordered
           v-for="event in events"
@@ -39,9 +39,11 @@
           <div class="text-center text-lg">
             {{ date.formatDate(event.start_date, 'HH:mm A') }}
           </div>
-          <div class="flex justify-center">
-            <q-icon size="2em" name="access_time" />
-            <div class="text-lg pl-1">{{ event.duration }} min</div>
+          <div class="visible-custom">
+            <div class="flex justify-center">
+              <q-icon size="2em" name="access_time" />
+              <div class="text-lg pl-1">{{ event.duration }} min</div>
+            </div>
           </div>
           <div class="flex justify-center">
             <router-link
@@ -58,7 +60,7 @@
               </div>
             </router-link>
           </div>
-          <div class="text-center">
+          <div class="text-center order-4">
             <ShareBooking />
           </div>
         </div>
@@ -102,3 +104,14 @@ export default defineComponent({
   }
 });
 </script>
+
+<style scoped>
+.visible-custom {
+  display: none;
+}
+@media only screen and (min-width: 640px) {
+  .visible-custom {
+    display: block;
+  }
+}
+</style>
