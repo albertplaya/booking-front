@@ -57,7 +57,7 @@
           <a :href="generateUrl(booking.data)" target="_blank">
             <q-btn
               icon="insert_invitation"
-              color="primary"
+              color="teal"
               label="Add to
           calendar"
               target="_blank"
@@ -72,7 +72,7 @@
 
 <script lang="ts">
 import { defineComponent, onMounted, ref } from 'vue';
-//import { useBookingSession } from '@/use/BookingSession';
+import { useBookingSession } from '@/use/BookingSession';
 import { useBooking } from '@/use/Booking';
 import CloseButton from '@/components/button/Close.vue';
 import { Booking } from '@/types/Booking';
@@ -86,14 +86,14 @@ export default defineComponent({
       default: ''
     }
   },
-  setup(/*props*/) {
+  setup(props) {
     onMounted(async () => {
-      //finishBookingSession(props.eventId);
-      const bookingId: string = 'a94e21ae-d982-44fc-900a-71b8990aad63';
-      await getBookingDetails(bookingId);
+      finishBookingSession(props.eventId).then((bookingId: string) => {
+        setTimeout(getBookingDetails, 1000, bookingId);
+      });
     });
 
-    //const { finishBookingSession } = useBookingSession();
+    const { finishBookingSession } = useBookingSession();
     const { getBooking } = useBooking();
 
     const booking = ref<Booking>();
@@ -101,8 +101,6 @@ export default defineComponent({
     const getBookingDetails = async (bookingId: string) => {
       booking.value = await getBooking(bookingId);
     };
-
-    console.log(booking.value);
 
     const generateUrl = (booking: Booking) => {
       console.log('yead' + booking + booking.start_date);

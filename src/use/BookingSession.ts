@@ -13,10 +13,15 @@ export function useBookingSession() {
   };
 
   const initBookingSession = async (eventId: string): Promise<void> => {
+    if (alreadyHasBookingSession()) {
+      return;
+    }
+
     postData(endpoints.v1.booking_init, {
       event_id: eventId
     }).then((bookingId: any) => {
       localStorage.setItem('booking_id', bookingId.data.booking_id.value);
+      localStorage.setItem('booking_session', Date.now().toString());
     });
   };
 
@@ -29,13 +34,23 @@ export function useBookingSession() {
     postData(endpoints.v1.booking_add_guest, bookingSession);
   };
 
-  const finishBookingSession = async (eventId: string): Promise<void> => {
-    postData(endpoints.v1.booking_finish, {
+  const finishBookingSession = async (eventId: string): Promise<string> => {
+    const bookingId = localStorage.getItem('booking_id') as string;
+    await postData(endpoints.v1.booking_finish, {
       event_id: eventId,
-      booking_id: localStorage.getItem('booking_id')
+      booking_id: bookingId
     }).then(() => {
       localStorage.removeItem('booking_id');
+      localStorage.removeItem('booking_session');
     });
+    return bookingId;
+  };
+
+  const alreadyHasBookingSession = (): boolean => {
+    return (
+      localStorage.getItem('booking_session') !== null &&
+      Date.now() - Number(localStorage.getItem('booking_session')) < 900000
+    );
   };
 
   return {

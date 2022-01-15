@@ -1,9 +1,5 @@
 <template>
-  <q-page
-    v-if="eventBooking"
-    padding
-    class="flex justify-center items-center bg-gray-200"
-  >
+  <q-page v-if="eventBooking" padding class="flex justify-center items-center">
     <q-card class="booking-card">
       <q-img
         src="https://www.hola.com/imagenes/estar-bien/20210507189097/razones-empezar-practicar-yoga/0-949-159/yoga-m.jpg?filter=w500"
@@ -50,7 +46,7 @@
       <q-card-actions class="m-2">
         <q-btn
           class="full-width"
-          color="primary"
+          color="teal"
           :to="{
             name: 'booking-guest',
             params: { eventId: eventBooking.data.event.event_id.value }
