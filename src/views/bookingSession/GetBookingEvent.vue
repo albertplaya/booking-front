@@ -45,6 +45,10 @@
 
       <q-card-actions class="m-2">
         <q-btn
+          v-if="
+            eventBooking.data.event.capacity !=
+            eventBooking.data.event.current_capacity
+          "
           class="full-width"
           color="teal"
           :to="{
@@ -53,6 +57,7 @@
           }"
           >Book
         </q-btn>
+        <q-btn v-else class="full-width" color="teal" disable>Sold Out </q-btn>
       </q-card-actions>
     </q-card>
   </q-page>
