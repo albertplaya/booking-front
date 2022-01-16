@@ -1,6 +1,6 @@
 import { Activity } from '@/types/Activity';
 import { endpoints } from '@/config/endpoints';
-import { postData, getData } from '@/infrastructure/ApiHandler';
+import { postData, putData, getData } from '@/infrastructure/ApiHandler';
 
 export function useActivity() {
   const create = async (activity: Activity): Promise<Activity> => {
@@ -17,6 +17,20 @@ export function useActivity() {
     return activity_res;
   };
 
+  const update = async (activity: Activity): Promise<Activity> => {
+    const payload = {
+      activity_id: activity.activity_id.value,
+      title: activity.title,
+      description: activity.description
+    };
+
+    const activity_res: Promise<Activity> = await putData(
+      endpoints.v1.activity_update,
+      payload
+    );
+    return activity_res;
+  };
+
   const list = async (partnerId: string): Promise<Activity[]> => {
     const listActivity = await getData(
       endpoints.v1.activity_list.replace('{partnerId}', partnerId)
@@ -24,8 +38,17 @@ export function useActivity() {
     return listActivity.data as Activity[];
   };
 
+  const get = async (activityId: string): Promise<Activity> => {
+    const getActivity = await getData(
+      endpoints.v1.activity_get.replace('{activityId}', activityId)
+    );
+    return getActivity.data as Activity;
+  };
+
   return {
     create,
-    list
+    update,
+    list,
+    get
   };
 }

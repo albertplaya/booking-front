@@ -50,7 +50,17 @@
               Events
             </q-btn>
             <q-space />
-            <q-btn flat class color="primary"> Update </q-btn>
+            <q-btn
+              flat
+              class
+              color="primary"
+              :to="{
+                name: 'activity-update',
+                params: { activityId: activity.activity_id.value }
+              }"
+            >
+              Update
+            </q-btn>
           </q-card-actions>
         </q-card>
       </div>

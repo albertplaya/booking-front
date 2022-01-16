@@ -1,6 +1,8 @@
 export const endpoints = {
   v1: {
     activity_create: '/activity',
+    activity_update: '/activity',
+    activity_get: '/activity/{activityId}',
     activity_list: '/activity/user/{partnerId}',
     event_create: '/event',
     event_list: '/event/activity/{activityId}',

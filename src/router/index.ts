@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
 import { AuthenticationGuard } from 'vue-auth0-plugin';
 import AddActivity from '@/views/activity/AddActivity.vue';
+import UpdateActivity from '@/views/activity/UpdateActivity.vue';
 import ListActivity from '@/views/activity/ListActivity.vue';
 import AddEvent from '@/views/event/AddEvent.vue';
 import ListEvent from '@/views/event/ListEvent.vue';
@@ -20,6 +21,12 @@ const routes: Array<RouteRecordRaw> = [
     path: '/activity/add',
     name: 'activity-add',
     component: AddActivity
+  },
+  {
+    path: '/activity/update/:activityId',
+    name: 'activity-update',
+    component: UpdateActivity,
+    props: true
   },
   {
     path: '/activity',
