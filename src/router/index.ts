@@ -32,7 +32,7 @@ const routes: Array<RouteRecordRaw> = [
     path: '/activity',
     name: 'activity-list',
     component: ListActivity
-    //beforeEnter: AuthenticationGuard
+    //beforeEnter: AuthenticationGuard,
   },
   {
     path: '/event/add/:activityId',
@@ -87,6 +87,7 @@ const routes: Array<RouteRecordRaw> = [
     component: NotFoundPage
   }
 ];
+
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes

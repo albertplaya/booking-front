@@ -21,10 +21,16 @@
 import { defineComponent } from 'vue';
 import Header from '@/components/layout/Header.vue';
 import FooterMobile from '@/components/layout/FooterMobile.vue';
+import { useAuth } from '@/use/Authentication';
+
 export default defineComponent({
   components: { Header, FooterMobile },
   setup() {
     const showLayout = window.location.pathname.split('/')[1] !== 'booking';
+    const { authUser } = useAuth();
+
+    authUser();
+
     return {
       Header,
       showLayout

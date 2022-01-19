@@ -3,7 +3,7 @@
     <q-toolbar class="flex justify-between">
       <div class="text-2xl">Header</div>
       <div>
-        <div v-if="auth.authenticated" class="flex flex-row visible-custom">
+        <div v-if="user" class="flex flex-row visible-custom">
           <q-btn
             no-caps
             flat
@@ -27,17 +27,27 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, inject, watch, ref } from 'vue';
-import { useStore } from 'vuex';
+import { User } from '@/types/User';
+import { useAuth } from '@/use/Authentication';
+import {
+  defineComponent,
+  inject,
+  watch,
+  ref,
+  computed,
+  ComputedRef
+} from 'vue';
 import { useRoute } from 'vue-router';
 
 export default defineComponent({
   name: 'HeaderApp',
   setup() {
     const auth: any = inject('auth');
-    const store = useStore();
     const route = useRoute();
     const currentRoute = ref<string>('');
+    const { getUser } = useAuth();
+
+    const user: ComputedRef<User> = computed(() => getUser());
 
     const login = () => {
       auth.loginWithPopup({
@@ -50,10 +60,6 @@ export default defineComponent({
       });
     };
 
-    const updateSidebar = () => {
-      store.dispatch('app/toggleSideBar');
-    };
-
     watch(
       () => route.name,
       () => {
@@ -61,7 +67,7 @@ export default defineComponent({
       }
     );
 
-    return { login, logout, updateSidebar, auth, currentRoute };
+    return { login, logout, auth, user, currentRoute };
   }
 });
 </script>
