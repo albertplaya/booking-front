@@ -1,3 +1,5 @@
+import { endpoints } from './../config/endpoints';
+import { postData } from '@/infrastructure/ApiHandler';
 import { User } from '@/types/User';
 import { useStore } from 'vuex';
 import { inject, watch } from 'vue';
@@ -31,11 +33,20 @@ export function useAuth() {
       () => {
         if (auth.user) {
           setUser(auth.user);
+          updateUserApi(auth.user.email);
         } else {
           removeUser();
         }
       }
     );
+  };
+
+  const updateUserApi = async (email: string): Promise<void> => {
+    const payload = {
+      email: email
+    };
+
+    await postData(endpoints.v1.partner_create, payload);
   };
 
   return { authUser, getUser };

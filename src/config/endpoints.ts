@@ -1,5 +1,6 @@
 export const endpoints = {
   v1: {
+    partner_create: '/partner',
     activity_create: '/activity',
     activity_update: '/activity',
     activity_get: '/activity/{activityId}',
