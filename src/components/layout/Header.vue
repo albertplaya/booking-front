@@ -12,12 +12,14 @@
             label="Activities"
             :to="{ name: 'activity-list' }"
           />
+          <!--
           <q-btn
             no-caps
             flat
             icon="confirmation_number_outline"
             label="Bookings"
           />
+          -->
           <q-btn no-caps flat color="" icon="account_circle" label="Account" />
         </div>
         <q-btn v-else @click="login" color="primary" label="login" />

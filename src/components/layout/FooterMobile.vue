@@ -14,12 +14,14 @@
         style="font-size: 1.2rem"
         :to="{ name: 'activity-list' }"
       />
+      <!--
       <q-btn
         flat
         round
         icon="confirmation_number_outline"
         style="font-size: 1.2rem"
       />
+      -->
       <q-btn flat round icon="account_circle" style="font-size: 1.2rem" />
     </q-footer>
   </div>
