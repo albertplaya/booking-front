@@ -11,6 +11,8 @@
         style="max-width: 400px"
       >
         <q-form class="q-gutter-md pt-4">
+          <ImageUploader @imageUploaded="updateImageActivity" />
+
           <q-input
             filled
             v-model="title"
@@ -54,17 +56,23 @@ import { defineComponent, ref } from 'vue';
 import { useActivity } from '@/use/Activity';
 import BackButton from '@/components/button/Back.vue';
 import ErrorNotification from '@/components/notification/Error.vue';
+import ImageUploader from '@/components/activity/ImageUploader.vue';
 import { Activity } from '@/types/Activity';
 import router from '@/router';
 
 export default defineComponent({
-  components: { BackButton, ErrorNotification },
+  components: { BackButton, ErrorNotification, ImageUploader },
   setup() {
     const { create } = useActivity();
 
     const title = ref<string>('');
     const description = ref<string>('');
+    const activityImageId = ref<string>('');
     const error = ref<any>('');
+
+    const updateImageActivity = (imageId: string): void => {
+      activityImageId.value = imageId;
+    };
 
     const saveActivity = () => {
       create({
@@ -77,7 +85,7 @@ export default defineComponent({
           error.value = err;
         });
     };
-    return { title, description, saveActivity, error };
+    return { title, description, saveActivity, error, updateImageActivity };
   }
 });
 </script>

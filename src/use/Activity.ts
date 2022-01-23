@@ -1,6 +1,7 @@
 import { Activity } from '@/types/Activity';
 import { endpoints } from '@/config/endpoints';
 import { postData, putData, getData } from '@/infrastructure/ApiHandler';
+import { upload } from '@/infrastructure/FileUploader';
 
 export function useActivity() {
   const create = async (activity: Activity): Promise<Activity> => {
@@ -45,10 +46,16 @@ export function useActivity() {
     return getActivity.data as Activity;
   };
 
+  const uploadImage = async (file: any): Promise<string> => {
+    const res = await upload(endpoints.v1.activity_upload_image, file);
+    return res.data.activity_image_id as string;
+  };
+
   return {
     create,
     update,
     list,
-    get
+    get,
+    uploadImage
   };
 }

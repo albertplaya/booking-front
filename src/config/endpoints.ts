@@ -5,6 +5,7 @@ export const endpoints = {
     activity_update: '/activity',
     activity_get: '/activity/{activityId}',
     activity_list: '/activity/user/{partnerId}',
+    activity_upload_image: '/activity/image',
     event_create: '/event',
     event_list: '/event/activity/{activityId}',
     booking_event: '/booking/event/{eventId}',
