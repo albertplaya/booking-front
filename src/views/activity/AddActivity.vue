@@ -67,7 +67,7 @@ export default defineComponent({
 
     const title = ref<string>('');
     const description = ref<string>('');
-    const activityImageId = ref<string>('');
+    const activityImageId = ref<string | null>(null);
     const error = ref<any>('');
 
     const updateImageActivity = (imageId: string): void => {
@@ -78,7 +78,8 @@ export default defineComponent({
       create({
         partner_id: localStorage.partner_id as string,
         title: title.value,
-        description: description.value
+        description: description.value,
+        image_id: activityImageId.value
       } as Activity)
         .then(() => router.push({ name: 'activity-list' }))
         .catch((err) => {

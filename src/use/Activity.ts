@@ -8,7 +8,8 @@ export function useActivity() {
     const payload = {
       partner_id: activity.partner_id,
       title: activity.title,
-      description: activity.description
+      description: activity.description,
+      image_id: activity.image_id
     };
 
     const activity_res: Promise<Activity> = await postData(

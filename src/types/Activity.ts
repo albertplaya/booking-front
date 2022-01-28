@@ -4,4 +4,5 @@ export interface Activity {
   partner_id: string;
   title: string;
   description: string;
+  image_id: string | null;
 }
