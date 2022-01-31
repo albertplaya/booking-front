@@ -1,12 +1,18 @@
 <template>
-  <label for="file-upload" class="custom-file-upload bg-gray-200 rounded-md">
-    <q-img
-      v-if="imageUrl"
-      class="rounded-md"
-      :src="imageUrl"
-      fit="cover"
-      style="max-width: 320px; height: 320px"
-    />
+  <label for="file-upload" class="custom-file-upload rounded-md">
+    <div
+      class="flex items-center justify-center"
+      style="width: 334px; height: 334px"
+    >
+      <q-img
+        v-if="imageUrl"
+        class="rounded-md"
+        :src="imageUrl"
+        fit="cover"
+        style="max-width: 334px; height: 334px"
+      />
+      <q-icon v-else size="8em" name="add" />
+    </div>
   </label>
   <input
     id="file-upload"
@@ -47,9 +53,8 @@ input[type='file'] {
   display: none;
 }
 .custom-file-upload {
-  height: 320px;
-  width: 320px;
   display: inline-block;
   cursor: pointer;
+  background-color: #e0e1e2;
 }
 </style>
