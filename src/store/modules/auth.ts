@@ -1,17 +1,17 @@
-import { User } from '@/types/User';
+import { User } from "@/types/User";
 
 interface UserState {
   user: User | null;
 }
 
 const state: UserState = {
-  user: null
+  user: null,
 };
 
 const getters = {
   user(state: UserState): User | null {
     return state.user;
-  }
+  },
 };
 
 const actions = {};
@@ -22,7 +22,7 @@ const mutations = {
   },
   remove(state: any, user: User) {
     state.user = null;
-  }
+  },
 };
 
 export default {
@@ -30,5 +30,5 @@ export default {
   state,
   getters,
   actions,
-  mutations
+  mutations,
 };

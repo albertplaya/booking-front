@@ -1,12 +1,12 @@
 export async function upload(url: string, file: any): Promise<any> {
   const formData = new FormData();
-  formData.append('activity_photo', file);
+  formData.append("activity_photo", file);
 
-  const domain: string = 'http://localhost:3000';
+  const domain = "http://localhost:3000";
   const response = await fetch(domain + url, {
-    method: 'POST',
-    mode: 'cors',
-    body: formData
+    method: "POST",
+    mode: "cors",
+    body: formData,
   });
 
   if (response.status !== 200) {

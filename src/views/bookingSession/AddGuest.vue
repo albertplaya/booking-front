@@ -11,8 +11,8 @@
       >
         <q-form class="q-gutter-md">
           <q-input
-            filled
             v-model="name"
+            filled
             label="Name"
             lazy-rules
             autogrow
@@ -22,8 +22,8 @@
           />
 
           <q-input
-            filled
             v-model="lastName"
+            filled
             label="Last name"
             lazy-rules
             autogrow
@@ -43,8 +43,8 @@
             ]"
           />
           <q-input
-            filled
             v-model="phone"
+            filled
             lazy-rules
             autogrow
             label="Phone"
@@ -56,11 +56,11 @@
       </div>
       <div style="max-width: 400px">
         <q-btn
-          @click="addGuestSession"
           class="float-right"
           label="Save"
           type="submit"
           color="primary"
+          @click="addGuestSession"
         />
       </div>
     </div>

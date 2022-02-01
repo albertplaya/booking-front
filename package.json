@@ -3,72 +3,45 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "serve": "vite preview",
+    "build": "vue-tsc --noEmit && vite build",
+    "dev": "vite",
+    "format": "prettier .  --write"
   },
   "dependencies": {
-    "@auth0/auth0-spa-js": "^1.19.3",
-    "@headlessui/vue": "^1.4.2",
+    "@auth0/auth0-spa-js": "^1.19.4",
+    "@headlessui/vue": "^1.4.3",
     "@mdi/font": "5.9.55",
-    "@quasar/extras": "^1.12.2",
+    "@quasar/extras": "^1.12.4",
     "@tailwindcss/postcss7-compat": "^2.2.17",
-    "@types/uuid": "^8.3.3",
+    "@types/uuid": "^8.3.4",
     "autoprefixer": "^9",
-    "core-js": "^3.6.5",
     "postcss": "^7",
-    "quasar": "^2.4.4",
+    "quasar": "^2.5.0",
     "roboto-fontface": "*",
     "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.2.17",
     "uuid": "^3.4.0",
-    "vue": "^3.0.0",
-    "vue-auth0-plugin": "^2.4.3",
+    "vue": "^3.2.29",
+    "vue-auth0-plugin": "^2.4.4",
     "vue-class-component": "^8.0.0-0",
     "vue-router": "^4.0.12",
-    "vuestic-ui": "^1.3.1",
+    "vuestic-ui": "^1.3.4",
     "vuex": "^4.0.2",
     "webfontloader": "^1.0.0",
-    "webpack": "^5.65.0"
+    "webpack": "^5.68.0"
   },
   "devDependencies": {
-    "@types/webfontloader": "^1.0.0",
-    "@typescript-eslint/eslint-plugin": "^5.6.0",
-    "@typescript-eslint/parser": "^5.6.0",
-    "@vue/cli-plugin-babel": "5.0.0-beta.7",
-    "@vue/cli-plugin-eslint": "5.0.0-rc.1",
-    "@vue/cli-plugin-typescript": "5.0.0-rc.1",
-    "@vue/cli-service": "^5.0.0-rc.1",
-    "@vue/compiler-sfc": "^3.2.0",
-    "@vue/eslint-config-typescript": "^9.1.0",
-    "babel-eslint": "^10.1.0",
-    "eslint": "^8.4.1",
-    "eslint-plugin-vue": "^8.2.0",
+    "@quasar/vite-plugin": "^1.0.4",
+    "@types/webfontloader": "^1.6.34",
+    "@vitejs/plugin-vue": "^1.6.1",
+    "@vue/compiler-sfc": "^3.2.29",
     "material-design-icons-iconfont": "^6.1.1",
-    "sass": "^1.38.0",
+    "prettier": "2.5.1",
+    "sass": "^1.49.4",
     "sass-loader": "^10.1.0",
     "typescript": "~4.1.5",
+    "vite": "^2.5.4",
     "vue-cli-plugin-quasar": "~4.0.4",
-    "vue-cli-plugin-tailwind": "~2.2.18",
-    "vue-cli-plugin-vuestic-ui": "~1.0.3"
-  },
-  "eslintConfig": {
-    "root": true,
-    "env": {
-      "node": true
-    },
-    "extends": [
-      "plugin:vue/vue3-essential",
-      "eslint:recommended",
-      "@vue/typescript"
-    ],
-    "parserOptions": {
-      "parser": "@typescript-eslint/parser"
-    },
-    "rules": {}
-  },
-  "browserslist": [
-    "> 1%",
-    "last 2 versions",
-    "not dead"
-  ]
+    "vue-tsc": "^0.0.24"
+  }
 }

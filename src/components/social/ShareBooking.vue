@@ -4,7 +4,7 @@
   </q-btn>
 
   <TransitionRoot appear :show="isOpen" as="template">
-    <Dialog as="div" :initialFocus="getActiveElement()" @close="closeModal">
+    <Dialog as="div" :initial-focus="getActiveElement()" @close="closeModal">
       <div class="fixed inset-0 z-10 overflow-y-auto">
         <div class="min-h-screen px-4 text-center">
           <TransitionChild

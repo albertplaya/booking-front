@@ -1,9 +1,10 @@
-import './styles/quasar.sass';
-import '@quasar/extras/material-icons/material-icons.css';
+import './styles/quasar.scss';
+import iconSet from 'quasar/icon-set/material-icons-outlined.js';
 import '@quasar/extras/material-icons-outlined/material-icons-outlined.css';
 
 // To be used on app.use(Quasar, { ... })
 export default {
   config: {},
-  plugins: {}
+  plugins: {},
+  iconSet: iconSet
 };

@@ -21,7 +21,7 @@
             <div>
               <div class="text-grey">Date</div>
               <div>
-                {{ date.formatDate(booking.data.start_date, 'DD MMM') }}
+                {{ date.formatDate(booking.data.start_date, "DD MMM") }}
               </div>
             </div>
             <div>
@@ -36,7 +36,7 @@
             <div>
               <div class="text-grey">Time</div>
               <div>
-                {{ date.formatDate(booking.data.start_date, 'HH:mm A') }}
+                {{ date.formatDate(booking.data.start_date, "HH:mm A") }}
               </div>
             </div>
             <div>
@@ -71,20 +71,20 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref } from 'vue';
-import { useBookingSession } from '@/use/BookingSession';
-import { useBooking } from '@/use/Booking';
-import CloseButton from '@/components/button/Close.vue';
-import { Booking } from '@/types/Booking';
-import { date } from 'quasar';
+import { defineComponent, onMounted, ref } from "vue";
+import { useBookingSession } from "@/use/BookingSession";
+import { useBooking } from "@/use/Booking";
+import CloseButton from "@/components/button/Close.vue";
+import { Booking } from "@/types/Booking";
+import { date } from "quasar";
 
 export default defineComponent({
   components: { CloseButton },
   props: {
     eventId: {
       type: String,
-      default: ''
-    }
+      default: "",
+    },
   },
   setup(props) {
     onMounted(async () => {
@@ -103,20 +103,20 @@ export default defineComponent({
     };
 
     const generateUrl = (booking: Booking) => {
-      console.log('yead' + booking + booking.start_date);
+      console.log("yead" + booking + booking.start_date);
       return (
-        'https://calendar.google.com/calendar/r/eventedit?text=' +
+        "https://calendar.google.com/calendar/r/eventedit?text=" +
         booking.title +
-        '&dates=' +
-        date.formatDate(booking.start_date, 'YYYYMMDD') +
-        date.formatDate(booking.start_date, 'Thhmmss') +
-        '/' +
-        date.formatDate(booking.start_date, 'YYYYMMDD') +
+        "&dates=" +
+        date.formatDate(booking.start_date, "YYYYMMDD") +
+        date.formatDate(booking.start_date, "Thhmmss") +
+        "/" +
+        date.formatDate(booking.start_date, "YYYYMMDD") +
         date.formatDate(
           new Date(
             new Date(booking.start_date).getTime() + booking.duration * 60000
           ),
-          'Thhmmss'
+          "Thhmmss"
         )
       );
     };
@@ -124,10 +124,10 @@ export default defineComponent({
     return {
       booking,
       date,
-      generateUrl
+      generateUrl,
       //generateCalendarLink
     };
-  }
+  },
 });
 </script>
 

@@ -11,8 +11,8 @@
         style="max-width: 400px"
       >
         <q-form class="q-gutter-md pt-4">
-          <q-input filled v-model="date">
-            <template v-slot:prepend>
+          <q-input v-model="date" filled>
+            <template #prepend>
               <q-icon name="event" class="cursor-pointer">
                 <q-popup-proxy
                   cover
@@ -29,8 +29,8 @@
             </template>
           </q-input>
 
-          <q-input filled v-model="time" mask="time" :rules="['time']">
-            <template v-slot:prepend>
+          <q-input v-model="time" filled mask="time" :rules="['time']">
+            <template #prepend>
               <q-icon name="access_time" class="cursor-pointer">
                 <q-popup-proxy
                   cover
@@ -53,8 +53,8 @@
           </q-input>
 
           <q-input
-            filled
             v-model="duration"
+            filled
             label="Duration in minuts"
             lazy-rules
             autogrow
@@ -64,8 +64,8 @@
           />
 
           <q-input
-            filled
             v-model="capacity"
+            filled
             label="Number of participants"
             lazy-rules
             autogrow
@@ -77,13 +77,13 @@
       </div>
       <div class="pt-4" style="max-width: 400px">
         <q-btn
-          @click="saveEvent"
           no-caps
           style="color: typography-primary-inverted"
           class="float-right"
           label="Save"
           type="submit"
           color="teal"
+          @click="saveEvent"
         />
       </div>
     </div>
