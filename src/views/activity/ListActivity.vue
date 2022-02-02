@@ -21,13 +21,23 @@
       />
       <div v-else class="flex row-auto justify-around mt-4">
         <q-card
-          class="my-card m-2"
+          class="m-2 rounded-md"
           flat
           bordered
           v-for="activity in activities"
           :key="activity.activity_id"
-          style="width: 350px"
+          style="width: 334px"
         >
+          <q-img
+            v-if="activity.image_id"
+            :src="
+              'http://localhost:4566/booking/' +
+              activity.image_id.value +
+              '.jpg'
+            "
+            fit="cover"
+            style="max-width: 334px; height: 334px"
+          />
           <q-card-section horizontal>
             <q-card-section class="q-pt-xs">
               <div class="text-h5 q-mt-sm q-mb-xs">{{ activity.title }}</div>

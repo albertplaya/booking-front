@@ -25,31 +25,48 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue';
-import { useActivity } from '@/use/Activity';
+import { defineComponent, ref, onMounted } from "vue";
+import { useActivity } from "@/use/Activity";
 
 export default defineComponent({
-  name: 'ImageUploader',
-  emits: ['imageUploaded'],
+  name: "ImageUploader",
+  emits: ["imageUploaded"],
+  props: {
+    activityImageId: {
+      type: String,
+      default: "",
+    },
+  },
   setup(props, { emit }) {
-    const imageUrl = ref<string>('');
+    const imageUrl = ref<string>("");
     const { uploadImage } = useActivity();
+
+    onMounted(() => {
+      if (props.activityImageId) {
+        makeImageUrl(props.activityImageId);
+      }
+    });
+
     const uploadImageActivity = async (event: any): Promise<void> => {
       const activityImageId: string = await uploadImage(event.target.files[0]);
-      imageUrl.value =
-        'http://localhost:4566/booking/' + activityImageId + '.jpg';
-      emit('imageUploaded', activityImageId);
+      makeImageUrl(activityImageId);
+      emit("imageUploaded", activityImageId);
     };
     return {
       uploadImageActivity,
-      imageUrl
+      imageUrl,
     };
-  }
+
+    function makeImageUrl(activityImageId: string) {
+      imageUrl.value =
+        "http://localhost:4566/booking/" + activityImageId + ".jpg";
+    }
+  },
 });
 </script>
 
 <style scoped>
-input[type='file'] {
+input[type="file"] {
   display: none;
 }
 .custom-file-upload {
