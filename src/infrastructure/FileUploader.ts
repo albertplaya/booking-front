@@ -2,7 +2,7 @@ export async function upload(url: string, file: any): Promise<any> {
   const formData = new FormData();
   formData.append("activity_photo", file);
 
-  const domain = "http://localhost:3000";
+  const domain: string = import.meta.env.VITE_API_URL;
   const response = await fetch(domain + url, {
     method: "POST",
     mode: "cors",

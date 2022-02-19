@@ -59,7 +59,7 @@ export default defineComponent({
 
     function makeImageUrl(activityImageId: string) {
       imageUrl.value =
-        "http://localhost:4566/booking/" + activityImageId + ".jpg";
+        import.meta.env.VITE_API_FILES + "/booking/" + activityImageId + ".jpg";
     }
   },
 });

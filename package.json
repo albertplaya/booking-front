@@ -5,7 +5,7 @@
   "scripts": {
     "serve": "vite preview",
     "build": "vue-tsc --noEmit && vite build",
-    "dev": "vite",
+    "dev": "vite --mode development",
     "format": "prettier .  --write"
   },
   "dependencies": {
@@ -16,6 +16,7 @@
     "@tailwindcss/postcss7-compat": "^2.2.17",
     "@types/uuid": "^8.3.4",
     "autoprefixer": "^9",
+    "dotenv": "^16.0.0",
     "postcss": "^7",
     "quasar": "^2.5.0",
     "roboto-fontface": "*",

@@ -1,6 +1,11 @@
-import { Event } from '@/types/Event';
-import { endpoints } from '@/config/endpoints';
-import { postData, getData } from '@/infrastructure/ApiHandler';
+import { Event } from "@/types/Event";
+import { endpoints } from "@/config/endpoints";
+import {
+  postData,
+  getData,
+  putData,
+  deleteData,
+} from "@/infrastructure/ApiHandler";
 
 export function useEvent() {
   const create = (event: Event): Promise<Event> => {
@@ -8,7 +13,7 @@ export function useEvent() {
       start_date: event.start_date,
       duration: event.duration,
       capacity: event.capacity,
-      activity_id: event.activity_id
+      activity_id: event.activity_id,
     };
 
     const activity_res: Promise<Event> = postData(
@@ -20,13 +25,35 @@ export function useEvent() {
 
   const list = async (activityId: string): Promise<Event[]> => {
     const events = await getData(
-      endpoints.v1.event_list.replace('{activityId}', activityId)
+      endpoints.v1.event_list.replace("{activityId}", activityId)
     );
     return events.data as Event[];
   };
 
+  const get = async (eventId: string): Promise<Event> => {
+    const getEvent = await getData(
+      endpoints.v1.event_get.replace("{eventId}", eventId)
+    );
+    return getEvent.data as Event;
+  };
+
+  const update = async (event: Event): Promise<Event> => {
+    const eventResult: Promise<Event> = await putData(
+      endpoints.v1.event_update,
+      event
+    );
+    return eventResult;
+  };
+
+  const remove = async (eventId: string): Promise<void> => {
+    await deleteData(endpoints.v1.event_remove.replace("{eventId}", eventId));
+  };
+
   return {
     create,
-    list
+    list,
+    get,
+    update,
+    remove,
   };
 }

@@ -11,7 +11,7 @@
           color="teal"
           :to="{
             name: 'event-add',
-            params: { activityId: activityId }
+            params: { activityId: activityId },
           }"
         />
       </div>
@@ -21,48 +21,54 @@
         to="event-add"
       />
       <div v-else class="flex flex-col">
-        <div
-          class="flex justify-around m-2 bg-white rounded-md p-2 items-center border-gray-200 border-2"
-          flat
-          bordered
-          v-for="event in events"
-          :key="event.event_id"
-        >
-          <div class="flex flex-col items-center">
-            <div class="text-xl font-bold text-gray-600">
-              {{ date.formatDate(event.start_date, 'DD') }}
-            </div>
-            <div class="uppercase font-bold">
-              {{ date.formatDate(event.start_date, 'MMM') }}
-            </div>
-          </div>
-          <div class="text-center text-lg">
-            {{ date.formatDate(event.start_date, 'HH:mm A') }}
-          </div>
-          <div class="visible-custom">
-            <div class="flex justify-center">
-              <q-icon size="2em" name="access_time" />
-              <div class="text-lg pl-1">{{ event.duration }} min</div>
-            </div>
-          </div>
-          <div class="flex justify-center">
-            <router-link
-              :to="{
-                name: 'booking-list',
-                params: { eventId: event.event_id.value }
-              }"
+        <div v-for="event in events" :key="event.event_id">
+          <router-link
+            :to="{
+              name: 'event-update',
+              params: { eventId: event.event_id.value },
+            }"
+          >
+            <div
+              class="flex justify-around m-2 bg-white rounded-md p-2 items-center border-gray-200 border-2 event"
+              flat
+              bordered
             >
-              <div
-                class="flex justify-center diagonal-fractions text-3xl text-teal px-2 py-1 rounded-md"
-                style="width: 80px; background: #e8f2ed; cursor: pointer"
-              >
-                {{ event.current_capacity }}/{{ event.capacity }}
+              <div class="flex flex-col items-center">
+                <div class="text-xl font-bold text-gray-600">
+                  {{ date.formatDate(event.start_date, "DD") }}
+                </div>
+                <div class="uppercase font-bold">
+                  {{ date.formatDate(event.start_date, "MMM") }}
+                </div>
               </div>
-            </router-link>
-          </div>
-          <div class="text-center order-4">
-            <ShareBooking />
-          </div>
+              <div class="text-center text-lg">
+                {{ date.formatDate(event.start_date, "HH:mm A") }}
+              </div>
+              <div class="visible-custom">
+                <div class="flex justify-center">
+                  <q-icon size="2em" name="access_time" />
+                  <div class="text-lg pl-1">{{ event.duration }} min</div>
+                </div>
+              </div>
+              <div class="flex justify-center">
+                <router-link
+                  :to="{
+                    name: 'booking-list',
+                    params: { eventId: event.event_id.value },
+                  }"
+                >
+                  <div
+                    class="flex justify-center diagonal-fractions text-3xl text-teal px-2 py-1 rounded-md booking-number"
+                  >
+                    {{ event.current_capacity }}/{{ event.capacity }}
+                  </div>
+                </router-link>
+              </div>
+              <div class="text-center">
+                <ShareBooking />
+              </div>
+            </div>
+          </router-link>
         </div>
       </div>
     </div>
@@ -70,21 +76,21 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue';
-import { useEvent } from '@/use/Event';
-import { Event } from '@/types/Event';
-import { date } from 'quasar';
-import AddWhenEmptyList from '@/components/button/AddWhenEmptyList.vue';
-import ShareBooking from '@/components/social/ShareBooking.vue';
-import router from '@/router';
+import { defineComponent, ref } from "vue";
+import { useEvent } from "@/use/Event";
+import { Event } from "@/types/Event";
+import { date } from "quasar";
+import AddWhenEmptyList from "@/components/button/AddWhenEmptyList.vue";
+import ShareBooking from "@/components/social/ShareBooking.vue";
+import router from "@/router";
 
 export default defineComponent({
   components: { AddWhenEmptyList, ShareBooking },
   props: {
     activityId: {
       type: String,
-      default: ''
-    }
+      default: "",
+    },
   },
   mounted() {
     this.listEvents();
@@ -97,15 +103,15 @@ export default defineComponent({
       list(props.activityId)
         .then((result) => (events.value = result))
         .catch(() => {
-          return router.push({ name: 'not-found' });
+          return router.push({ name: "not-found" });
         });
     };
     return { events, listEvents, date };
-  }
+  },
 });
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .visible-custom {
   display: none;
 }
@@ -113,5 +119,20 @@ export default defineComponent({
   .visible-custom {
     display: block;
   }
+}
+
+.booking-number {
+  width: 80px;
+  background: $light-teal;
+  cursor: pointer;
+}
+.booking-number:hover {
+  color: $dark-teal !important;
+}
+.event {
+  cursor: pointer;
+}
+.event:hover {
+  border-left: 2px solid $teal;
 }
 </style>

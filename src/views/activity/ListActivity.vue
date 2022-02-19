@@ -30,11 +30,7 @@
         >
           <q-img
             v-if="activity.image_id"
-            :src="
-              'http://localhost:4566/booking/' +
-              activity.image_id.value +
-              '.jpg'
-            "
+            :src="filesUrl(activity.image_id.value)"
             fit="cover"
             style="max-width: 334px; height: 334px"
           />
@@ -54,7 +50,7 @@
               color="primary"
               :to="{
                 name: 'event-list',
-                params: { activityId: activity.activity_id.value }
+                params: { activityId: activity.activity_id.value },
               }"
             >
               Events
@@ -66,7 +62,7 @@
               color="primary"
               :to="{
                 name: 'activity-update',
-                params: { activityId: activity.activity_id.value }
+                params: { activityId: activity.activity_id.value },
               }"
             >
               Update
@@ -79,11 +75,11 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue';
-import { useActivity } from '@/use/Activity';
-import { Activity } from '@/types/Activity';
-import AddWhenEmptyList from '@/components/button/AddWhenEmptyList.vue';
-import router from '@/router';
+import { defineComponent, ref } from "vue";
+import { useActivity } from "@/use/Activity";
+import { Activity } from "@/types/Activity";
+import AddWhenEmptyList from "@/components/button/AddWhenEmptyList.vue";
+import router from "@/router";
 
 export default defineComponent({
   components: { AddWhenEmptyList },
@@ -98,11 +94,13 @@ export default defineComponent({
       list(localStorage.partner_id as string)
         .then((result) => (activities.value = result))
         .catch(() => {
-          return router.push({ name: 'not-found' });
+          return router.push({ name: "not-found" });
         });
     };
-    return { activities, listActivities };
-  }
+    const filesUrl = (id: string) =>
+      `${import.meta.env.VITE_API_FILES}/booking/${id}.jpg`;
+    return { activities, filesUrl, listActivities };
+  },
 });
 </script>
 

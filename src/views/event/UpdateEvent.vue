@@ -2,11 +2,12 @@
   <q-page padding class="flex justify-center bg-gray-50">
     <div class="q-pa-md flex-grow" style="max-width: 400px">
       <div class="pb-4 flex row-auto justify-between">
-        <h3 class="text-2xl">Add event</h3>
+        <h3 class="text-2xl">Update event</h3>
         <BackButton />
       </div>
       <ErrorNotification :error="error" />
       <div
+        v-if="event"
         class="q-pa-md pt-4 border border-solid rounded-md border-gray-200"
         style="max-width: 400px"
       >
@@ -53,7 +54,7 @@
           </q-input>
 
           <q-input
-            v-model="duration"
+            v-model="event.duration"
             filled
             label="Duration in minuts"
             lazy-rules
@@ -64,7 +65,7 @@
           />
 
           <q-input
-            v-model="capacity"
+            v-model="event.capacity"
             filled
             label="Number of participants"
             lazy-rules
@@ -75,15 +76,23 @@
           />
         </q-form>
       </div>
-      <div class="pt-4" style="max-width: 400px">
+      <div class="pt-4 q-gutter-sm" style="max-width: 400px">
         <q-btn
           no-caps
           style="color: typography-primary-inverted"
           class="float-right"
-          label="Save"
+          label="Update"
           type="submit"
           color="teal"
-          @click="saveEvent"
+          @click="updateEvent"
+        />
+        <q-btn
+          no-caps
+          class="float-right"
+          label="Delete"
+          type="submit"
+          color="rhubarb"
+          @click="deleteEvent"
         />
       </div>
     </div>
@@ -91,47 +100,99 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from "vue";
+import { defineComponent, ref, onMounted } from "vue";
 import { useEvent } from "@/use/Event";
 import BackButton from "@/components/button/Back.vue";
 import ErrorNotification from "@/components/notification/Error.vue";
 import router from "@/router";
+import { Event } from "@/types/Event";
 
 export default defineComponent({
   components: { BackButton, ErrorNotification },
   props: {
-    activityId: {
+    eventId: {
       type: String,
       default: "",
     },
   },
   setup(props) {
-    const { create } = useEvent();
+    const { get, update, remove } = useEvent();
 
-    const date = ref<string>("2021-02-01");
-    const time = ref<string>("12:44");
-    const duration = ref<string>("30");
-    const capacity = ref<string>("10");
+    const date = ref<string>("");
+    const time = ref<string>("");
+    const event = ref<Event>();
     const error = ref<any>("");
 
-    const saveEvent = () => {
-      create({
-        start_date: date.value + " " + time.value,
-        duration: duration.value,
-        capacity: capacity.value,
-        activity_id: props.activityId,
-      })
+    onMounted(() => {
+      getEvent(props.eventId);
+    });
+
+    const getEvent = async (eventId: string) => {
+      get(eventId)
+        .then((result) => {
+          event.value = result;
+          const currentDate = new Date(result.start_date);
+          date.value = new Intl.DateTimeFormat("fr-CA", {
+            year: "numeric",
+            month: "2-digit",
+            day: "2-digit",
+          }).format(currentDate);
+          time.value = new Intl.DateTimeFormat("default", {
+            hour: "numeric",
+            minute: "numeric",
+          }).format(currentDate);
+        })
+        .catch(() => {
+          return router.push({ name: "not-found" });
+        });
+    };
+
+    const updateEvent = () => {
+      if (!event.value) {
+        return;
+      }
+
+      update({
+        event_id: props.eventId,
+        capacity: event.value.capacity,
+        duration: event.value.duration,
+        start_date: `${date.value} ${time.value}:00`,
+        activity_id: event.value.activity_id.value,
+      } as Event)
         .then(() =>
           router.push({
             name: "event-list",
-            params: { activityId: props.activityId },
+            params: { activityId: event.value.activity_id.value },
           })
         )
         .catch((err) => {
           error.value = err;
         });
     };
-    return { date, time, duration, capacity, error, saveEvent };
+
+    const deleteEvent = () => {
+      if (!event.value) {
+        return;
+      }
+      remove(props.eventId)
+        .then(() =>
+          router.push({
+            name: "event-list",
+            params: { activityId: event.value.activity_id.value },
+          })
+        )
+        .catch((err) => {
+          error.value = err;
+        });
+    };
+
+    return { date, time, event, error, updateEvent, deleteEvent };
   },
 });
 </script>
+
+<style lang="scss" scoped>
+.bg-rhubarb {
+  background: $rhubarb !important;
+}
+</style>

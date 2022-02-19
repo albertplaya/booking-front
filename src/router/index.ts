@@ -5,6 +5,7 @@ import UpdateActivity from "@/views/activity/UpdateActivity.vue";
 import ListActivity from "@/views/activity/ListActivity.vue";
 import AddEvent from "@/views/event/AddEvent.vue";
 import ListEvent from "@/views/event/ListEvent.vue";
+import UpdateEvent from "@/views/event/UpdateEvent.vue";
 import ListBooking from "@/views/booking/ListBooking.vue";
 import GetBookingEvent from "@/views/bookingSession/GetBookingEvent.vue";
 import AddGuest from "@/views/bookingSession/AddGuest.vue";
@@ -44,6 +45,12 @@ const routes: Array<RouteRecordRaw> = [
     path: "/events/:activityId",
     name: "event-list",
     component: ListEvent,
+    props: true,
+  },
+  {
+    path: "/event/update/:eventId",
+    name: "event-update",
+    component: UpdateEvent,
     props: true,
   },
 

@@ -29,36 +29,36 @@
 </template>
 
 <script lang="ts">
-import { User } from '@/types/User';
-import { useAuth } from '@/use/Authentication';
+import { User } from "@/types/User";
+import { useAuth } from "@/use/Authentication";
 import {
   defineComponent,
   inject,
   watch,
   ref,
   computed,
-  ComputedRef
-} from 'vue';
-import { useRoute } from 'vue-router';
+  ComputedRef,
+} from "vue";
+import { useRoute } from "vue-router";
 
 export default defineComponent({
-  name: 'HeaderApp',
+  name: "HeaderApp",
   setup() {
-    const auth: any = inject('auth');
+    const auth: any = inject("auth");
     const route = useRoute();
-    const currentRoute = ref<string>('');
+    const currentRoute = ref<string>("");
     const { getUser } = useAuth();
 
     const user: ComputedRef<User> = computed(() => getUser());
 
     const login = () => {
       auth.loginWithPopup({
-        redirect_uri: 'http://localhost:8080/'
+        redirect_uri: window.location.origin,
       });
     };
     const logout = () => {
       auth.logout({
-        returnTo: window.location.origin
+        returnTo: window.location.origin,
       });
     };
 
@@ -70,7 +70,7 @@ export default defineComponent({
     );
 
     return { login, logout, auth, user, currentRoute };
-  }
+  },
 });
 </script>
 
