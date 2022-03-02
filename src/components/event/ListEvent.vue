@@ -51,11 +51,13 @@ export default defineComponent({
       );
     };
 
-    const eventGroup = {};
+    const eventGroup = {
+      today: [] as Event[],
+      tomorrow: [] as Event[],
+      month: {},
+    };
     const eventsByMonth = {};
-    eventGroup.today = [];
-    eventGroup.tomorrow = [];
-    props.events.map((event) => {
+    props.events.map((event: Event) => {
       const eventDate = new Date(event.start_date);
       if (isToday(eventDate)) {
         eventGroup.today.push(event);

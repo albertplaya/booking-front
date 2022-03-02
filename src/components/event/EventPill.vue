@@ -46,7 +46,7 @@ export default defineComponent({
   components: { ShareBooking },
   props: {
     event: {
-      type: Object as PropType<Event[]>,
+      type: Object as PropType<Event>,
     },
   },
   setup() {
