@@ -1,7 +1,25 @@
 <template>
   <q-page class="flex justify-center bg-gray-50" padding>
     <div style="width: 895px">
-      <div class="flex justify-between">
+      <div class="flex justify-between mb-2">
+        <q-btn
+          v-if="eventListButton === 'upcoming'"
+          no-caps
+          rounded
+          label="Past events"
+          type="submit"
+          color="grey"
+          @click="listPastEvents"
+        />
+        <q-btn
+          v-if="eventListButton === 'past'"
+          no-caps
+          rounded
+          label="Upcoming events"
+          type="submit"
+          color="grey"
+          @click="listUpcommingEvents"
+        />
         <q-separator />
         <q-btn
           no-caps
@@ -41,20 +59,32 @@ export default defineComponent({
     },
   },
   mounted() {
-    this.listEvents();
+    this.listUpcommingEvents();
   },
   setup(props) {
-    const { list } = useEvent();
+    const { listUpcomming, listPast } = useEvent();
     const events = ref<Event[]>([]);
+    const eventListButton = ref<string>("upcoming");
 
-    const listEvents = async () => {
-      list(props.activityId)
+    const listUpcommingEvents = async () => {
+      listUpcomming(props.activityId)
         .then((result) => (events.value = result))
         .catch(() => {
           return router.push({ name: "not-found" });
         });
+      eventListButton.value = "upcoming";
     };
-    return { events, listEvents };
+
+    const listPastEvents = async () => {
+      listPast(props.activityId)
+        .then((result) => (events.value = result))
+        .catch(() => {
+          return router.push({ name: "not-found" });
+        });
+      eventListButton.value = "past";
+    };
+
+    return { events, listUpcommingEvents, listPastEvents, eventListButton };
   },
 });
 </script>

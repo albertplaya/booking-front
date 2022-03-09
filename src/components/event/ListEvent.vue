@@ -1,26 +1,42 @@
 <template>
   <div class="flex flex-col">
     <EventBlock
-      v-if="eventGroup.today.length > 0"
-      :events="eventGroup.today"
+      v-if="todayEvents.length > 0"
+      :events="todayEvents"
       :title="'Today'"
     />
     <EventBlock
-      v-if="eventGroup.tomorrow.length > 0"
-      :events="eventGroup.tomorrow"
+      v-if="tomorrowEvents.length > 0"
+      :events="tomorrowEvents"
       :title="'Tomorrow'"
     />
-    <div v-for="(events, month) in eventGroup.month">
-      <EventBlock :events="events" :title="monthsNames[month]" />
+
+    <div v-for="eventGroup in eventGroups">
+      <div v-if="eventGroup.showYear">
+        <div class="text-2xl font-bold mt-4 mb-2">
+          {{ eventGroup.year }}
+        </div>
+      </div>
+      <EventBlock
+        :events="eventGroup.events"
+        :title="monthsNames[eventGroup.month]"
+      />
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from "vue";
+import { defineComponent, PropType, ref, watch, onMounted } from "vue";
 import EventBlock from "@/components/event/EventBlock.vue";
 import { date } from "quasar";
 import { Event } from "@/types/Event";
+
+interface EventGroup {
+  showYear: boolean;
+  year: number;
+  month: number;
+  events: Event[];
+}
 
 export default defineComponent({
   name: "ListEvents",
@@ -32,6 +48,10 @@ export default defineComponent({
     },
   },
   setup(props) {
+    onMounted(() => {
+      buildEventList();
+    });
+
     const isToday = (date: Date) => {
       const today = new Date();
       return (
@@ -51,32 +71,71 @@ export default defineComponent({
       );
     };
 
-    const eventGroup = {
-      today: [] as Event[],
-      tomorrow: [] as Event[],
-      month: {},
+    const todayEvents = ref<Event[]>([]);
+    const tomorrowEvents = ref<Event[]>([]);
+    const eventGroups = ref<EventGroup[]>([]);
+
+    const buildEventList = () => {
+      let showYear = false;
+      let year = 0;
+      let month = 0;
+      let yearMonthEvents: Event[] = [];
+      props.events.map((event: Event, index, array) => {
+        let eventDate = new Date(event.start_date);
+        if (isToday(eventDate)) {
+          todayEvents.value.push(event);
+          return;
+        }
+
+        if (isTomorrow(eventDate)) {
+          tomorrowEvents.value.push(event);
+          return;
+        }
+
+        if (year === 0) {
+          showYear = eventDate.getFullYear() !== new Date().getFullYear();
+          year = eventDate.getFullYear();
+          month = eventDate.getMonth();
+          yearMonthEvents = [event];
+        } else if (
+          year == eventDate.getFullYear() &&
+          month == eventDate.getMonth()
+        ) {
+          yearMonthEvents.push(event);
+        } else {
+          eventGroups.value.push({
+            showYear,
+            year: year,
+            month: month,
+            events: yearMonthEvents,
+          });
+
+          showYear = eventDate.getFullYear() !== year;
+          year = eventDate.getFullYear();
+          month = eventDate.getMonth();
+          yearMonthEvents = [event];
+        }
+
+        if (index === array.length - 1) {
+          eventGroups.value.push({
+            showYear,
+            year,
+            month,
+            events: yearMonthEvents,
+          });
+        }
+      });
     };
-    const eventsByMonth = {};
-    props.events.map((event: Event) => {
-      const eventDate = new Date(event.start_date);
-      if (isToday(eventDate)) {
-        eventGroup.today.push(event);
-        return;
-      }
 
-      if (isTomorrow(eventDate)) {
-        eventGroup.tomorrow.push(event);
-        return;
+    watch(
+      () => props.events,
+      () => {
+        todayEvents.value = [];
+        tomorrowEvents.value = [];
+        eventGroups.value = [];
+        buildEventList();
       }
-
-      const month = eventDate.getMonth();
-      if (!eventsByMonth[month]) {
-        eventsByMonth[month] = [];
-      }
-      eventsByMonth[month].push(event);
-    });
-
-    eventGroup.month = eventsByMonth;
+    );
 
     const monthsNames = [
       "January",
@@ -95,8 +154,11 @@ export default defineComponent({
 
     return {
       date,
-      eventGroup,
+      todayEvents,
+      tomorrowEvents,
+      eventGroups,
       monthsNames,
+      buildEventList,
     };
   },
 });

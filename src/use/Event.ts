@@ -23,9 +23,24 @@ export function useEvent() {
     return activity_res;
   };
 
-  const list = async (activityId: string): Promise<Event[]> => {
+  const listUpcomming = async (activityId: string): Promise<Event[]> => {
+    const payload = {
+      time: "future",
+    };
     const events = await getData(
-      endpoints.v1.event_list.replace("{activityId}", activityId)
+      endpoints.v1.event_list.replace("{activityId}", activityId),
+      payload
+    );
+    return events.data as Event[];
+  };
+
+  const listPast = async (activityId: string): Promise<Event[]> => {
+    const payload = {
+      time: "past",
+    };
+    const events = await getData(
+      endpoints.v1.event_list.replace("{activityId}", activityId),
+      payload
     );
     return events.data as Event[];
   };
@@ -51,7 +66,8 @@ export function useEvent() {
 
   return {
     create,
-    list,
+    listUpcomming,
+    listPast,
     get,
     update,
     remove,
