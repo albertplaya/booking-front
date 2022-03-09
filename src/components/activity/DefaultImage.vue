@@ -26,6 +26,6 @@ export default defineComponent({
 <style scoped lang="scss">
 .default-image {
   height: 332px;
-  color: $dark-petrol;
+  color: $teal;
 }
 </style>
