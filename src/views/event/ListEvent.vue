@@ -3,7 +3,7 @@
     <div style="width: 895px">
       <div class="flex justify-between mb-2">
         <q-btn
-          v-if="eventListButton === 'upcoming'"
+          v-if="eventListButton === 'upcoming' && events.length"
           no-caps
           rounded
           label="Past events"
@@ -12,7 +12,7 @@
           @click="listPastEvents"
         />
         <q-btn
-          v-if="eventListButton === 'past'"
+          v-if="eventListButton === 'past' && events.length"
           no-caps
           rounded
           label="Upcoming events"
