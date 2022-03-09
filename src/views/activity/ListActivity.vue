@@ -34,6 +34,7 @@
             fit="cover"
             style="max-width: 334px; height: 334px"
           />
+          <DefaultImage v-else :activity="activity" />
           <q-card-section horizontal>
             <q-card-section class="q-pt-xs">
               <div class="text-h5 q-mt-sm q-mb-xs">{{ activity.title }}</div>
@@ -79,10 +80,11 @@ import { defineComponent, ref } from "vue";
 import { useActivity } from "@/use/Activity";
 import { Activity } from "@/types/Activity";
 import AddWhenEmptyList from "@/components/button/AddWhenEmptyList.vue";
+import DefaultImage from "@/components/activity/DefaultImage.vue";
 import router from "@/router";
 
 export default defineComponent({
-  components: { AddWhenEmptyList },
+  components: { AddWhenEmptyList, DefaultImage },
   mounted() {
     this.listActivities();
   },
