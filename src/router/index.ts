@@ -10,6 +10,8 @@ import ListBooking from "@/views/booking/ListBooking.vue";
 import GetBookingEvent from "@/views/bookingSession/GetBookingEvent.vue";
 import AddGuest from "@/views/bookingSession/AddGuest.vue";
 import ThankYou from "@/views/bookingSession/ThankYou.vue";
+import ActivityCards from "@/views/partnerLanding/ActivityCards.vue";
+import ActivityEventsList from "@/views/partnerLanding/ActivityEventList.vue";
 import NotFoundPage from "@/views/error/NotFoundPage.vue";
 
 const routes: Array<RouteRecordRaw> = [
@@ -79,6 +81,20 @@ const routes: Array<RouteRecordRaw> = [
     path: "/bookings/:eventId",
     name: "booking-list",
     component: ListBooking,
+    props: true,
+  },
+
+  //Partner
+  {
+    path: "/partner/:partnerId",
+    name: "activity-cards",
+    component: ActivityCards,
+    props: true,
+  },
+  {
+    path: "/partner/activity/:activityId",
+    name: "activity-events-list",
+    component: ActivityEventsList,
     props: true,
   },
 

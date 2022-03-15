@@ -18,20 +18,21 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
-import Header from '@/components/layout/Header.vue';
-import FooterMobile from '@/components/layout/FooterMobile.vue';
-import { useAuth } from '@/use/Authentication';
+import { defineComponent } from "vue";
+import Header from "@/components/layout/Header.vue";
+import FooterMobile from "@/components/layout/FooterMobile.vue";
+import { useAuth } from "@/use/Authentication";
 export default defineComponent({
   components: { Header, FooterMobile },
   setup() {
-    const showLayout = window.location.pathname.split('/')[1] !== 'booking';
+    const urlFirstPath = window.location.pathname.split("/")[1];
+    const showLayout = urlFirstPath !== "booking" && urlFirstPath !== "partner";
     const { authUser } = useAuth();
     authUser();
     return {
       Header,
-      showLayout
+      showLayout,
     };
-  }
+  },
 });
 </script>
