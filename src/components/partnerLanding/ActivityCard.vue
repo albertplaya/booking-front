@@ -61,7 +61,7 @@ export default defineComponent({
       required: true,
     },
   },
-  setup() {
+  setup(props) {
     const expanded = ref<Boolean>(false);
 
     const filesUrl = (id: string) =>

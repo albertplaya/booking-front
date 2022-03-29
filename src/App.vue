@@ -1,5 +1,5 @@
 <template>
-  <div v-if="showLayout">
+  <div v-if="showAppLayout">
     <q-layout view="hHh LpR fFf">
       <Header />
       <FooterMobile />
@@ -10,29 +10,21 @@
   </div>
   <div v-else>
     <q-layout view="hHh lpR fFf">
-      <q-page-container class="a flex justify-center bg-gray-200">
+      <q-page-container class="flex justify-center bg-gray-200">
         <router-view />
       </q-page-container>
     </q-layout>
   </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import { defineComponent } from "vue";
 import Header from "@/components/layout/Header.vue";
 import FooterMobile from "@/components/layout/FooterMobile.vue";
 import { useAuth } from "@/use/Authentication";
-export default defineComponent({
-  components: { Header, FooterMobile },
-  setup() {
-    const urlFirstPath = window.location.pathname.split("/")[1];
-    const showLayout = urlFirstPath !== "booking" && urlFirstPath !== "partner";
-    const { authUser } = useAuth();
-    authUser();
-    return {
-      Header,
-      showLayout,
-    };
-  },
-});
+
+let subdomain = window.location.host.split(".")[0];
+const showAppLayout = subdomain === "app";
+const { authUser } = useAuth();
+authUser();
 </script>

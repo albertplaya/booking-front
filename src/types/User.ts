@@ -4,4 +4,5 @@ export interface User {
   picture: string;
   locale: string;
   email: string;
+  logins_count: number;
 }

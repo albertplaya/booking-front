@@ -16,9 +16,10 @@ import NotFoundPage from "@/views/error/NotFoundPage.vue";
 
 const routes: Array<RouteRecordRaw> = [
   {
-    path: "/  ",
-    name: "home",
-    component: AddActivity,
+    path: "/",
+    name: "activity-cards",
+    component: ActivityCards,
+    props: true,
   },
   {
     path: "/activity/add",
@@ -86,12 +87,6 @@ const routes: Array<RouteRecordRaw> = [
 
   //Partner
   {
-    path: "/partner/:partnerId",
-    name: "activity-cards",
-    component: ActivityCards,
-    props: true,
-  },
-  {
     path: "/partner/activity/:activityId",
     name: "activity-events-list",
     component: ActivityEventsList,
@@ -116,6 +111,18 @@ const routes: Array<RouteRecordRaw> = [
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes,
+});
+
+router.beforeEach((to, from, next) => {
+  let subdomain = window.location.host.split(".")[0];
+  if (
+    subdomain != "www" &&
+    subdomain != "localhost:8080" &&
+    subdomain != "booking"
+  ) {
+    to.params["subdomain"] = subdomain;
+  }
+  next();
 });
 
 export default router;

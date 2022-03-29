@@ -12,7 +12,6 @@ loadFonts();
 
 createApp(App)
   .use(Quasar, quasarUserOptions)
-  .use(Quasar, quasarUserOptions)
   .use(router)
   .use(store)
   .use(VueAuth0Plugin, {
