@@ -28,34 +28,25 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent, PropType } from "vue";
+<script setup lang="ts">
+import { PropType, defineProps } from "vue";
 import ShareBooking from "@/components/social/ShareBooking.vue";
 import { date } from "quasar";
 import { Event } from "@/types/Event";
 import router from "@/router";
 
-export default defineComponent({
-  name: "EventPill",
-  components: { ShareBooking },
-  props: {
-    event: {
-      type: Object as PropType<Event>,
-    },
-  },
-  setup() {
-    const bookingList = (event: Event) => {
-      router.push({
-        name: "booking-list",
-        params: { eventId: event.event_id.value },
-      });
-    };
-    return {
-      date,
-      bookingList,
-    };
+const props = defineProps({
+  event: {
+    type: Object as PropType<Event>,
   },
 });
+
+const bookingList = (event: Event) => {
+  router.push({
+    name: "booking-list",
+    params: { eventId: event.event_id.value },
+  });
+};
 </script>
 
 <style scoped lang="scss">

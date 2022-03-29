@@ -42,33 +42,26 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent, PropType } from "vue";
+<script setup lang="ts">
+import { PropType } from "vue";
 import EventPill from "@/components/event/EventPill.vue";
 import { Event } from "@/types/Event";
 import router from "@/router";
 
-export default defineComponent({
-  name: "EventBlock",
-  components: { EventPill },
-  props: {
-    title: String,
-    events: {
-      type: Object as PropType<Event[]>,
-      default: [],
-    },
-  },
-
-  setup() {
-    const updateEvent = (event: Event) => {
-      router.push({
-        name: "event-update",
-        params: { eventId: event.event_id.value },
-      });
-    };
-    return { updateEvent };
+const props = defineProps({
+  title: String,
+  events: {
+    type: Object as PropType<Event[]>,
+    default: [],
   },
 });
+
+const updateEvent = (event: Event) => {
+  router.push({
+    name: "event-update",
+    params: { eventId: event.event_id.value },
+  });
+};
 </script>
 
 <style scoped lang="scss">

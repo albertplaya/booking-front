@@ -42,49 +42,44 @@
   </q-page>
 </template>
 
-<script lang="ts">
-import { defineComponent, ref } from "vue";
+<script setup lang="ts">
+import { ref, defineProps, onMounted } from "vue";
 import { useEvent } from "@/use/Event";
 import { Event } from "@/types/Event";
 import AddWhenEmptyList from "@/components/button/AddWhenEmptyList.vue";
 import router from "@/router";
 import ListEvent from "@/components/event/ListEvent.vue";
 
-export default defineComponent({
-  components: { AddWhenEmptyList, ListEvent },
-  props: {
-    activityId: {
-      type: String,
-      default: "",
-    },
-  },
-  mounted() {
-    this.listUpcommingEvents();
-  },
-  setup(props) {
-    const { listUpcomming, listPast } = useEvent();
-    const events = ref<Event[]>([]);
-    const eventListButton = ref<string>("upcoming");
-
-    const listUpcommingEvents = async () => {
-      listUpcomming(props.activityId)
-        .then((result) => (events.value = result))
-        .catch(() => {
-          return router.push({ name: "not-found" });
-        });
-      eventListButton.value = "upcoming";
-    };
-
-    const listPastEvents = async () => {
-      listPast(props.activityId)
-        .then((result) => (events.value = result))
-        .catch(() => {
-          return router.push({ name: "not-found" });
-        });
-      eventListButton.value = "past";
-    };
-
-    return { events, listUpcommingEvents, listPastEvents, eventListButton };
+const props = defineProps({
+  activityId: {
+    type: String,
+    default: "",
   },
 });
+
+onMounted(async () => {
+  listUpcommingEvents();
+});
+
+const { listUpcomming, listPast } = useEvent();
+const events = ref<Event[]>([]);
+const eventListButton = ref<string>("upcoming");
+
+const listUpcommingEvents = async () => {
+  listUpcomming(props.activityId)
+    .then((result) => (events.value = result))
+    .catch(() => {
+      return router.push({ name: "not-found" });
+    });
+  eventListButton.value = "upcoming";
+};
+
+const listPastEvents = async () => {
+  listPast(props.activityId)
+    .then((result) => (events.value = result))
+    .catch(() => {
+      return router.push({ name: "not-found" });
+    });
+  eventListButton.value = "past";
+};
 </script>
