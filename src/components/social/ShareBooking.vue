@@ -1,5 +1,5 @@
 <template>
-  <q-btn no-caps flat color="primary" @click="openModal">
+  <q-btn no-caps flat color="primary" @click.stop="openModal">
     <q-icon size="2em" name="ios_share" />
   </q-btn>
 
@@ -68,14 +68,14 @@
 </template>
 
 <script>
-import { ref } from 'vue';
+import { ref } from "vue";
 import {
   TransitionRoot,
   TransitionChild,
   Dialog,
   DialogOverlay,
-  DialogTitle
-} from '@headlessui/vue';
+  DialogTitle,
+} from "@headlessui/vue";
 
 export default {
   components: {
@@ -83,7 +83,7 @@ export default {
     TransitionChild,
     Dialog,
     DialogOverlay,
-    DialogTitle
+    DialogTitle,
   },
 
   setup() {
@@ -99,8 +99,8 @@ export default {
       },
       getActiveElement() {
         return document.activeElement;
-      }
+      },
     };
-  }
+  },
 };
 </script>

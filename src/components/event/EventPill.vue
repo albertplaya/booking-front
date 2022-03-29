@@ -16,19 +16,12 @@
       <div class="text-lg pl-1">{{ event.duration }} min</div>
     </div>
   </div>
-  <div class="flex justify-center">
-    <router-link
-      :to="{
-        name: 'booking-list',
-        params: { eventId: event.event_id.value },
-      }"
+  <div class="flex justify-center" @click.stop="bookingList(event)">
+    <div
+      class="flex justify-center diagonal-fractions text-3xl text-teal px-2 py-1 rounded-md booking-number"
     >
-      <div
-        class="flex justify-center diagonal-fractions text-3xl text-teal px-2 py-1 rounded-md booking-number"
-      >
-        {{ event.current_capacity }}/{{ event.capacity }}
-      </div>
-    </router-link>
+      {{ event.current_capacity }}/{{ event.capacity }}
+    </div>
   </div>
   <div class="text-center">
     <ShareBooking />
@@ -40,6 +33,7 @@ import { defineComponent, PropType } from "vue";
 import ShareBooking from "@/components/social/ShareBooking.vue";
 import { date } from "quasar";
 import { Event } from "@/types/Event";
+import router from "@/router";
 
 export default defineComponent({
   name: "EventPill",
@@ -50,8 +44,15 @@ export default defineComponent({
     },
   },
   setup() {
+    const bookingList = (event: Event) => {
+      router.push({
+        name: "booking-list",
+        params: { eventId: event.event_id.value },
+      });
+    };
     return {
       date,
+      bookingList,
     };
   },
 });
