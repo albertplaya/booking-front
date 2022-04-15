@@ -27,6 +27,7 @@ export function useEvent() {
     const payload = {
       time: "future",
     };
+
     const events = await getData(
       endpoints.v1.event_list.replace("{activityId}", activityId),
       payload

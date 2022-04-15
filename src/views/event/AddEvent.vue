@@ -90,48 +90,43 @@
   </q-page>
 </template>
 
-<script lang="ts">
-import { defineComponent, ref } from "vue";
+<script setup lang="ts">
+import { defineProps, ref } from "vue";
 import { useEvent } from "@/use/Event";
 import BackButton from "@/components/button/Back.vue";
 import ErrorNotification from "@/components/notification/Error.vue";
 import router from "@/router";
+import { date as dateHelper } from "quasar";
 
-export default defineComponent({
-  components: { BackButton, ErrorNotification },
-  props: {
-    activityId: {
-      type: String,
-      default: "",
-    },
-  },
-  setup(props) {
-    const { create } = useEvent();
-
-    const date = ref<string>("2021-02-01");
-    const time = ref<string>("12:44");
-    const duration = ref<string>("30");
-    const capacity = ref<string>("10");
-    const error = ref<any>("");
-
-    const saveEvent = () => {
-      create({
-        start_date: date.value + " " + time.value,
-        duration: duration.value,
-        capacity: capacity.value,
-        activity_id: props.activityId,
-      })
-        .then(() =>
-          router.push({
-            name: "event-list",
-            params: { activityId: props.activityId },
-          })
-        )
-        .catch((err) => {
-          error.value = err;
-        });
-    };
-    return { date, time, duration, capacity, error, saveEvent };
+const props = defineProps({
+  activityId: {
+    type: String,
+    default: "",
   },
 });
+const { create } = useEvent();
+
+const date = ref<string>(dateHelper.formatDate(new Date(), "YYYY-MM-DD"));
+const time = ref<string>("12:00");
+const duration = ref<string>("30");
+const capacity = ref<string>("10");
+const error = ref<any>("");
+
+const saveEvent = () => {
+  create({
+    start_date: date.value + " " + time.value,
+    duration: duration.value,
+    capacity: capacity.value,
+    activity_id: props.activityId,
+  })
+    .then(() =>
+      router.push({
+        name: "event-list",
+        params: { activityId: props.activityId },
+      })
+    )
+    .catch((err) => {
+      error.value = err;
+    });
+};
 </script>
