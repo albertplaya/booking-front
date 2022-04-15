@@ -15,14 +15,16 @@
             <template #prepend>
               <q-icon name="event" class="cursor-pointer">
                 <q-popup-proxy
-                  cover
+                  ref="qDateProxy"
                   transition-show="scale"
                   transition-hide="scale"
                 >
-                  <q-date v-model="date" mask="YYYY-MM-DD">
-                    <div class="row items-center justify-end">
-                      <q-btn v-close-popup label="Close" color="primary" flat />
-                    </div>
+                  <q-date
+                    v-model="date"
+                    cover
+                    mask="YYYY-MM-DD"
+                    @click="$refs.qDateProxy.hide()"
+                  >
                   </q-date>
                 </q-popup-proxy>
               </q-icon>
@@ -33,6 +35,7 @@
             <template #prepend>
               <q-icon name="access_time" class="cursor-pointer">
                 <q-popup-proxy
+                  ref="qTimeProxy"
                   cover
                   transition-show="scale"
                   transition-hide="scale"
