@@ -20,7 +20,14 @@
             label="Bookings"
           />
           -->
-          <q-btn no-caps flat color="" icon="account_circle" label="Account" />
+          <q-btn
+            no-caps
+            flat
+            color=""
+            icon="account_circle"
+            label="Account"
+            :to="{ name: 'account' }"
+          />
         </div>
         <q-btn v-else @click="login" color="primary" label="login" />
       </div>
