@@ -5,13 +5,10 @@
     bordered
     style="width: 334px; height: fit-content"
   >
-  d
     <div
       class="cursor-pointer"
       @click="goToActivityEventList(activity.activity_id.value)"
-
     >
-
       <q-img
         v-if="activity.image_id"
         :src="filesUrl(activity.image_id.value)"

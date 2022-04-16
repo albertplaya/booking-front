@@ -1,13 +1,13 @@
-import { Guest } from './../types/Guest';
-import { EventBooking } from '../types/EventBooking';
-import { endpoints } from '@/config/endpoints';
-import { BookingSession } from '@/types/BookingSession';
-import { postData, getData } from '@/infrastructure/ApiHandler';
+import { Guest } from "./../types/Guest";
+import { EventBooking } from "../types/EventBooking";
+import { endpoints } from "@/config/endpoints";
+import { BookingSession } from "@/types/BookingSession";
+import { postData, getData } from "@/infrastructure/ApiHandler";
 
 export function useBookingSession() {
   const getEvent = async (eventId: string): Promise<EventBooking> => {
     const eventBooking: EventBooking = await getData(
-      endpoints.v1.booking_event.replace('{eventId}', eventId)
+      endpoints.v1.booking_event.replace("{eventId}", eventId)
     );
     return eventBooking;
   };
@@ -18,38 +18,38 @@ export function useBookingSession() {
     }
 
     postData(endpoints.v1.booking_init, {
-      event_id: eventId
+      event_id: eventId,
     }).then((bookingId: any) => {
-      localStorage.setItem('booking_id', bookingId.data.booking_id.value);
-      localStorage.setItem('booking_session', Date.now().toString());
+      localStorage.setItem("booking_id", bookingId.data.booking_id.value);
+      localStorage.setItem("booking_session", Date.now().toString());
     });
   };
 
   const addGuest = async (eventId: string, guest: Guest): Promise<any> => {
     const bookingSession: BookingSession = {
-      booking_id: localStorage.getItem('booking_id') as string,
+      booking_id: localStorage.getItem("booking_id") as string,
       event_id: eventId,
-      guest: guest
+      guest: guest,
     };
-    postData(endpoints.v1.booking_add_guest, bookingSession);
+    await postData(endpoints.v1.booking_add_guest, bookingSession);
   };
 
   const finishBookingSession = async (eventId: string): Promise<string> => {
-    const bookingId = localStorage.getItem('booking_id') as string;
+    const bookingId = localStorage.getItem("booking_id") as string;
     await postData(endpoints.v1.booking_finish, {
       event_id: eventId,
-      booking_id: bookingId
+      booking_id: bookingId,
     }).then(() => {
-      localStorage.removeItem('booking_id');
-      localStorage.removeItem('booking_session');
+      localStorage.removeItem("booking_id");
+      localStorage.removeItem("booking_session");
     });
     return bookingId;
   };
 
   const alreadyHasBookingSession = (): boolean => {
     return (
-      localStorage.getItem('booking_session') !== null &&
-      Date.now() - Number(localStorage.getItem('booking_session')) < 900000
+      localStorage.getItem("booking_session") !== null &&
+      Date.now() - Number(localStorage.getItem("booking_session")) < 900000
     );
   };
 
@@ -57,6 +57,6 @@ export function useBookingSession() {
     getEvent,
     initBookingSession,
     addGuest,
-    finishBookingSession
+    finishBookingSession,
   };
 }

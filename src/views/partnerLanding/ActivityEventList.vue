@@ -79,8 +79,8 @@
   </q-page>
 </template>
 
-<script lang="ts">
-import { defineComponent, ref, watch } from "vue";
+<script setup lang="ts">
+import { onMounted, defineProps, ref, watch } from "vue";
 import { useEvent } from "@/use/Event";
 import { useActivity } from "@/use/Activity";
 import { Activity } from "@/types/Activity";
@@ -91,87 +91,70 @@ import { date as dateUtil } from "quasar";
 import EventHourPillList from "@/components/booking/EventHourPillList.vue";
 import BackButton from "@/components/button/Back.vue";
 
-export default defineComponent({
-  components: { AddWhenEmptyList, EventHourPillList, BackButton },
-  props: {
-    activityId: {
-      type: String,
-      default: "",
-    },
-  },
-  mounted() {
-    this.listUpcommingEvents();
-    this.getActivity();
-  },
-  setup(props) {
-    const { listUpcomming } = useEvent();
-    const { get } = useActivity();
-    const activity = ref<Activity>();
-    const events = ref<Event[]>([]);
-    const eventDates = ref<string[]>([]);
-    const currentDate = ref<string>("");
-    const selectedEvents = ref<Event[]>([]);
-    const currentEvent = ref<Event>();
-
-    const listUpcommingEvents = async () => {
-      await listUpcomming(props.activityId)
-        .then((result) => (events.value = result))
-        .catch(() => {
-          return router.push({ name: "not-found" });
-        });
-
-      eventDates.value = events.value.map((event) =>
-        dateUtil.formatDate(event.start_date, "YYYY/MM/DD")
-      );
-
-      currentDate.value = eventDates.value[0];
-    };
-
-    const getActivity = () => {
-      get(props.activityId)
-        .then(
-          (activityResult) => (
-            (activity.value = activityResult), console.log("activity", activity)
-          )
-        )
-        .catch(() => {
-          return router.push({ name: "not-found" });
-        });
-    };
-
-    const disabledDays = (date: string) => {
-      return eventDates.value.includes(date);
-    };
-
-    const selectNewCurrentEvent = (event: Event) => {
-      currentEvent.value = event;
-    };
-
-    watch(
-      () => currentDate.value,
-      () => {
-        selectedEvents.value = events.value.filter(
-          (event) =>
-            dateUtil.formatDate(event.start_date, "YYYY/MM/DD") ===
-            currentDate.value
-        );
-        currentEvent.value = selectedEvents.value[0];
-      }
-    );
-
-    return {
-      getActivity,
-      activity,
-      events,
-      eventDates,
-      currentDate,
-      currentEvent,
-      disabledDays,
-      dateUtil,
-      selectedEvents,
-      listUpcommingEvents,
-      selectNewCurrentEvent,
-    };
+const props = defineProps({
+  activityId: {
+    type: String,
+    default: "",
   },
 });
+
+onMounted(async () => {
+  listUpcommingEvents();
+  getActivity();
+});
+
+const { listUpcomming } = useEvent();
+const { get } = useActivity();
+const activity = ref<Activity>();
+const events = ref<Event[]>([]);
+const eventDates = ref<string[]>([]);
+const currentDate = ref<string>("");
+const selectedEvents = ref<Event[]>([]);
+const currentEvent = ref<Event>();
+
+const listUpcommingEvents = async () => {
+  await listUpcomming(props.activityId)
+    .then((result) => (events.value = result))
+    .catch(() => {
+      return router.push({ name: "not-found" });
+    });
+
+  eventDates.value = events.value.map((event) =>
+    dateUtil.formatDate(event.start_date, "YYYY/MM/DD")
+  );
+
+  currentDate.value = eventDates.value[0];
+};
+
+const getActivity = () => {
+  get(props.activityId)
+    .then(
+      (activityResult) => (
+        (activity.value = activityResult), console.log("activity", activity)
+      )
+    )
+    .catch(() => {
+      return router.push({ name: "not-found" });
+    });
+};
+
+const disabledDays = (date: string) => {
+  return eventDates.value.includes(date);
+};
+
+const selectNewCurrentEvent = (event: Event) => {
+  currentEvent.value = event;
+};
+
+watch(
+  () => currentDate.value,
+  () => {
+    selectedEvents.value = events.value.filter(
+      (event) =>
+        dateUtil.formatDate(event.start_date, "YYYY/MM/DD") ===
+        currentDate.value
+    );
+    currentEvent.value = selectedEvents.value[0];
+  }
+);
 </script>

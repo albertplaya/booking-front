@@ -29,13 +29,13 @@
           <div class="text-sm">
             {{ booking.booking_id.value }}
           </div>
-          <div class="flex">
+          <div class="flex justify-around">
             <div>
               {{ booking.guest.first_name }}
               {{ booking.guest.last_name }}
             </div>
             <div class="text-xs sm:text-sm">
-              {{ booking.email }}
+              {{ booking.guest.email }}
             </div>
           </div>
           <div class="text-lg flex justify-center">
@@ -53,20 +53,20 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue';
-import { date } from 'quasar';
-import BackButton from '@/components/button/Back.vue';
-import { useBooking } from '@/use/Booking';
-import { Booking } from '@/types/Booking';
-import router from '@/router';
+import { defineComponent, ref } from "vue";
+import { date } from "quasar";
+import BackButton from "@/components/button/Back.vue";
+import { useBooking } from "@/use/Booking";
+import { Booking } from "@/types/Booking";
+import router from "@/router";
 
 export default defineComponent({
   components: { BackButton },
   props: {
     eventId: {
       type: String,
-      default: ''
-    }
+      default: "",
+    },
   },
   mounted() {
     this.listBookings();
@@ -79,10 +79,10 @@ export default defineComponent({
       listByEventId(props.eventId)
         .then((result) => (bookings.value = result))
         .catch(() => {
-          return router.push({ name: 'not-found' });
+          return router.push({ name: "not-found" });
         });
     };
     return { bookings, listBookings, date };
-  }
+  },
 });
 </script>
