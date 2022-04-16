@@ -57,8 +57,8 @@
   </q-page>
 </template>
 
-<script lang="ts">
-import { defineComponent, onMounted, ref } from "vue";
+<script setup lang="ts">
+import { defineProps, onMounted, ref } from "vue";
 import { useActivity } from "@/use/Activity";
 import BackButton from "@/components/button/Back.vue";
 import ErrorNotification from "@/components/notification/Error.vue";
@@ -66,47 +66,42 @@ import { Activity } from "@/types/Activity";
 import ImageUploader from "@/components/activity/ImageUploader.vue";
 import router from "@/router";
 
-export default defineComponent({
-  components: { BackButton, ErrorNotification, ImageUploader },
-  props: {
-    activityId: {
-      type: String,
-      default: "",
-    },
-  },
-  setup(props) {
-    const { get, update } = useActivity();
-
-    const activity = ref<Activity>();
-    const error = ref<any>("");
-
-    onMounted(() => {
-      getActivity(props.activityId);
-    });
-
-    const getActivity = async (activityId: string) => {
-      get(activityId)
-        .then((result) => (activity.value = result))
-        .catch(() => {
-          return router.push({ name: "not-found" });
-        });
-    };
-
-    const updateImageActivity = (imageId: string): void => {
-      (activity.value as Activity).image_id = imageId;
-    };
-
-    const updateActivity = () => {
-      update(activity.value as Activity)
-        .then(async () => {
-          await new Promise((resolve) => setTimeout(resolve, 500));
-          router.push({ name: "activity-list" });
-        })
-        .catch((err) => {
-          error.value = err;
-        });
-    };
-    return { activity, updateImageActivity, updateActivity, error };
+const props = defineProps({
+  activityId: {
+    type: String,
+    default: "",
   },
 });
+
+const { get, update } = useActivity();
+
+const activity = ref<Activity>();
+const error = ref<any>("");
+
+onMounted(() => {
+  getActivity(props.activityId);
+});
+
+const getActivity = async (activityId: string) => {
+  get(activityId)
+    .then((result) => (activity.value = result))
+    .catch(() => {
+      return router.push({ name: "not-found" });
+    });
+};
+
+const updateImageActivity = (imageId: string): void => {
+  (activity.value as Activity).image_id = imageId;
+};
+
+const updateActivity = () => {
+  update(activity.value as Activity)
+    .then(async () => {
+      await new Promise((resolve) => setTimeout(resolve, 500));
+      router.push({ name: "activity-list" });
+    })
+    .catch((err) => {
+      error.value = err;
+    });
+};
 </script>

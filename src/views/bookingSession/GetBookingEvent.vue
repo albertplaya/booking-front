@@ -30,9 +30,9 @@
         <div class="q-pt-none flex items-center mt-1">
           <q-icon name="event" class="text-grey mr-1" style="font-size: 1rem" />
           <div class="text-subtitle2 text-grey">
-            {{ date.formatDate(eventBooking.data.event.start_date, 'DD MMM') }}
+            {{ date.formatDate(eventBooking.data.event.start_date, "DD MMM") }}
             ・
-            {{ date.formatDate(eventBooking.data.event.start_date, 'HH:mm A') }}
+            {{ date.formatDate(eventBooking.data.event.start_date, "HH:mm A") }}
           </div>
         </div>
       </q-card-section>
@@ -53,7 +53,7 @@
           color="teal"
           :to="{
             name: 'booking-guest',
-            params: { eventId: eventBooking.data.event.event_id.value }
+            params: { eventId: eventBooking.data.event.event_id.value },
           }"
           >Book
         </q-btn>
@@ -63,38 +63,34 @@
   </q-page>
 </template>
 
-<script lang="ts">
-import { defineComponent, ref } from 'vue';
-import { useBookingSession } from '@/use/BookingSession';
-import { EventBooking } from '@/types/EventBooking';
-import { date } from 'quasar';
-import router from '@/router';
+<script setup lang="ts">
+import { defineProps, onMounted, ref } from "vue";
+import { useBookingSession } from "@/use/BookingSession";
+import { EventBooking } from "@/types/EventBooking";
+import { date } from "quasar";
+import router from "@/router";
 
-export default defineComponent({
-  components: {},
-  props: {
-    eventId: {
-      type: String,
-      default: ''
-    }
+const props = defineProps({
+  eventId: {
+    type: String,
+    default: "",
   },
-  mounted() {
-    this.getEventBookingDetails();
-  },
-  setup(props) {
-    const { getEvent } = useBookingSession();
-    const eventBooking = ref<EventBooking>();
-
-    const getEventBookingDetails = async () => {
-      getEvent(props.eventId)
-        .then((result) => (eventBooking.value = result))
-        .catch(() => {
-          return router.push({ name: 'not-found' });
-        });
-    };
-    return { date, eventBooking, getEventBookingDetails };
-  }
 });
+
+onMounted(() => {
+  getEventBookingDetails();
+});
+
+const { getEvent } = useBookingSession();
+const eventBooking = ref<EventBooking>();
+
+const getEventBookingDetails = async () => {
+  getEvent(props.eventId)
+    .then((result) => (eventBooking.value = result))
+    .catch(() => {
+      return router.push({ name: "not-found" });
+    });
+};
 </script>
 
 <style scoped>

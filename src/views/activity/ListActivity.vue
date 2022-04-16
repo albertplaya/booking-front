@@ -75,35 +75,30 @@
   </q-page>
 </template>
 
-<script lang="ts">
-import { defineComponent, ref } from "vue";
+<script setup lang="ts">
+import { onMounted, ref } from "vue";
 import { useActivity } from "@/use/Activity";
 import { Activity } from "@/types/Activity";
 import AddWhenEmptyList from "@/components/button/AddWhenEmptyList.vue";
 import DefaultImage from "@/components/activity/DefaultImage.vue";
 import router from "@/router";
 
-export default defineComponent({
-  components: { AddWhenEmptyList, DefaultImage },
-  mounted() {
-    this.listActivities();
-  },
-  setup() {
-    const { list } = useActivity();
-    const activities = ref<Activity[]>([]);
-
-    const listActivities = async () => {
-      list(localStorage.partner_id as string)
-        .then((result) => (activities.value = result))
-        .catch(() => {
-          return router.push({ name: "not-found" });
-        });
-    };
-    const filesUrl = (id: string) =>
-      `${import.meta.env.VITE_API_FILES}/booking/${id}.jpg`;
-    return { activities, filesUrl, listActivities };
-  },
+onMounted(() => {
+  listActivities();
 });
+
+const { list } = useActivity();
+const activities = ref<Activity[]>([]);
+
+const listActivities = async () => {
+  list(localStorage.partner_id as string)
+    .then((result) => (activities.value = result))
+    .catch(() => {
+      return router.push({ name: "not-found" });
+    });
+};
+const filesUrl = (id: string) =>
+  `${import.meta.env.VITE_API_FILES}/booking/${id}.jpg`;
 </script>
 
 <style scoped>

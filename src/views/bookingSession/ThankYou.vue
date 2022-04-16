@@ -70,65 +70,53 @@
   </q-page>
 </template>
 
-<script lang="ts">
-import { defineComponent, onMounted, ref } from "vue";
+<script setup lang="ts">
+import { defineProps, onMounted, ref } from "vue";
 import { useBookingSession } from "@/use/BookingSession";
 import { useBooking } from "@/use/Booking";
 import CloseButton from "@/components/button/Close.vue";
 import { Booking } from "@/types/Booking";
 import { date } from "quasar";
 
-export default defineComponent({
-  components: { CloseButton },
-  props: {
-    eventId: {
-      type: String,
-      default: "",
-    },
-  },
-  setup(props) {
-    onMounted(async () => {
-      finishBookingSession(props.eventId).then((bookingId: string) => {
-        setTimeout(getBookingDetails, 1000, bookingId);
-      });
-    });
-
-    const { finishBookingSession } = useBookingSession();
-    const { getBooking } = useBooking();
-
-    const booking = ref<Booking>();
-
-    const getBookingDetails = async (bookingId: string) => {
-      booking.value = await getBooking(bookingId);
-    };
-
-    const generateUrl = (booking: Booking) => {
-      console.log("yead" + booking + booking.start_date);
-      return (
-        "https://calendar.google.com/calendar/r/eventedit?text=" +
-        booking.title +
-        "&dates=" +
-        date.formatDate(booking.start_date, "YYYYMMDD") +
-        date.formatDate(booking.start_date, "Thhmmss") +
-        "/" +
-        date.formatDate(booking.start_date, "YYYYMMDD") +
-        date.formatDate(
-          new Date(
-            new Date(booking.start_date).getTime() + booking.duration * 60000
-          ),
-          "Thhmmss"
-        )
-      );
-    };
-
-    return {
-      booking,
-      date,
-      generateUrl,
-      //generateCalendarLink
-    };
+const props = defineProps({
+  eventId: {
+    type: String,
+    default: "",
   },
 });
+onMounted(async () => {
+  finishBookingSession(props.eventId).then((bookingId: string) => {
+    setTimeout(getBookingDetails, 1000, bookingId);
+  });
+});
+
+const { finishBookingSession } = useBookingSession();
+const { getBooking } = useBooking();
+
+const booking = ref<Booking>();
+
+const getBookingDetails = async (bookingId: string) => {
+  booking.value = await getBooking(bookingId);
+};
+
+const generateUrl = (booking: Booking) => {
+  console.log("yead" + booking + booking.start_date);
+  return (
+    "https://calendar.google.com/calendar/r/eventedit?text=" +
+    booking.title +
+    "&dates=" +
+    date.formatDate(booking.start_date, "YYYYMMDD") +
+    date.formatDate(booking.start_date, "Thhmmss") +
+    "/" +
+    date.formatDate(booking.start_date, "YYYYMMDD") +
+    date.formatDate(
+      new Date(
+        new Date(booking.start_date).getTime() + booking.duration * 60000
+      ),
+      "Thhmmss"
+    )
+  );
+};
 </script>
 
 <style scoped>

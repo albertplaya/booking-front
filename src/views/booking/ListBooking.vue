@@ -52,37 +52,33 @@
   </q-page>
 </template>
 
-<script lang="ts">
-import { defineComponent, ref } from "vue";
+<script setup lang="ts">
+import { defineProps, onMounted, ref } from "vue";
 import { date } from "quasar";
 import BackButton from "@/components/button/Back.vue";
 import { useBooking } from "@/use/Booking";
 import { Booking } from "@/types/Booking";
 import router from "@/router";
 
-export default defineComponent({
-  components: { BackButton },
-  props: {
-    eventId: {
-      type: String,
-      default: "",
-    },
-  },
-  mounted() {
-    this.listBookings();
-  },
-  setup(props) {
-    const { listByEventId } = useBooking();
-    const bookings = ref<Booking[]>([]);
-
-    const listBookings = async () => {
-      listByEventId(props.eventId)
-        .then((result) => (bookings.value = result))
-        .catch(() => {
-          return router.push({ name: "not-found" });
-        });
-    };
-    return { bookings, listBookings, date };
+const props = defineProps({
+  eventId: {
+    type: String,
+    default: "",
   },
 });
+
+onMounted(() => {
+  listBookings();
+});
+
+const { listByEventId } = useBooking();
+const bookings = ref<Booking[]>([]);
+
+const listBookings = async () => {
+  listByEventId(props.eventId)
+    .then((result) => (bookings.value = result))
+    .catch(() => {
+      return router.push({ name: "not-found" });
+    });
+};
 </script>

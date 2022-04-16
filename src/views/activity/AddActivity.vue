@@ -51,8 +51,8 @@
   </q-page>
 </template>
 
-<script lang="ts">
-import { defineComponent, ref } from "vue";
+<script setup lang="ts">
+import { ref } from "vue";
 import { useActivity } from "@/use/Activity";
 import BackButton from "@/components/button/Back.vue";
 import ErrorNotification from "@/components/notification/Error.vue";
@@ -60,33 +60,27 @@ import ImageUploader from "@/components/activity/ImageUploader.vue";
 import { Activity } from "@/types/Activity";
 import router from "@/router";
 
-export default defineComponent({
-  components: { BackButton, ErrorNotification, ImageUploader },
-  setup() {
-    const { create } = useActivity();
+const { create } = useActivity();
 
-    const title = ref<string>("");
-    const description = ref<string>("");
-    const activityImageId = ref<string | null>(null);
-    const error = ref<any>("");
+const title = ref<string>("");
+const description = ref<string>("");
+const activityImageId = ref<string | null>(null);
+const error = ref<any>("");
 
-    const updateImageActivity = (imageId: string): void => {
-      activityImageId.value = imageId;
-    };
+const updateImageActivity = (imageId: string): void => {
+  activityImageId.value = imageId;
+};
 
-    const saveActivity = () => {
-      create({
-        partner_id: localStorage.partner_id as string,
-        title: title.value,
-        description: description.value,
-        image_id: activityImageId.value,
-      } as Activity)
-        .then(() => router.push({ name: "activity-list" }))
-        .catch((err) => {
-          error.value = err;
-        });
-    };
-    return { title, description, saveActivity, error, updateImageActivity };
-  },
-});
+const saveActivity = () => {
+  create({
+    partner_id: localStorage.partner_id as string,
+    title: title.value,
+    description: description.value,
+    image_id: activityImageId.value,
+  } as Activity)
+    .then(() => router.push({ name: "activity-list" }))
+    .catch((err) => {
+      error.value = err;
+    });
+};
 </script>

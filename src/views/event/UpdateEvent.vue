@@ -99,96 +99,90 @@
   </q-page>
 </template>
 
-<script lang="ts">
-import { defineComponent, ref, onMounted } from "vue";
+<script setup lang="ts">
+import { defineProps, ref, onMounted } from "vue";
 import { useEvent } from "@/use/Event";
 import BackButton from "@/components/button/Back.vue";
 import ErrorNotification from "@/components/notification/Error.vue";
 import router from "@/router";
 import { Event } from "@/types/Event";
 
-export default defineComponent({
-  components: { BackButton, ErrorNotification },
-  props: {
-    eventId: {
-      type: String,
-      default: "",
-    },
-  },
-  setup(props) {
-    const { get, update, remove } = useEvent();
-
-    const date = ref<string>("");
-    const time = ref<string>("");
-    const event = ref<Event>();
-    const error = ref<any>("");
-
-    onMounted(() => {
-      getEvent(props.eventId);
-    });
-
-    const getEvent = async (eventId: string) => {
-      get(eventId)
-        .then((result) => {
-          event.value = result;
-          const currentDate = new Date(result.start_date);
-          date.value = new Intl.DateTimeFormat("fr-CA", {
-            year: "numeric",
-            month: "2-digit",
-            day: "2-digit",
-          }).format(currentDate);
-          time.value = new Intl.DateTimeFormat("default", {
-            hour: "numeric",
-            minute: "numeric",
-          }).format(currentDate);
-        })
-        .catch(() => {
-          return router.push({ name: "not-found" });
-        });
-    };
-
-    const updateEvent = () => {
-      if (!event.value) {
-        return;
-      }
-
-      update({
-        event_id: props.eventId,
-        capacity: event.value.capacity,
-        duration: event.value.duration,
-        start_date: `${date.value} ${time.value}:00`,
-        activity_id: event.value.activity_id.value,
-      } as Event)
-        .then(() =>
-          router.push({
-            name: "event-list",
-            params: { activityId: event.value.activity_id.value },
-          })
-        )
-        .catch((err) => {
-          error.value = err;
-        });
-    };
-
-    const deleteEvent = () => {
-      if (!event.value) {
-        return;
-      }
-      remove(props.eventId)
-        .then(() =>
-          router.push({
-            name: "event-list",
-            params: { activityId: event.value.activity_id.value },
-          })
-        )
-        .catch((err) => {
-          error.value = err;
-        });
-    };
-
-    return { date, time, event, error, updateEvent, deleteEvent };
+const props = defineProps({
+  eventId: {
+    type: String,
+    default: "",
   },
 });
+
+const { get, update, remove } = useEvent();
+
+const date = ref<string>("");
+const time = ref<string>("");
+const event = ref<Event>();
+const error = ref<any>("");
+
+onMounted(() => {
+  getEvent(props.eventId);
+});
+
+const getEvent = async (eventId: string) => {
+  get(eventId)
+    .then((result) => {
+      event.value = result;
+      const currentDate = new Date(result.start_date);
+      date.value = new Intl.DateTimeFormat("fr-CA", {
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+      }).format(currentDate);
+      time.value = new Intl.DateTimeFormat("default", {
+        hour: "numeric",
+        minute: "numeric",
+      }).format(currentDate);
+    })
+    .catch(() => {
+      return router.push({ name: "not-found" });
+    });
+};
+
+const updateEvent = () => {
+  if (!event.value) {
+    return;
+  }
+
+  update({
+    event_id: props.eventId,
+    capacity: event.value.capacity,
+    duration: event.value.duration,
+    start_date: `${date.value} ${time.value}:00`,
+    activity_id: event.value.activity_id.value,
+  } as Event)
+    .then(() =>
+      router.push({
+        name: "event-list",
+        params: { activityId: event.value.activity_id.value },
+      })
+    )
+    .catch((err) => {
+      error.value = err;
+    });
+};
+
+const deleteEvent = () => {
+  if (!event.value) {
+    return;
+  }
+  remove(props.eventId)
+    .then(() =>
+      router.push({
+        name: "event-list",
+        params: { activityId: event.value.activity_id.value },
+      })
+    )
+    .catch((err) => {
+      error.value = err;
+    });
+};
 </script>
 
 <style lang="scss" scoped>
