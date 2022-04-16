@@ -3,7 +3,7 @@
     <q-footer
       elevated
       class="bg-gray-50 text-black flex justify-around"
-      style="height: 60px"
+      style="height: 50px"
       v-if="auth.authenticated"
     >
       <q-btn
@@ -11,7 +11,7 @@
         flat
         round
         icon="insert_invitation"
-        style="font-size: 1.2rem"
+        style="font-size: 1rem"
         :to="{ name: 'activity-list' }"
       />
       <!--
@@ -22,22 +22,29 @@
         style="font-size: 1.2rem"
       />
       -->
-      <q-btn flat round icon="account_circle" style="font-size: 1.2rem" />
+      <q-btn
+        :color="currentRoute == 'account' ? 'teal' : 'black'"
+        flat
+        round
+        icon="account_circle"
+        style="font-size: 1rem"
+        :to="{ name: 'account' }"
+      />
     </q-footer>
   </div>
 </template>
 
 <script lang="ts">
-import { watch, defineComponent, inject, ref } from 'vue';
-import { useRoute } from 'vue-router';
+import { watch, defineComponent, inject, ref } from "vue";
+import { useRoute } from "vue-router";
 
 export default defineComponent({
-  name: 'FooterMobile',
+  name: "FooterMobile",
   setup() {
     const route = useRoute();
-    const auth: any = inject('auth');
+    const auth: any = inject("auth");
 
-    const currentRoute = ref<string>('');
+    const currentRoute = ref<string>("");
     watch(
       () => route.name,
       () => {
@@ -46,7 +53,7 @@ export default defineComponent({
     );
 
     return { auth, currentRoute };
-  }
+  },
 });
 </script>
 
