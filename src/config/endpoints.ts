@@ -1,12 +1,13 @@
 export const endpoints = {
   v1: {
     partner_create: "/partner",
-    partner_subdomain: "/partner/subdomain/{subdomain}",
     partner_get: "/partner/{partnerId}",
+    partner_subdomain: "/partner/subdomain/{subdomain}",
+    partner_email: "/partner/email/{email}",
     activity_create: "/activity",
     activity_update: "/activity",
     activity_get: "/activity/{activityId}",
-    activity_list: "/activity/user/{partnerId}",
+    activity_list: "/activity/partner/{partnerId}",
     activity_upload_image: "/activity/image",
     event_create: "/event",
     event_list: "/event/activity/{activityId}",

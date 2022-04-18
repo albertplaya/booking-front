@@ -100,7 +100,6 @@ const getBookingDetails = async (bookingId: string) => {
 };
 
 const generateUrl = (booking: Booking) => {
-  console.log("yead" + booking + booking.start_date);
   return (
     "https://calendar.google.com/calendar/r/eventedit?text=" +
     booking.title +

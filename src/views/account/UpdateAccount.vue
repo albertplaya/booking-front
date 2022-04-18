@@ -109,18 +109,20 @@ import ErrorNotification from "@/components/notification/Error.vue";
 import router from "@/router";
 import { usePartner } from "@/use/Partner";
 import { Partner } from "@/types/Partner";
+import { useAuth } from "@/use/Authentication";
 
 const { get } = usePartner();
+const { getPartner } = useAuth();
 
 const partner = ref<Partner>();
 const error = ref<any>("");
 
 onMounted(async () => {
-  const partnerId = localStorage.partner_id as string;
-  getPartner(partnerId);
+  const partner: Partner = getPartner();
+  getPartnerFromApi(partner.partner_id.value);
 });
 
-const getPartner = async (partnerId: string) => {
+const getPartnerFromApi = async (partnerId: string) => {
   get(partnerId)
     .then((result) => (partner.value = result))
     .catch(() => {

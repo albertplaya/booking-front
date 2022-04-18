@@ -128,11 +128,7 @@ const listUpcommingEvents = async () => {
 
 const getActivity = () => {
   get(props.activityId)
-    .then(
-      (activityResult) => (
-        (activity.value = activityResult), console.log("activity", activity)
-      )
-    )
+    .then((activityResult) => (activity.value = activityResult))
     .catch(() => {
       return router.push({ name: "not-found" });
     });

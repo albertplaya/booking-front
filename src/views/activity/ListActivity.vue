@@ -82,16 +82,20 @@ import { Activity } from "@/types/Activity";
 import AddWhenEmptyList from "@/components/button/AddWhenEmptyList.vue";
 import DefaultImage from "@/components/activity/DefaultImage.vue";
 import router from "@/router";
+import { useAuth } from "@/use/Authentication";
+import { Partner } from "@/types/Partner";
 
 onMounted(() => {
   listActivities();
 });
 
 const { list } = useActivity();
+const { getPartner } = useAuth();
 const activities = ref<Activity[]>([]);
 
 const listActivities = async () => {
-  list(localStorage.partner_id as string)
+  const partner: Partner = getPartner();
+  list(partner.partner_id.value as string)
     .then((result) => (activities.value = result))
     .catch(() => {
       return router.push({ name: "not-found" });

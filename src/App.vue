@@ -25,6 +25,6 @@ import { useAuth } from "@/use/Authentication";
 
 let subdomain = window.location.host.split(".")[0];
 const showAppLayout = subdomain === "app";
-const { authUser } = useAuth();
-authUser();
+const { authPartner } = useAuth();
+authPartner();
 </script>

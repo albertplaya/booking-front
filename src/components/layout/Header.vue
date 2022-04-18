@@ -3,7 +3,7 @@
     <q-toolbar class="flex justify-between">
       <div class="text-2xl">Header</div>
       <div>
-        <div v-if="user" class="flex flex-row visible-custom">
+        <div v-if="partner" class="flex flex-row visible-custom">
           <q-btn
             no-caps
             flat
@@ -23,7 +23,7 @@
           <q-btn
             no-caps
             flat
-            color=""
+            :color="currentRoute == 'account' ? 'teal' : 'black'"
             icon="account_circle"
             label="Account"
             :to="{ name: 'account' }"
@@ -36,7 +36,7 @@
 </template>
 
 <script lang="ts">
-import { User } from "@/types/User";
+import { Partner } from "@/types/Partner";
 import { useAuth } from "@/use/Authentication";
 import {
   defineComponent,
@@ -54,9 +54,9 @@ export default defineComponent({
     const auth: any = inject("auth");
     const route = useRoute();
     const currentRoute = ref<string>("");
-    const { getUser } = useAuth();
+    const { getPartner } = useAuth();
 
-    const user: ComputedRef<User> = computed(() => getUser());
+    const partner: ComputedRef<Partner> = computed(() => getPartner());
 
     const login = () => {
       auth.loginWithPopup({
@@ -76,7 +76,7 @@ export default defineComponent({
       }
     );
 
-    return { login, logout, auth, user, currentRoute };
+    return { login, logout, auth, partner, currentRoute };
   },
 });
 </script>

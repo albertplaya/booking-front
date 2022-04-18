@@ -1,46 +1,68 @@
-import { endpoints } from "./../config/endpoints";
-import { postData } from "@/infrastructure/ApiHandler";
-import { User } from "@/types/User";
+import { Partner } from "@/types/Partner";
 import { useStore } from "vuex";
 import { inject, watch } from "vue";
+import { usePartner } from "@/use/Partner";
+import { ulid } from "ulid";
 
 export function useAuth() {
   const auth: any = inject("auth");
 
-  const store = useStore();
+  //const store = useStore();
 
-  const initializePartner = (user: User) => {
-    store.commit("auth/set", {
-      given_name: auth.user.given_name,
-      family_name: auth.user.family_name,
-      picture: auth.user.picture,
-      locale: auth.user.locale,
-      email: auth.user.email,
-    } as User);
+  const storePartner = (partner: Partner) => {
+    //store.commit("auth/set", partner);
+    localStorage.setItem("partner", JSON.stringify(partner));
   };
 
-  const removePartner = () => {
-    store.commit("auth/remove");
+  const removePartner = async (): Promise<void> => {
+    //store.commit("auth/remove");
+    localStorage.removeItem("partner");
   };
 
-  const getUser = (): User => {
-    return store.getters["auth/user"] as User;
+  const getPartner = (): Partner => {
+    return JSON.parse(localStorage.getItem("partner")) as Partner;
+    //return store.getters["auth/user"] as Partner;
   };
 
-  const authUser = () => {
+  const authPartner = () => {
+    const { create, getByEmail } = usePartner();
+
     watch(
       () => auth.user,
-      () => {
+      async () => {
         if (auth.user) {
-          initializePartner(auth.user);
-          const user: User = getUser();
-          console.log(user);
-          createPartner(user);
+          const partner: Partner = await getByEmail(auth.user.email);
+          if (partner) {
+            storePartner(partner);
+          } else {
+            const partner: Partner = initializePartner(auth.user);
+            create(partner);
+            storePartner(partner);
+          }
         } else {
           removePartner();
         }
       }
     );
+  };
+
+  const initializePartner = (user: any): Partner => {
+    return {
+      partner_id: ulid(),
+      email: user.email,
+      given_name: user.given_name,
+      family_name: user.family_name,
+      picture: user.picture,
+      locale: user.locale,
+      subscription_plan: "BETA",
+      subdomain: generateSubdomain(user.given_name, user.family_name),
+    } as Partner;
+  };
+
+  const generateSubdomain = (givenName: string, familyName: string): string => {
+    const given_name = replaceSpecialChars(givenName);
+    const family_name = replaceSpecialChars(familyName);
+    return `${given_name}-${family_name}`;
   };
 
   const replaceSpecialChars = (value: string): string => {
@@ -53,25 +75,5 @@ export function useAuth() {
       .replace(/(^-+|-+$)/g, ""); // Remove extra hyphens from beginning or end of the string
   };
 
-  const generateSubdomain = (user: User): string => {
-    const given_name = replaceSpecialChars(user.given_name);
-    const family_name = replaceSpecialChars(user.family_name);
-    return `${given_name}-${family_name}`;
-  };
-
-  const createPartner = async (user: User): Promise<void> => {
-    const payload = {
-      email: user.email,
-      given_name: user.given_name,
-      family_name: user.family_name,
-      picture: user.picture,
-      locale: user.locale,
-      subscription_plan: "BETA",
-      subdomain: generateSubdomain(user),
-    };
-
-    await postData(endpoints.v1.partner_create, payload);
-  };
-
-  return { authUser, getUser };
+  return { authPartner, getPartner };
 }

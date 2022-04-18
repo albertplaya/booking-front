@@ -1,27 +1,27 @@
-import { User } from "@/types/User";
+import { Partner } from "@/types/Partner";
 
-interface UserState {
-  user: User | null;
+interface PartnerState {
+  partner: Partner | null;
 }
 
-const state: UserState = {
-  user: null,
+const state: PartnerState = {
+  partner: null,
 };
 
 const getters = {
-  user(state: UserState): User | null {
-    return state.user;
+  partner(state: PartnerState): Partner | null {
+    return state.partner;
   },
 };
 
 const actions = {};
 
 const mutations = {
-  set(state: UserState, user: User) {
-    state.user = user;
+  set(state: PartnerState, partner: Partner) {
+    state.partner = partner;
   },
-  remove(state: any, user: User) {
-    state.user = null;
+  remove(state: any, partner: Partner) {
+    state.partner = null;
   },
 };
 

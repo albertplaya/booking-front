@@ -1,6 +1,6 @@
-import { Uuid } from './Uuid';
+import { Ulid } from "./Ulid";
 export interface Activity {
-  activity_id: Uuid;
+  activity_id: Ulid;
   partner_id: string;
   title: string;
   description: string;

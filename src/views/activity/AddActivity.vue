@@ -59,8 +59,11 @@ import ErrorNotification from "@/components/notification/Error.vue";
 import ImageUploader from "@/components/activity/ImageUploader.vue";
 import { Activity } from "@/types/Activity";
 import router from "@/router";
+import { useAuth } from "@/use/Authentication";
+import { Partner } from "@/types/Partner";
 
 const { create } = useActivity();
+const { getPartner } = useAuth();
 
 const title = ref<string>("");
 const description = ref<string>("");
@@ -72,8 +75,9 @@ const updateImageActivity = (imageId: string): void => {
 };
 
 const saveActivity = () => {
+  const partner: Partner = getPartner();
   create({
-    partner_id: localStorage.partner_id as string,
+    partner_id: partner.partner_id.value as string,
     title: title.value,
     description: description.value,
     image_id: activityImageId.value,
