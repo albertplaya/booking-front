@@ -1,3 +1,4 @@
+import { ulid } from "ulid";
 import { Guest } from "./../types/Guest";
 import { EventBooking } from "../types/EventBooking";
 import { endpoints } from "@/config/endpoints";
@@ -17,10 +18,12 @@ export function useBookingSession() {
       return;
     }
 
+    const bookingId: string = ulid();
     postData(endpoints.v1.booking_init, {
+      booking_id: bookingId,
       event_id: eventId,
     }).then((bookingId: any) => {
-      localStorage.setItem("booking_id", bookingId.data.booking_id.value);
+      localStorage.setItem("booking_id", bookingId);
       localStorage.setItem("booking_session", Date.now().toString());
     });
   };
