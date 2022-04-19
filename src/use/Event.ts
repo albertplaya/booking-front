@@ -1,3 +1,4 @@
+import { ulid } from "ulid";
 import { Event } from "@/types/Event";
 import { endpoints } from "@/config/endpoints";
 import {
@@ -10,6 +11,7 @@ import {
 export function useEvent() {
   const create = (event: Event): Promise<Event> => {
     const payload = {
+      event_id: ulid(),
       start_date: event.start_date,
       duration: event.duration,
       capacity: event.capacity,

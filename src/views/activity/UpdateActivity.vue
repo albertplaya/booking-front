@@ -14,9 +14,7 @@
         <q-form class="q-gutter-md pt-4">
           <ImageUploader
             @imageUploaded="updateImageActivity"
-            :activityImageId="
-              activity.image_id ? activity.image_id.value : null
-            "
+            :activityImageId="activity.image_id ? activity.image_id : null"
           />
 
           <q-input
@@ -84,14 +82,16 @@ onMounted(() => {
 
 const getActivity = async (activityId: string) => {
   get(activityId)
-    .then((result) => (activity.value = result))
+    .then((result) => {
+      activity.value = result;
+    })
     .catch(() => {
       return router.push({ name: "not-found" });
     });
 };
 
 const updateImageActivity = (imageId: string): void => {
-  (activity.value as Activity).image_id = imageId;
+  activity.value.image_id = imageId;
 };
 
 const updateActivity = () => {

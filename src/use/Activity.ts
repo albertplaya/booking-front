@@ -1,3 +1,4 @@
+import { ulid } from "ulid";
 import { Activity } from "@/types/Activity";
 import { endpoints } from "@/config/endpoints";
 import { postData, putData, getData } from "@/infrastructure/ApiHandler";
@@ -6,6 +7,7 @@ import { upload } from "@/infrastructure/FileUploader";
 export function useActivity() {
   const create = async (activity: Activity): Promise<Activity> => {
     const payload = {
+      activity_id: ulid(),
       partner_id: activity.partner_id,
       title: activity.title,
       description: activity.description,
@@ -24,7 +26,7 @@ export function useActivity() {
       activity_id: activity.activity_id.value,
       title: activity.title,
       description: activity.description,
-      image_id: activity.image_id,
+      image_id: activity.image_id?.value,
     };
 
     const activity_res: Promise<Activity> = await putData(
