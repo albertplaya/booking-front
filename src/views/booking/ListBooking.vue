@@ -27,7 +27,7 @@
           :key="booking.booking_id"
         >
           <div class="text-sm">
-            {{ booking.booking_id.value }}
+            {{ booking.booking_id }}
           </div>
           <div class="flex justify-around">
             <div>

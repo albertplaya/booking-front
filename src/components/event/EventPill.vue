@@ -44,7 +44,7 @@ const props = defineProps({
 const bookingList = (event: Event) => {
   router.push({
     name: "booking-list",
-    params: { eventId: event.event_id.value },
+    params: { eventId: event.event_id },
   });
 };
 </script>

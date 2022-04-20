@@ -77,7 +77,7 @@ const updateImageActivity = (imageId: string): void => {
 const saveActivity = () => {
   const partner: Partner = getPartner();
   create({
-    partner_id: partner.partner_id.value as string,
+    partner_id: partner.partner_id as string,
     title: title.value,
     description: description.value,
     image_id: activityImageId.value,

@@ -59,7 +59,7 @@ const props = defineProps({
 const updateEvent = (event: Event) => {
   router.push({
     name: "event-update",
-    params: { eventId: event.event_id.value },
+    params: { eventId: event.event_id },
   });
 };
 </script>

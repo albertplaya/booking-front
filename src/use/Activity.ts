@@ -23,10 +23,10 @@ export function useActivity() {
 
   const update = async (activity: Activity): Promise<Activity> => {
     const payload = {
-      activity_id: activity.activity_id.value,
+      activity_id: activity.activity_id,
       title: activity.title,
       description: activity.description,
-      image_id: activity.image_id?.value,
+      image_id: activity.image_id,
     };
 
     const activity_res: Promise<Activity> = await putData(

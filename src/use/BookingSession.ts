@@ -22,7 +22,7 @@ export function useBookingSession() {
     postData(endpoints.v1.booking_init, {
       booking_id: bookingId,
       event_id: eventId,
-    }).then((bookingId: any) => {
+    }).then(() => {
       localStorage.setItem("booking_id", bookingId);
       localStorage.setItem("booking_session", Date.now().toString());
     });

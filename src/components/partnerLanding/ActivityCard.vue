@@ -7,11 +7,11 @@
   >
     <div
       class="cursor-pointer"
-      @click="goToActivityEventList(activity.activity_id.value)"
+      @click="goToActivityEventList(activity.activity_id)"
     >
       <q-img
         v-if="activity.image_id"
-        :src="filesUrl(activity.image_id.value)"
+        :src="filesUrl(activity.image_id)"
         fit="cover"
         style="max-width: 334px; height: 334px"
       />
@@ -19,7 +19,7 @@
     </div>
 
     <q-card-section horizontal>
-      <div @click="goToActivityEventList(activity.activity_id.value)">
+      <div @click="goToActivityEventList(activity.activity_id)">
         <q-card-section class="q-pt-xs cursor-pointer">
           <div class="text-h5 q-mt-sm q-mb-xs">{{ activity.title }}</div>
         </q-card-section>

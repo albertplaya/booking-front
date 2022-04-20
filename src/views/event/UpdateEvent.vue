@@ -155,12 +155,12 @@ const updateEvent = () => {
     capacity: event.value.capacity,
     duration: event.value.duration,
     start_date: `${date.value} ${time.value}:00`,
-    activity_id: event.value.activity_id.value,
+    activity_id: event.value.activity_id,
   } as Event)
     .then(() =>
       router.push({
         name: "event-list",
-        params: { activityId: event.value.activity_id.value },
+        params: { activityId: event.value.activity_id },
       })
     )
     .catch((err) => {
@@ -176,7 +176,7 @@ const deleteEvent = () => {
     .then(() =>
       router.push({
         name: "event-list",
-        params: { activityId: event.value.activity_id.value },
+        params: { activityId: event.value.activity_id },
       })
     )
     .catch((err) => {

@@ -30,7 +30,7 @@
         >
           <q-img
             v-if="activity.image_id"
-            :src="filesUrl(activity.image_id.value)"
+            :src="filesUrl(activity.image_id)"
             fit="cover"
             style="max-width: 334px; height: 334px"
           />
@@ -51,7 +51,7 @@
               color="primary"
               :to="{
                 name: 'event-list',
-                params: { activityId: activity.activity_id.value },
+                params: { activityId: activity.activity_id },
               }"
             >
               Events
@@ -63,7 +63,7 @@
               color="primary"
               :to="{
                 name: 'activity-update',
-                params: { activityId: activity.activity_id.value },
+                params: { activityId: activity.activity_id },
               }"
             >
               Update
@@ -95,7 +95,8 @@ const activities = ref<Activity[]>([]);
 
 const listActivities = async () => {
   const partner: Partner = getPartner();
-  list(partner.partner_id.value as string)
+  console.log(partner);
+  list(partner.partner_id as string)
     .then((result) => (activities.value = result))
     .catch(() => {
       return router.push({ name: "not-found" });

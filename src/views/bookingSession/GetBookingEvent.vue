@@ -53,7 +53,7 @@
           color="teal"
           :to="{
             name: 'booking-guest',
-            params: { eventId: eventBooking.data.event.event_id.value },
+            params: { eventId: eventBooking.data.event.event_id },
           }"
           >Book
         </q-btn>

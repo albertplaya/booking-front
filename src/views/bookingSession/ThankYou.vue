@@ -15,7 +15,7 @@
         <q-card-section>
           <div class="mb-4">
             <div class="text-grey">Booking code</div>
-            <div class="text-xs">{{ booking.data.booking_id.value }}</div>
+            <div class="text-xs">{{ booking.data.booking_id }}</div>
           </div>
           <div class="grid grid-rows-4 grid-flow-col gap-4">
             <div>

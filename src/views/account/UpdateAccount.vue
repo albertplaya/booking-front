@@ -119,7 +119,7 @@ const error = ref<any>("");
 
 onMounted(async () => {
   const partner: Partner = getPartner();
-  getPartnerFromApi(partner.partner_id.value);
+  getPartnerFromApi(partner.partner_id);
 });
 
 const getPartnerFromApi = async (partnerId: string) => {
