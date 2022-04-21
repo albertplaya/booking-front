@@ -1,4 +1,5 @@
 export interface Event {
+  event_id: string;
   start_date: string;
   duration: string;
   capacity: string;

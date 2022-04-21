@@ -3,16 +3,27 @@
     <div style="width: 895px">
       <div class="flex justify-between">
         <h3 class="text-2xl ml-2">Activities</h3>
-        <q-separator />
-        <q-btn
-          no-caps
-          :to="{ name: 'activity-add' }"
-          label="Add Activity"
-          type="submit"
-          color="teal"
-          icon="add"
-          style="color: typography-primary-inverted"
-        />
+        <div class="flex">
+          <q-btn
+            class="mr-2"
+            round
+            text-color="black"
+            color="lightgrey"
+            icon="web"
+            target="_blank"
+            :href="landingPageUrl"
+          />
+
+          <q-btn
+            no-caps
+            :to="{ name: 'activity-add' }"
+            label="Add Activity"
+            type="submit"
+            color="teal"
+            icon="add"
+            style="color: typography-primary-inverted"
+          />
+        </div>
       </div>
       <AddWhenEmptyList
         v-if="!activities.length"
@@ -92,10 +103,9 @@ onMounted(() => {
 const { list } = useActivity();
 const { getPartner } = useAuth();
 const activities = ref<Activity[]>([]);
+const partner: Partner = getPartner();
 
 const listActivities = async () => {
-  const partner: Partner = getPartner();
-  console.log(partner);
   list(partner.partner_id as string)
     .then((result) => (activities.value = result))
     .catch(() => {
@@ -104,6 +114,9 @@ const listActivities = async () => {
 };
 const filesUrl = (id: string) =>
   `${import.meta.env.VITE_API_FILES}/booking/${id}.jpg`;
+
+const landingPageUrl =
+  "https://" + window.location.host.replace("app", partner.subdomain);
 </script>
 
 <style scoped>
