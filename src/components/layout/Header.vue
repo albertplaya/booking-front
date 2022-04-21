@@ -35,7 +35,7 @@
   </q-header>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import { Partner } from "@/types/Partner";
 import { useAuth } from "@/use/Authentication";
 import {
@@ -48,37 +48,30 @@ import {
 } from "vue";
 import { useRoute } from "vue-router";
 
-export default defineComponent({
-  name: "HeaderApp",
-  setup() {
-    const auth: any = inject("auth");
-    const route = useRoute();
-    const currentRoute = ref<string>("");
-    const { getPartner } = useAuth();
+const auth: any = inject("auth");
+const route = useRoute();
+const currentRoute = ref<string>("");
+const { getPartner } = useAuth();
 
-    const partner: ComputedRef<Partner> = computed(() => getPartner());
+const partner: ComputedRef<Partner> = computed(() => getPartner());
 
-    const login = () => {
-      auth.loginWithPopup({
-        redirect_uri: window.location.origin,
-      });
-    };
-    const logout = () => {
-      auth.logout({
-        returnTo: window.location.origin,
-      });
-    };
+const login = () => {
+  auth.loginWithPopup({
+    redirect_uri: window.location.origin,
+  });
+};
+const logout = () => {
+  auth.logout({
+    returnTo: window.location.origin,
+  });
+};
 
-    watch(
-      () => route.name,
-      () => {
-        currentRoute.value = route.name as string;
-      }
-    );
-
-    return { login, logout, auth, partner, currentRoute };
-  },
-});
+watch(
+  () => route.name,
+  () => {
+    currentRoute.value = route.name as string;
+  }
+);
 </script>
 
 <style scoped>

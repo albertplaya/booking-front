@@ -4,7 +4,7 @@
       elevated
       class="bg-gray-50 text-black flex justify-around"
       style="height: 50px"
-      v-if="auth.authenticated"
+      v-if="partner"
     >
       <q-btn
         :color="currentRoute == 'activity-list' ? 'teal' : 'black'"
@@ -34,27 +34,24 @@
   </div>
 </template>
 
-<script lang="ts">
-import { watch, defineComponent, inject, ref } from "vue";
+<script setup lang="ts">
+import { watch, ref } from "vue";
 import { useRoute } from "vue-router";
+import { Partner } from "@/types/Partner";
+import { useAuth } from "@/use/Authentication";
 
-export default defineComponent({
-  name: "FooterMobile",
-  setup() {
-    const route = useRoute();
-    const auth: any = inject("auth");
+const route = useRoute();
+const { getPartner } = useAuth();
 
-    const currentRoute = ref<string>("");
-    watch(
-      () => route.name,
-      () => {
-        currentRoute.value = route.name as string;
-      }
-    );
+const partner: Partner = getPartner();
 
-    return { auth, currentRoute };
-  },
-});
+const currentRoute = ref<string>("");
+watch(
+  () => route.name,
+  () => {
+    currentRoute.value = route.name as string;
+  }
+);
 </script>
 
 <style scoped>
