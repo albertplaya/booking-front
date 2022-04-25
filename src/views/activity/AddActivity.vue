@@ -33,6 +33,21 @@
               (val) => (val && val.length > 0) || 'Please type something',
             ]"
           />
+
+          <q-input
+            filled
+            v-model="price"
+            label="Price"
+            lazy-rules
+            autogrow
+            :rules="[
+              (val) => (val && val.length > 0) || 'Please type something',
+            ]"
+          >
+            <template v-slot:append>
+              <q-icon name="euro" />
+            </template>
+          </q-input>
         </q-form>
       </div>
 
@@ -67,6 +82,8 @@ const { getPartner } = useAuth();
 
 const title = ref<string>("");
 const description = ref<string>("");
+const price = ref<number>();
+const currency = ref<string>("EUR");
 const activityImageId = ref<string | null>(null);
 const error = ref<any>("");
 
@@ -80,6 +97,8 @@ const saveActivity = () => {
     partner_id: partner.partner_id as string,
     title: title.value,
     description: description.value,
+    price: price.value,
+    currency: currency.value,
     image_id: activityImageId.value,
   } as Activity)
     .then(() => router.push({ name: "activity-list" }))

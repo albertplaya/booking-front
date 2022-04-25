@@ -11,6 +11,8 @@ export function useActivity() {
       partner_id: activity.partner_id,
       title: activity.title,
       description: activity.description,
+      price: activity.price,
+      currency: activity.currency,
       image_id: activity.image_id,
     };
 
@@ -26,6 +28,8 @@ export function useActivity() {
       activity_id: activity.activity_id,
       title: activity.title,
       description: activity.description,
+      price: activity.price,
+      currency: activity.currency,
       image_id: activity.image_id,
     };
 

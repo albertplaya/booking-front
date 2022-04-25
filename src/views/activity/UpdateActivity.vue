@@ -37,6 +37,21 @@
               (val) => (val && val.length > 0) || 'Please type something',
             ]"
           />
+
+          <q-input
+            filled
+            v-model="activity.price"
+            label="Price"
+            lazy-rules
+            autogrow
+            :rules="[
+              (val) => (val && val.length > 0) || 'Please type something',
+            ]"
+          >
+            <template v-slot:append>
+              <q-icon name="euro" />
+            </template>
+          </q-input>
         </q-form>
       </div>
 
