@@ -97,7 +97,7 @@ const saveActivity = () => {
     partner_id: partner.partner_id as string,
     title: title.value,
     description: description.value,
-    price: price.value,
+    price: price.value * 100,
     currency: currency.value,
     image_id: activityImageId.value,
   } as Activity)

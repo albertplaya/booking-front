@@ -97,8 +97,11 @@ onMounted(() => {
 
 const getActivity = async (activityId: string) => {
   get(activityId)
-    .then((result) => {
-      activity.value = result;
+    .then((result: Activity) => {
+      activity.value = {
+        ...result,
+        price: result.price / 100,
+      };
     })
     .catch(() => {
       return router.push({ name: "not-found" });
@@ -110,7 +113,10 @@ const updateImageActivity = (imageId: string): void => {
 };
 
 const updateActivity = () => {
-  update(activity.value as Activity)
+  update({
+    ...activity.value,
+    price: activity.value.price * 100,
+  } as Activity)
     .then(async () => {
       await new Promise((resolve) => setTimeout(resolve, 500));
       router.push({ name: "activity-list" });
