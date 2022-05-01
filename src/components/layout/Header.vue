@@ -12,14 +12,14 @@
             label="Activities"
             :to="{ name: 'activity-list' }"
           />
-          <!--
           <q-btn
             no-caps
             flat
-            icon="confirmation_number_outline"
+            :color="currentRoute == 'booking-list' ? 'teal' : 'black'"
+            icon="confirmation_number"
             label="Bookings"
+            :to="{ name: 'booking-list' }"
           />
-          -->
           <q-btn
             no-caps
             flat
@@ -38,14 +38,7 @@
 <script setup lang="ts">
 import { Partner } from "@/types/Partner";
 import { useAuth } from "@/use/Authentication";
-import {
-  defineComponent,
-  inject,
-  watch,
-  ref,
-  computed,
-  ComputedRef,
-} from "vue";
+import { inject, watch, ref, computed, ComputedRef } from "vue";
 import { useRoute } from "vue-router";
 
 const auth: any = inject("auth");

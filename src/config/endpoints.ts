@@ -20,5 +20,6 @@ export const endpoints = {
     booking_finish: "/booking/finish",
     booking_get: "/booking/{bookingId}",
     booking_list_by_event: "/bookings/event/{eventId}",
+    booking_list_with_filter: "/bookings",
   },
 };

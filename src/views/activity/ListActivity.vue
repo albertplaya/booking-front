@@ -108,7 +108,7 @@ const partner: Partner = getPartner();
 const listActivities = async () => {
   list(partner.partner_id as string)
     .then((result) => (activities.value = result))
-    .catch(() => {
+    .catch((e) => {
       return router.push({ name: "not-found" });
     });
 };

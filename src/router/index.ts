@@ -7,6 +7,7 @@ import AddEvent from "@/views/event/AddEvent.vue";
 import ListEvent from "@/views/event/ListEvent.vue";
 import UpdateEvent from "@/views/event/UpdateEvent.vue";
 import ListBooking from "@/views/booking/ListBooking.vue";
+import ListBookingByEvent from "@/views/booking/ListBookingByEvent.vue";
 import GetBookingEvent from "@/views/bookingSession/GetBookingEvent.vue";
 import AddGuest from "@/views/bookingSession/AddGuest.vue";
 import ThankYou from "@/views/bookingSession/ThankYou.vue";
@@ -81,6 +82,12 @@ const routes: Array<RouteRecordRaw> = [
   //Bookings
   {
     path: "/bookings/:eventId",
+    name: "booking-list-by-event",
+    component: ListBookingByEvent,
+    props: true,
+  },
+  {
+    path: "/bookings",
     name: "booking-list",
     component: ListBooking,
     props: true,

@@ -3,6 +3,8 @@
     <div style="width: 895px">
       <div class="flex justify-between">
         <h3 class="text-2xl ml-2">Bookings</h3>
+        <q-separator />
+        <BackButton />
       </div>
       <div v-if="!bookings.length" class="flex">
         <div
@@ -51,32 +53,31 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from "vue";
+import { defineProps, onMounted, ref } from "vue";
 import { date } from "quasar";
+import BackButton from "@/components/button/Back.vue";
 import { useBooking } from "@/use/Booking";
 import { Booking } from "@/types/Booking";
-import { Partner } from "@/types/Partner";
-import { useAuth } from "@/use/Authentication";
 import router from "@/router";
+
+const props = defineProps({
+  eventId: {
+    type: String,
+    default: "",
+  },
+});
 
 onMounted(() => {
   listBookings();
 });
 
-const { getPartner } = useAuth();
-const { listWithFilter } = useBooking();
-
+const { listByEventId } = useBooking();
 const bookings = ref<Booking[]>([]);
-const partner = ref<Partner>();
 
 const listBookings = async () => {
-  partner.value = getPartner();
-  listWithFilter({
-    filter: "partner",
-    partner_id: partner.value.partner_id,
-  })
+  listByEventId(props.eventId)
     .then((result) => (bookings.value = result))
-    .catch((e) => {
+    .catch(() => {
       return router.push({ name: "not-found" });
     });
 };

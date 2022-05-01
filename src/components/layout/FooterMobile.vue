@@ -14,14 +14,14 @@
         style="font-size: 1rem"
         :to="{ name: 'activity-list' }"
       />
-      <!--
       <q-btn
+        :color="currentRoute == 'booking-list' ? 'teal' : 'black'"
         flat
         round
-        icon="confirmation_number_outline"
-        style="font-size: 1.2rem"
+        icon="confirmation_number"
+        style="font-size: 1rem"
+        :to="{ name: 'booking-list' }"
       />
-      -->
       <q-btn
         :color="currentRoute == 'account' ? 'teal' : 'black'"
         flat

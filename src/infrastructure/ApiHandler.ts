@@ -40,9 +40,13 @@ export async function putData(url: string = "", data = {}) {
   return response.json();
 }
 
-export async function getData(url: string = "", payload = {}): Promise<any> {
+export async function getData(
+  url: string = "",
+  payload: any = {}
+): Promise<any> {
   const domain: string = import.meta.env.VITE_API_URL;
 
+  console.log(domain, url);
   const searchParams =
     Object.keys(payload).length != 0 ? "?" + new URLSearchParams(payload) : "";
 
