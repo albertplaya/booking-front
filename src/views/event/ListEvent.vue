@@ -3,7 +3,7 @@
     <div style="width: 895px">
       <div class="flex justify-between mb-2">
         <q-btn
-          v-if="eventListButton === 'upcoming' && events.length"
+          v-if="eventListButton === 'upcoming'"
           no-caps
           rounded
           label="Past events"
@@ -12,7 +12,7 @@
           @click="listPastEvents"
         />
         <q-btn
-          v-if="eventListButton === 'past' && events.length"
+          v-if="eventListButton === 'past'"
           no-caps
           rounded
           label="Upcoming events"
@@ -47,8 +47,8 @@ import { ref, defineProps, onMounted } from "vue";
 import { useEvent } from "@/use/Event";
 import { Event } from "@/types/Event";
 import AddWhenEmptyList from "@/components/button/AddWhenEmptyList.vue";
-import router from "@/router";
 import ListEvent from "@/components/event/ListEvent.vue";
+import router from "@/router";
 
 const props = defineProps({
   activityId: {
