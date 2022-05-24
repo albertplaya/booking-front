@@ -23,6 +23,14 @@
         :to="{ name: 'booking-list' }"
       />
       <q-btn
+        :color="currentRoute == 'guest-list' ? 'teal' : 'black'"
+        flat
+        round
+        icon="people"
+        style="font-size: 1rem"
+        :to="{ name: 'guest-list' }"
+      />
+      <q-btn
         :color="currentRoute == 'account' ? 'teal' : 'black'"
         flat
         round

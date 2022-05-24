@@ -14,6 +14,8 @@ import ThankYou from "@/views/bookingSession/ThankYou.vue";
 import ActivityCards from "@/views/partnerLanding/ActivityCards.vue";
 import ActivityEventsList from "@/views/partnerLanding/ActivityEventList.vue";
 import UpdateAccount from "@/views/account/UpdateAccount.vue";
+import ListGuest from "@/views/guest/ListGuest.vue";
+import CreateGuest from "@/views/guest/AddGuest.vue";
 import NotFoundPage from "@/views/error/NotFoundPage.vue";
 
 const routes: Array<RouteRecordRaw> = [
@@ -106,6 +108,20 @@ const routes: Array<RouteRecordRaw> = [
     path: "/account",
     name: "account",
     component: UpdateAccount,
+    props: true,
+  },
+
+  // Guest
+  {
+    path: "/guests",
+    name: "guest-list",
+    component: ListGuest,
+    props: true,
+  },
+  {
+    path: "/guest/add",
+    name: "guest-add",
+    component: CreateGuest,
     props: true,
   },
 

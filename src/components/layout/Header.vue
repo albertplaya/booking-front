@@ -23,6 +23,14 @@
           <q-btn
             no-caps
             flat
+            :color="currentRoute == 'guest-list' ? 'teal' : 'black'"
+            icon="people"
+            label="Guests"
+            :to="{ name: 'guest-list' }"
+          />
+          <q-btn
+            no-caps
+            flat
             :color="currentRoute == 'account' ? 'teal' : 'black'"
             icon="account_circle"
             label="Account"
