@@ -96,6 +96,10 @@ const props = defineProps({
     type: String,
     default: "",
   },
+  partnerId: {
+    type: String,
+    default: "",
+  },
 });
 
 onMounted(async () => {

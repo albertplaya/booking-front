@@ -75,6 +75,7 @@ import BackButton from "@/components/button/Back.vue";
 import ErrorNotification from "@/components/notification/Error.vue";
 import router from "@/router";
 import { Guest } from "@/types/Guest";
+import { Partner } from "@/types/Partner";
 import { ulid } from "ulid";
 
 const props = defineProps({
@@ -97,8 +98,10 @@ const phone = ref<string>("");
 const error = ref<any>("");
 
 const addGuestSession = () => {
+  const partner = getPartner();
   addGuest(props.eventId, {
     guest_id: ulid(),
+    partner_id: partner.partner_id,
     first_name: name.value,
     last_name: lastName.value,
     email: email.value,
@@ -113,5 +116,9 @@ const addGuestSession = () => {
     .catch((err) => {
       error.value = err;
     });
+};
+
+const getPartner = (): Partner => {
+  return JSON.parse(localStorage.getItem("booking_session_partner")) as Partner;
 };
 </script>

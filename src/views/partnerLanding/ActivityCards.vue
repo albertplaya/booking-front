@@ -31,6 +31,10 @@ const props = defineProps({
 onMounted(async () => {
   getPartner().then((partnerResult: Partner) => {
     partner.value = partnerResult;
+    localStorage.setItem(
+      "booking_session_partner",
+      JSON.stringify(partner.value)
+    );
     listActivities(partnerResult);
   });
 });

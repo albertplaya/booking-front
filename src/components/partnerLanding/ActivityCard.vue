@@ -47,36 +47,30 @@
   </q-card>
 </template>
 
-<script lang="ts">
-import { defineComponent, ref, PropType } from "vue";
+<script setup lang="ts">
+import { defineProps, ref, PropType } from "vue";
 import { Activity } from "@/types/Activity";
 import DefaultImage from "@/components/activity/DefaultImage.vue";
 import router from "@/router";
 
-export default defineComponent({
-  components: { DefaultImage },
-  props: {
-    activity: {
-      type: Object as PropType<Activity>,
-      required: true,
-    },
-  },
-  setup(props) {
-    const expanded = ref<Boolean>(false);
-
-    const filesUrl = (id: string) =>
-      `${import.meta.env.VITE_API_FILES}/booking/${id}.jpg`;
-
-    const goToActivityEventList = async (activityId: string) => {
-      return router.push({
-        name: "activity-events-list",
-        params: { activityId: activityId },
-      });
-    };
-
-    return { filesUrl, expanded, goToActivityEventList };
+const props = defineProps({
+  activity: {
+    type: Object as PropType<Activity>,
+    required: true,
   },
 });
+
+const expanded = ref<Boolean>(false);
+
+const filesUrl = (id: string) =>
+  `${import.meta.env.VITE_API_FILES}/booking/${id}.jpg`;
+
+const goToActivityEventList = async (activityId: string) => {
+  return router.push({
+    name: "activity-events-list",
+    params: { activityId: activityId },
+  });
+};
 </script>
 
 <style scoped>
