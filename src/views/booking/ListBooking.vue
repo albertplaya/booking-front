@@ -3,6 +3,16 @@
     <div style="width: 895px">
       <div class="flex justify-between">
         <h3 class="text-2xl ml-2">Bookings</h3>
+
+        <q-btn
+          no-caps
+          :to="{ name: 'pos-activity-list' }"
+          label="Add Booking"
+          type="submit"
+          color="teal"
+          icon="add"
+          style="color: typography-primary-inverted"
+        />
       </div>
       <div v-if="!bookings.length" class="flex">
         <div

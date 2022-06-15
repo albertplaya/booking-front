@@ -17,6 +17,9 @@ import UpdateAccount from "@/views/account/UpdateAccount.vue";
 import ListGuest from "@/views/guest/ListGuest.vue";
 import CreateGuest from "@/views/guest/AddGuest.vue";
 import NotFoundPage from "@/views/error/NotFoundPage.vue";
+import PosListActivity from "@/views/pos/ListActivity.vue";
+import PosActivityEventList from "@/views/pos/ActivityEventList.vue";
+import PosAddGuest from "@/views/pos/AddGuest.vue";
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -92,7 +95,6 @@ const routes: Array<RouteRecordRaw> = [
     path: "/bookings",
     name: "booking-list",
     component: ListBooking,
-    props: true,
   },
 
   //Partner page
@@ -122,6 +124,26 @@ const routes: Array<RouteRecordRaw> = [
     path: "/guest/add",
     name: "guest-add",
     component: CreateGuest,
+    props: true,
+  },
+
+  //POS
+  {
+    path: "/pos",
+    name: "pos-activity-list",
+    component: PosListActivity,
+    props: true,
+  },
+  {
+    path: "/pos/activity/:activityId",
+    name: "pos-activity-event-list",
+    component: PosActivityEventList,
+    props: true,
+  },
+  {
+    path: "/pos/guest/:eventId",
+    name: "pos-activity-guest",
+    component: PosAddGuest,
     props: true,
   },
 

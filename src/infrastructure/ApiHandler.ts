@@ -46,7 +46,6 @@ export async function getData(
 ): Promise<any> {
   const domain: string = import.meta.env.VITE_API_URL;
 
-  console.log(domain, url);
   const searchParams =
     Object.keys(payload).length != 0 ? "?" + new URLSearchParams(payload) : "";
 
