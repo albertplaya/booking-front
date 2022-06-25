@@ -26,9 +26,7 @@
           :current_event="currentEvent"
           @eventChanged="selectNewCurrentEvent"
         />
-        <div
-          class="grid grid-cols-2 py-4 my-2 rounded-md text-l p-2 mr-2 bg-grey-2"
-        >
+        <div class="grid grid-cols-2 py-4 my-2 rounded-md text-l p-2 bg-grey-2">
           <div class="flex flex-col" v-if="activity">
             <div class="font-bold">
               {{ activity.title }}
@@ -51,7 +49,12 @@
           </div>
           <div class="flex flex-col content-end">
             <div class="flex justify-end">Total</div>
-            <div class="text-2xl font-bold">FREE</div>
+            <div v-if="activity.price == 0" class="text-2xl font-bold">
+              FREE
+            </div>
+            <div v-else class="text-2xl font-bold">
+              {{ activity?.price / 100 }} {{ activity?.currency }}
+            </div>
             <div class="flex justify-end">
               {{ currentEvent?.duration }} minutes
             </div>
