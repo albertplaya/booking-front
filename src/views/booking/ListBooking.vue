@@ -14,6 +14,12 @@
           style="color: typography-primary-inverted"
         />
       </div>
+      <BookingModal
+        v-if="selectedBooking && showModal"
+        :showModal="showModal"
+        :bookingId="selectedBooking.booking_id"
+        @closeModal="closeModalAndRefresh"
+      />
       <div v-if="!bookings.length" class="flex">
         <div
           class="flex justify-center flex-grow text-2xl bg-gray-50 border-2 rounded-md mt-4 p-4"
@@ -22,37 +28,48 @@
         </div>
       </div>
       <div v-else class="flex flex-col mt-4">
-        <div class="grid grid-cols-3 gap-4 center m-2 p-2">
-          <div class="text-lg font-bold flex justify-center">Booking</div>
+        <div class="grid grid-cols-3 gap-4 center m-1 p-1">
+          <div class="text-lg font-bold flex justify-center">Activity</div>
           <div class="text-lg font-bold flex justify-center">Guest</div>
           <div class="text-lg font-bold flex justify-center">Status</div>
         </div>
+
         <div
-          class="grid grid-cols-3 gap-4 m-2 bg-white rounded-md p-2 items-center border-gray-200 border-2"
+          class="mb-2 bg-white rounded-md tems-center border-gray-200 border-2"
           flat
           bordered
-          v-for="booking in bookings"
-          :key="booking.booking_id"
         >
-          <div class="text-sm">
-            {{ booking.booking_id }}
-          </div>
-          <div class="flex justify-around">
-            <div>
-              {{ booking.guest.first_name }}
-              {{ booking.guest.last_name }}
-            </div>
-            <div class="text-xs sm:text-sm">
-              {{ booking.guest.email }}
-            </div>
-          </div>
-          <div class="text-lg flex justify-center">
+          <div v-for="booking in bookings" :key="booking.booking_id">
             <div
-              class="text-teal px-2 py-1 rounded-md"
-              style="background: #e8f2ed"
+              class="booking grid grid-cols-3 gap-4 p-2 bg-white rounded-md items-center"
+              @click="showBookingModal(booking)"
             >
-              {{ booking.status }}
+              <div class="text-sm text-center">
+                {{ booking.title }}
+              </div>
+              <div class="flex justify-around">
+                <div>
+                  {{ booking.guest.first_name }}
+                  {{ booking.guest.last_name }}
+                </div>
+                <div class="text-xs sm:text-sm">
+                  {{ booking.guest.email }}
+                </div>
+              </div>
+              <div class="text-lg flex justify-center">
+                <div
+                  class="text-teal px-2 py-1 rounded-md"
+                  style="background: #e8f2ed"
+                >
+                  {{ booking.status }}
+                </div>
+              </div>
             </div>
+            <div
+              v-if="bookings[bookings.length - 1] !== booking"
+              q-space
+              class="border"
+            />
           </div>
         </div>
       </div>
@@ -67,6 +84,7 @@ import { useBooking } from "@/use/Booking";
 import { Booking } from "@/types/Booking";
 import { Partner } from "@/types/Partner";
 import { useAuth } from "@/use/Authentication";
+import BookingModal from "@/components/booking/BookingModal.vue";
 import router from "@/router";
 
 onMounted(() => {
@@ -78,6 +96,13 @@ const { listWithFilter } = useBooking();
 
 const bookings = ref<Booking[]>([]);
 const partner = ref<Partner>();
+const showModal = ref<boolean>(false);
+const selectedBooking = ref<Booking>();
+
+const showBookingModal = (booking: Booking) => {
+  selectedBooking.value = booking;
+  showModal.value = true;
+};
 
 const listBookings = async () => {
   partner.value = getPartner();
@@ -90,4 +115,19 @@ const listBookings = async () => {
       return router.push({ name: "not-found" });
     });
 };
+
+const closeModalAndRefresh = () => {
+  showModal.value = false;
+  listBookings();
+};
 </script>
+
+<style scoped lang="scss">
+.booking {
+  cursor: pointer;
+}
+.booking:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgba(249, 250, 251, var(--tw-bg-opacity)) !important;
+}
+</style>

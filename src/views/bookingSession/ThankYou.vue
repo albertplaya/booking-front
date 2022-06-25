@@ -8,20 +8,20 @@
       <div class="text-h6 mb-6">Your booking has been confirmed!</div>
       <q-card class="booking-card font-bold">
         <q-card-section class="flex flex-nowrap justify-between">
-          <div class="text-h5 font-bold q-mb-xs">{{ booking.data.title }}</div>
+          <div class="text-h5 font-bold q-mb-xs">{{ booking.title }}</div>
           <CloseButton />
         </q-card-section>
         <q-separator />
         <q-card-section>
           <div class="mb-4">
             <div class="text-grey">Booking code</div>
-            <div class="text-xs">{{ booking.data.booking_id }}</div>
+            <div class="text-xs">{{ booking.booking_id }}</div>
           </div>
           <div class="grid grid-rows-4 grid-flow-col gap-4">
             <div>
               <div class="text-grey">Date</div>
               <div>
-                {{ date.formatDate(booking.data.start_date, "DD MMM") }}
+                {{ date.formatDate(booking.start_date, "DD MMM") }}
               </div>
             </div>
             <div>
@@ -30,13 +30,13 @@
             </div>
             <div>
               <div class="text-grey">Name</div>
-              <div>{{ booking.data.guest.first_name }}</div>
+              <div>{{ booking.guest.first_name }}</div>
             </div>
             <div></div>
             <div>
               <div class="text-grey">Time</div>
               <div>
-                {{ date.formatDate(booking.data.start_date, "HH:mm A") }}
+                {{ date.formatDate(booking.start_date, "HH:mm A") }}
               </div>
             </div>
             <div>
@@ -46,7 +46,7 @@
 
             <div>
               <div class="text-grey">Last name</div>
-              <div>{{ booking.data.guest.last_name }}</div>
+              <div>{{ booking.guest.last_name }}</div>
             </div>
           </div>
         </q-card-section>
@@ -54,7 +54,7 @@
         <q-separator />
 
         <q-card-actions class="m-2 pb-4">
-          <a :href="generateUrl(booking.data)" target="_blank">
+          <a :href="generateUrl(booking)" target="_blank">
             <q-btn
               icon="insert_invitation"
               color="teal"

@@ -1,5 +1,5 @@
 <template>
-  <q-header class="bg-gray-50 text-black">
+  <q-header class="bg-gray-50 text-black z-40">
     <q-toolbar class="flex justify-between">
       <div class="text-2xl">Header</div>
       <div>

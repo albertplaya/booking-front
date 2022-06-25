@@ -21,6 +21,7 @@ export const endpoints = {
     booking_get: "/booking/{bookingId}",
     booking_list_by_event: "/bookings/event/{eventId}",
     booking_list_with_filter: "/bookings",
+    booking_update: "/booking",
     guest_create: "/guest",
     guest_list: "/guest/{partnerId}",
   },

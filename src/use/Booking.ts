@@ -1,6 +1,6 @@
 import { Booking } from "./../types/Booking";
 import { endpoints } from "@/config/endpoints";
-import { getData } from "@/infrastructure/ApiHandler";
+import { getData, putData } from "@/infrastructure/ApiHandler";
 
 export interface BookingListFilterCriteria {
   filter: string;
@@ -26,15 +26,23 @@ export function useBooking() {
   };
 
   const getBooking = async (bookingId: string): Promise<Booking> => {
-    const booking: Booking = await getData(
+    const booking = await getData(
       endpoints.v1.booking_get.replace("{bookingId}", bookingId)
     );
-    return booking;
+    return booking.data as Booking;
+  };
+
+  const updateBookingStatus = async (booking: Booking): Promise<void> => {
+    await putData(endpoints.v1.booking_update, {
+      booking_id: booking.booking_id,
+      status: booking.status,
+    });
   };
 
   return {
     getBooking,
     listByEventId,
     listWithFilter,
+    updateBookingStatus,
   };
 }

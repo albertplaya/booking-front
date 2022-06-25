@@ -20,22 +20,37 @@
         to="guest-add"
       />
       <div v-else class="flex flex-col mt-4">
+        <div class="grid grid-cols-3 gap-4 center m-2 p-2">
+          <div class="text-lg font-bold flex justify-center">Name</div>
+          <div class="text-lg font-bold flex justify-center">Email</div>
+          <div class="text-lg font-bold flex justify-center">Phone</div>
+        </div>
+
         <div
-          class="grid grid-cols-3 gap-4 m-2 bg-white rounded-md p-2 items-center border-gray-200 border-2"
+          class="m-2 bg-white rounded-md tems-center border-gray-200 border-2"
           flat
           bordered
-          v-for="guest in guests"
-          :key="guest.guests_id"
         >
-          <div class="text-sm">
-            {{ guest.first_name }}
-            {{ guest.last_name }}
-          </div>
-          <div class="text-sm">
-            {{ guest.email }}
-          </div>
-          <div class="text-sm">
-            {{ guest.phone }}
+          <div v-for="guest in guests" :key="guest.guests_id">
+            <div
+              class="booking grid grid-cols-3 gap-4 p-2 bg-white rounded-md items-center"
+            >
+              <div class="text-sm text-center">
+                {{ guest.first_name }}
+                {{ guest.last_name }}
+              </div>
+              <div class="text-sm text-center">
+                {{ guest.email }}
+              </div>
+              <div class="text-sm text-center">
+                {{ guest.phone }}
+              </div>
+            </div>
+            <div
+              v-if="guests[guests.length - 1] !== guest"
+              q-space
+              class="border"
+            />
           </div>
         </div>
       </div>
