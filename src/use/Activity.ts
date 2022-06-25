@@ -1,7 +1,12 @@
 import { ulid } from "ulid";
 import { Activity } from "@/types/Activity";
 import { endpoints } from "@/config/endpoints";
-import { postData, putData, getData } from "@/infrastructure/ApiHandler";
+import {
+  postData,
+  putData,
+  getData,
+  deleteData,
+} from "@/infrastructure/ApiHandler";
 import { upload } from "@/infrastructure/FileUploader";
 
 export function useActivity() {
@@ -59,11 +64,18 @@ export function useActivity() {
     return res.data.activity_image_id as string;
   };
 
+  const remove = async (activityId: string): Promise<void> => {
+    await deleteData(
+      endpoints.v1.activity_remove.replace("{activityId}", activityId)
+    );
+  };
+
   return {
     create,
     update,
     list,
     get,
     uploadImage,
+    remove,
   };
 }

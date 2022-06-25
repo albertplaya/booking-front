@@ -9,6 +9,7 @@ export const endpoints = {
     activity_get: "/activity/{activityId}",
     activity_list: "/activity/partner/{partnerId}",
     activity_upload_image: "/activity/image",
+    activity_remove: "/activity/{activityId}",
     event_create: "/event",
     event_list: "/event/activity/{activityId}",
     event_get: "/event/{eventId}",

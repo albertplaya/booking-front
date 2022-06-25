@@ -55,7 +55,7 @@
         </q-form>
       </div>
 
-      <div class="pt-4" style="max-width: 400px">
+      <div class="pt-4 q-gutter-sm" style="max-width: 400px">
         <q-btn
           @click="updateActivity"
           no-caps
@@ -64,6 +64,14 @@
           label="Save"
           type="submit"
           color="teal"
+        />
+        <q-btn
+          no-caps
+          class="float-right"
+          label="Delete"
+          type="submit"
+          color="rhubarb"
+          @click="deleteActivity"
         />
       </div>
     </div>
@@ -86,7 +94,7 @@ const props = defineProps({
   },
 });
 
-const { get, update } = useActivity();
+const { get, update, remove } = useActivity();
 
 const activity = ref<Activity>();
 const error = ref<any>("");
@@ -125,4 +133,21 @@ const updateActivity = () => {
       error.value = err;
     });
 };
+
+const deleteActivity = () => {
+  remove(activity.value.activity_id)
+    .then(async () => {
+      await new Promise((resolve) => setTimeout(resolve, 500));
+      router.push({ name: "activity-list" });
+    })
+    .catch((err) => {
+      error.value = err;
+    });
+};
 </script>
+
+<style lang="scss" scoped>
+.bg-rhubarb {
+  background: $rhubarb !important;
+}
+</style>
