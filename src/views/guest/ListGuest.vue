@@ -9,6 +9,7 @@
           label="Add Guest"
           type="submit"
           color="teal"
+          icon="add"
           :to="{
             name: 'guest-add',
           }"
