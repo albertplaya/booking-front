@@ -25,5 +25,10 @@ export const endpoints = {
     booking_update: "/booking",
     guest_create: "/guest",
     guest_list: "/guest/{partnerId}",
+    pass_create: "/pass",
+    pass_update: "/pass",
+    pass_get: "/pass/{passId}",
+    pass_list: "/pass/partner/{partnerId}",
+    pass_remove: "/pass/{passId}",
   },
 };

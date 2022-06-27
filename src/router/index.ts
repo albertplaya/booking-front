@@ -20,6 +20,9 @@ import NotFoundPage from "@/views/error/NotFoundPage.vue";
 import PosListActivity from "@/views/pos/ListActivity.vue";
 import PosActivityEventList from "@/views/pos/ActivityEventList.vue";
 import PosAddGuest from "@/views/pos/AddGuest.vue";
+import ListPass from "@/views/pass/ListPass.vue";
+import AddPass from "@/views/pass/AddPass.vue";
+import UpdatePass from "@/views/pass/UpdatePass.vue";
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -147,6 +150,25 @@ const routes: Array<RouteRecordRaw> = [
     props: true,
   },
 
+  //Pass
+  {
+    path: "/pass",
+    name: "pass-list",
+    component: ListPass,
+    props: true,
+  },
+  {
+    path: "/pass/add",
+    name: "pass-add",
+    component: AddPass,
+    props: true,
+  },
+  {
+    path: "/pass/update/:passId",
+    name: "pass-update",
+    component: UpdatePass,
+    props: true,
+  },
   //Error
   /*
   {
