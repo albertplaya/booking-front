@@ -22,8 +22,9 @@
         </div>
       </div>
       <div v-else class="flex flex-col mt-4">
-        <div class="grid grid-cols-3 gap-4 center m-1 p-1">
+        <div class="grid grid-cols-4 gap-4 center m-1 p-1">
           <div class="text-lg font-bold flex justify-center">Title</div>
+          <div class="text-lg font-bold flex justify-center">Description</div>
           <div class="text-lg font-bold flex justify-center">Quantity</div>
           <div class="text-lg font-bold flex justify-center">Price</div>
         </div>
@@ -35,11 +36,14 @@
         >
           <div v-for="singlePass in pass" :key="singlePass.pass_id">
             <div
-              class="booking grid grid-cols-3 gap-4 p-2 bg-white rounded-md items-center"
+              class="booking grid grid-cols-4 gap-4 p-2 bg-white rounded-md items-center"
               @click="updatePass(singlePass.pass_id)"
             >
               <div class="text-sm text-center">
                 {{ singlePass.title }}
+              </div>
+              <div class="text-sm text-center">
+                {{ singlePass.description }}
               </div>
               <div class="text-sm text-center">
                 {{ singlePass.quantity }}

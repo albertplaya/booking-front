@@ -23,6 +23,16 @@
 
           <q-input
             filled
+            v-model="description"
+            label="Description"
+            lazy-rules
+            :rules="[
+              (val) => (val && val.length > 0) || 'Please type something',
+            ]"
+          />
+
+          <q-input
+            filled
             v-model="quantity"
             label="Quantity"
             lazy-rules
@@ -78,6 +88,7 @@ const { create } = usePass();
 const { getPartner } = useAuth();
 
 const title = ref<string>("");
+const description = ref<string>("");
 const quantity = ref<number>(10);
 const price = ref<number>(0);
 const currency = ref<string>("EUR");
@@ -88,6 +99,7 @@ const savePass = () => {
   create({
     partner_id: partner.partner_id as string,
     title: title.value,
+    description: description.value,
     quantity: quantity.value,
     price: price.value,
     currency: currency.value,

@@ -127,7 +127,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref, defineEmits } from "vue";
+import { onMounted, ref } from "vue";
 import { date } from "quasar";
 import { useBooking } from "@/use/Booking";
 import { Booking } from "@/types/Booking";
