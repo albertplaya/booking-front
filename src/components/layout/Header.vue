@@ -36,6 +36,14 @@
             label="Account"
             :to="{ name: 'account' }"
           />
+          <q-btn
+            no-caps
+            flat
+            :color="currentRoute == 'wallet' ? 'teal' : 'black'"
+            icon="account_balance_wallet"
+            label="Wallet"
+            :to="{ name: 'wallet' }"
+          />
         </div>
         <q-btn v-else @click="login" color="primary" label="login" />
       </div>

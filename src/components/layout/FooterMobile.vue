@@ -38,6 +38,14 @@
         style="font-size: 1rem"
         :to="{ name: 'account' }"
       />
+      <q-btn
+        :color="currentRoute == 'wallet' ? 'teal' : 'black'"
+        flat
+        round
+        icon="account_balance_wallet"
+        style="font-size: 1rem"
+        :to="{ name: 'wallet' }"
+      />
     </q-footer>
   </div>
 </template>

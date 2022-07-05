@@ -23,6 +23,7 @@ import PosAddGuest from "@/views/pos/AddGuest.vue";
 import ListPass from "@/views/pass/ListPass.vue";
 import AddPass from "@/views/pass/AddPass.vue";
 import UpdatePass from "@/views/pass/UpdatePass.vue";
+import Wallet from "@/views/wallet/Wallet.vue";
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -168,6 +169,14 @@ const routes: Array<RouteRecordRaw> = [
     name: "pass-update",
     component: UpdatePass,
     props: true,
+  },
+
+  //Wallet
+  {
+    path: "/wallet",
+    name: "wallet",
+    component: Wallet,
+    props: false,
   },
   //Error
   /*
