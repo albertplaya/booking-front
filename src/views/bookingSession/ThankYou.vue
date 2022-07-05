@@ -71,7 +71,7 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps, onMounted, ref } from "vue";
+import { onMounted, ref } from "vue";
 import { useBookingSession } from "@/use/BookingSession";
 import { useBooking } from "@/use/Booking";
 import CloseButton from "@/components/button/Close.vue";

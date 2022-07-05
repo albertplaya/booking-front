@@ -85,7 +85,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, defineProps, ref, watch } from "vue";
+import { onMounted, ref, watch } from "vue";
 import { useEvent } from "@/use/Event";
 import { useActivity } from "@/use/Activity";
 import { Activity } from "@/types/Activity";

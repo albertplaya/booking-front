@@ -43,7 +43,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, defineProps, onMounted } from "vue";
+import { ref, onMounted } from "vue";
 import { useEvent } from "@/use/Event";
 import { Event } from "@/types/Event";
 import AddWhenEmptyList from "@/components/button/AddWhenEmptyList.vue";

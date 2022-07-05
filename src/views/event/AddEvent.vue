@@ -94,7 +94,7 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps, ref } from "vue";
+import { ref } from "vue";
 import { useEvent } from "@/use/Event";
 import BackButton from "@/components/button/Back.vue";
 import ErrorNotification from "@/components/notification/Error.vue";

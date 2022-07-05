@@ -100,7 +100,7 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps, ref, onMounted } from "vue";
+import { ref, onMounted } from "vue";
 import { useEvent } from "@/use/Event";
 import BackButton from "@/components/button/Back.vue";
 import ErrorNotification from "@/components/notification/Error.vue";

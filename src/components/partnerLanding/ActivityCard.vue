@@ -48,7 +48,7 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps, ref, PropType } from "vue";
+import { ref, PropType } from "vue";
 import { Activity } from "@/types/Activity";
 import DefaultImage from "@/components/activity/DefaultImage.vue";
 import router from "@/router";

@@ -53,7 +53,7 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps, onMounted, ref } from "vue";
+import { onMounted, ref } from "vue";
 import { date } from "quasar";
 import BackButton from "@/components/button/Back.vue";
 import { useBooking } from "@/use/Booking";

@@ -29,7 +29,7 @@
 </template>
 
 <script setup lang="ts">
-import { PropType, defineProps } from "vue";
+import { PropType } from "vue";
 import ShareBooking from "@/components/social/ShareBooking.vue";
 import { date } from "quasar";
 import { Event } from "@/types/Event";

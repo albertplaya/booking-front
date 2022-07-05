@@ -12,7 +12,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, defineProps, onMounted } from "vue";
+import { ref, onMounted } from "vue";
 import { useActivity } from "@/use/Activity";
 import { usePartner } from "@/use/Partner";
 import { Activity } from "@/types/Activity";

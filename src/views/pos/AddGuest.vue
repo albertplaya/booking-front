@@ -39,7 +39,7 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps, onMounted, ref } from "vue";
+import { onMounted, ref } from "vue";
 import { useBookingSession } from "@/use/BookingSession";
 import { useGuest } from "@/use/Guest";
 import BackButton from "@/components/button/Back.vue";

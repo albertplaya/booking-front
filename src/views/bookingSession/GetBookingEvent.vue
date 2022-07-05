@@ -64,7 +64,7 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps, onMounted, ref } from "vue";
+import { onMounted, ref } from "vue";
 import { useBookingSession } from "@/use/BookingSession";
 import { EventBooking } from "@/types/EventBooking";
 import { date } from "quasar";
