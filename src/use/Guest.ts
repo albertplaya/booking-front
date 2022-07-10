@@ -4,14 +4,14 @@ import { endpoints } from "@/config/endpoints";
 import { getData, postData } from "@/infrastructure/ApiHandler";
 
 export function useGuest() {
-  const list = async (partnerId: string): Promise<Guest[]> => {
+  const listGuest = async (partnerId: string): Promise<Guest[]> => {
     const result = await getData(
       endpoints.v1.guest_list.replace("{partnerId}", partnerId)
     );
     return result.data as Guest[];
   };
 
-  const create = async (guest: Guest): Promise<void> => {
+  const createGuest = async (guest: Guest): Promise<void> => {
     const payload = {
       guest_id: ulid(),
       partner_id: guest.partner_id,
@@ -24,7 +24,7 @@ export function useGuest() {
   };
 
   return {
-    list,
-    create,
+    listGuest,
+    createGuest,
   };
 }

@@ -61,7 +61,7 @@
 
       <div class="pt-4 q-gutter-sm" style="max-width: 400px">
         <q-btn
-          @click="updatePass"
+          @click="updatePassAction"
           no-caps
           style="color: typography-primary-inverted"
           class="float-right"
@@ -75,7 +75,7 @@
           label="Delete"
           type="submit"
           color="rhubarb"
-          @click="deletePass"
+          @click="deletePassAction"
         />
       </div>
     </div>
@@ -99,18 +99,18 @@ const props = defineProps({
   },
 });
 
-const { get, update, remove } = usePass();
+const { getPass, updatePass, removePass } = usePass();
 const { getPartner } = useAuth();
 
 onMounted(() => {
-  getPass(props.passId);
+  getPassAction(props.passId);
 });
 
 const pass = ref<Pass>();
 const error = ref<any>("");
 
-const getPass = async (passId: string) => {
-  get(passId)
+const getPassAction = async (passId: string) => {
+  getPass(passId)
     .then((result: Pass) => {
       pass.value = {
         ...result,
@@ -122,9 +122,9 @@ const getPass = async (passId: string) => {
     });
 };
 
-const updatePass = () => {
+const updatePassAction = () => {
   const partner: Partner = getPartner();
-  update(pass.value)
+  updatePass(pass.value)
     .then(async () => {
       await new Promise((resolve) => setTimeout(resolve, 500));
       router.push({ name: "pass-list" });
@@ -134,8 +134,8 @@ const updatePass = () => {
     });
 };
 
-const deletePass = () => {
-  remove(pass.value.pass_id)
+const deletePassAction = () => {
+  removePass(pass.value.pass_id)
     .then(async () => {
       await new Promise((resolve) => setTimeout(resolve, 500));
       router.push({ name: "pass-list" });

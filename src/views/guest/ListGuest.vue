@@ -69,18 +69,18 @@ import AddWhenEmptyList from "@/components/button/AddWhenEmptyList.vue";
 import router from "@/router";
 
 onMounted(() => {
-  listGuest();
+  listGuestAction();
 });
 
 const { getPartner } = useAuth();
-const { list } = useGuest();
+const { listGuest } = useGuest();
 
 const guests = ref<Guest[]>([]);
 const partner = ref<Partner>();
 
-const listGuest = async () => {
+const listGuestAction = async () => {
   partner.value = getPartner();
-  list(partner.value.partner_id)
+  listGuest(partner.value.partner_id)
     .then((result) => (guests.value = result))
     .catch((e) => {
       return router.push({ name: "not-found" });

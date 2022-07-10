@@ -81,7 +81,7 @@ import { useAuth } from "@/use/Authentication";
 import { Partner } from "@/types/Partner";
 import { Guest } from "@/types/Guest";
 
-const { create } = useGuest();
+const { createGuest } = useGuest();
 const { getPartner } = useAuth();
 
 const firstName = ref<string>("");
@@ -92,7 +92,7 @@ const error = ref<any>("");
 
 const saveGuest = () => {
   const partner: Partner = getPartner();
-  create({
+  createGuest({
     partner_id: partner.partner_id,
     first_name: firstName.value,
     last_name: lastName.value,

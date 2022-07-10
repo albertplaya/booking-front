@@ -30,5 +30,6 @@ export const endpoints = {
     pass_get: "/pass/{passId}",
     pass_list: "/pass/partner/{partnerId}",
     pass_remove: "/pass/{passId}",
+    guest_pass_create: "/guestpass",
   },
 };

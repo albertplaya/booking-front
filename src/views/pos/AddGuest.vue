@@ -63,7 +63,7 @@ onMounted(() => {
 
 const { initBookingSession, addGuest, finishBookingSession } =
   useBookingSession();
-const { list } = useGuest();
+const { listGuest } = useGuest();
 const { getPartner } = useAuth();
 
 const error = ref<string>("");
@@ -74,7 +74,7 @@ const stringOptions = ref<{ label: string; value: Guest }[]>([]);
 const options = ref<{ label: string; value: Guest }[]>([]);
 
 const getGuests = async () => {
-  list(partner.partner_id as string).then((result) => {
+  listGuest(partner.partner_id as string).then((result) => {
     stringOptions.value = result.map((guest: Guest) => {
       return { value: guest, label: guest.first_name + " " + guest.last_name };
     });

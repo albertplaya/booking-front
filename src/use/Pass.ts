@@ -9,7 +9,7 @@ import {
 } from "@/infrastructure/ApiHandler";
 
 export function usePass() {
-  const create = async (pass: Pass): Promise<any> => {
+  const createPass = async (pass: Pass): Promise<any> => {
     const payload = {
       pass_id: ulid(),
       partner_id: pass.partner_id,
@@ -27,21 +27,21 @@ export function usePass() {
     return activity_res;
   };
 
-  const list = async (partnerId: string): Promise<Pass[]> => {
+  const listPass = async (partnerId: string): Promise<Pass[]> => {
     const listPass = await getData(
       endpoints.v1.pass_list.replace("{partnerId}", partnerId)
     );
     return listPass.data as Pass[];
   };
 
-  const get = async (passId: string): Promise<Pass> => {
+  const getPass = async (passId: string): Promise<Pass> => {
     const getPass = await getData(
       endpoints.v1.pass_get.replace("{passId}", passId)
     );
     return getPass.data as Pass;
   };
 
-  const update = async (pass: Pass): Promise<any> => {
+  const updatePass = async (pass: Pass): Promise<any> => {
     const payload = {
       pass_id: pass.pass_id,
       partner_id: pass.partner_id,
@@ -59,15 +59,15 @@ export function usePass() {
     return passResult;
   };
 
-  const remove = async (passId: string): Promise<void> => {
+  const removePass = async (passId: string): Promise<void> => {
     await deleteData(endpoints.v1.pass_remove.replace("{passId}", passId));
   };
 
   return {
-    create,
-    update,
-    list,
-    get,
-    remove,
+    createPass,
+    updatePass,
+    listPass,
+    getPass,
+    removePass,
   };
 }

@@ -23,6 +23,7 @@ import PosAddGuest from "@/views/pos/AddGuest.vue";
 import ListPass from "@/views/pass/ListPass.vue";
 import AddPass from "@/views/pass/AddPass.vue";
 import UpdatePass from "@/views/pass/UpdatePass.vue";
+import AssignPass from "@/views/guestPass/AssignPass.vue";
 import Wallet from "@/views/wallet/Wallet.vue";
 
 const routes: Array<RouteRecordRaw> = [
@@ -168,6 +169,14 @@ const routes: Array<RouteRecordRaw> = [
     path: "/pass/update/:passId",
     name: "pass-update",
     component: UpdatePass,
+    props: true,
+  },
+
+  // Pass Guest
+  {
+    path: "/pass/assign",
+    name: "pass-assign",
+    component: AssignPass,
     props: true,
   },
 

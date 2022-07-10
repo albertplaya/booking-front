@@ -5,15 +5,16 @@
         <h3 class="text-2xl ml-2">Wallet</h3>
         <q-separator />
         <q-btn
-          no-caps
-          label="Add Guest"
-          type="submit"
           color="teal"
-          icon="add"
+          no-caps
+          type="submit"
           :to="{
-            name: 'guest-add',
+            name: 'pass-list',
           }"
-        />
+        >
+          <q-icon left size="2em" name="local_activity" />
+          <div>Passes</div>
+        </q-btn>
       </div>
       <AddWhenEmptyList
         v-if="!guests.length"
@@ -69,18 +70,18 @@ import AddWhenEmptyList from "@/components/button/AddWhenEmptyList.vue";
 import router from "@/router";
 
 onMounted(() => {
-  listGuest();
+  listGuestAction();
 });
 
 const { getPartner } = useAuth();
-const { list } = useGuest();
+const { listGuest } = useGuest();
 
 const guests = ref<Guest[]>([]);
 const partner = ref<Partner>();
 
-const listGuest = async () => {
+const listGuestAction = async () => {
   partner.value = getPartner();
-  list(partner.value.partner_id)
+  listGuest(partner.value.partner_id)
     .then((result) => (guests.value = result))
     .catch((e) => {
       return router.push({ name: "not-found" });

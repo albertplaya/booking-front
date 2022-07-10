@@ -84,7 +84,7 @@ import router from "@/router";
 import { useAuth } from "@/use/Authentication";
 import { Partner } from "@/types/Partner";
 
-const { create } = usePass();
+const { createPass } = usePass();
 const { getPartner } = useAuth();
 
 const title = ref<string>("");
@@ -96,7 +96,7 @@ const error = ref<any>("");
 
 const savePass = () => {
   const partner: Partner = getPartner();
-  create({
+  createPass({
     partner_id: partner.partner_id as string,
     title: title.value,
     description: description.value,
