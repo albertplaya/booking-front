@@ -21,20 +21,20 @@
         to="guest-add"
       />
       <div v-else class="flex flex-col mt-4">
-        <div class="grid grid-cols-3 gap-4 center m-2 p-2">
-          <div class="text-lg font-bold flex justify-center">Name</div>
-          <div class="text-lg font-bold flex justify-center">Email</div>
-          <div class="text-lg font-bold flex justify-center">Phone</div>
+        <div class="grid grid-cols-3 gap-4 center m-1 p-1">
+          <div class="grid-title">Name</div>
+          <div class="grid-title">Email</div>
+          <div class="grid-title">Phone</div>
         </div>
 
         <div
-          class="m-2 bg-white rounded-md tems-center border-gray-200 border-2"
+          class="mb-2 bg-white rounded-md tems-center border-gray-200 border-2"
           flat
           bordered
         >
           <div v-for="guest in guests" :key="guest.guests_id">
             <div
-              class="booking grid grid-cols-3 gap-4 p-2 bg-white rounded-md items-center"
+              class="guest-list grid grid-cols-3 gap-4 p-2 bg-white rounded-md items-center"
             >
               <div class="text-sm text-center">
                 {{ guest.first_name }}
@@ -87,3 +87,16 @@ const listGuestAction = async () => {
     });
 };
 </script>
+
+<style scoped lang="scss">
+.grid-title {
+  @apply text-lg font-bold flex justify-center;
+}
+.guest-list {
+  cursor: pointer;
+}
+.guest-list:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgba(249, 250, 251, var(--tw-bg-opacity)) !important;
+}
+</style>
