@@ -32,9 +32,10 @@
           flat
           bordered
         >
-          <div v-for="guest in guests" :key="guest.guests_id">
+          <div v-for="guest in guests" :key="guest.guest_id">
             <div
               class="guest-list grid grid-cols-3 gap-4 p-2 bg-white rounded-md items-center"
+              @click="goToGuest(guest.guest_id)"
             >
               <div class="text-sm text-center">
                 {{ guest.first_name }}
@@ -85,6 +86,13 @@ const listGuestAction = async () => {
     .catch((e) => {
       return router.push({ name: "not-found" });
     });
+};
+
+const goToGuest = async (guestId: string) => {
+  return router.push({
+    name: "guest",
+    params: { guestId: guestId },
+  });
 };
 </script>
 

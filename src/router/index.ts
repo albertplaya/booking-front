@@ -16,6 +16,7 @@ import ActivityEventsList from "@/views/partnerLanding/ActivityEventList.vue";
 import UpdateAccount from "@/views/account/UpdateAccount.vue";
 import ListGuest from "@/views/guest/ListGuest.vue";
 import CreateGuest from "@/views/guest/AddGuest.vue";
+import Guest from "@/views/guest/Guest.vue";
 import NotFoundPage from "@/views/error/NotFoundPage.vue";
 import PosListActivity from "@/views/pos/ListActivity.vue";
 import PosActivityEventList from "@/views/pos/ActivityEventList.vue";
@@ -123,6 +124,12 @@ const routes: Array<RouteRecordRaw> = [
     path: "/guests",
     name: "guest-list",
     component: ListGuest,
+    props: true,
+  },
+  {
+    path: "/guest/:guestId",
+    name: "guest",
+    component: Guest,
     props: true,
   },
   {

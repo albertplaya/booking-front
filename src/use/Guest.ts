@@ -23,8 +23,16 @@ export function useGuest() {
     await postData(endpoints.v1.guest_create, payload);
   };
 
+  const getGuest = async (guestId: string): Promise<Guest> => {
+    const guestResult = await getData(
+      endpoints.v1.guest_get.replace("{guestId}", guestId)
+    );
+    return guestResult.data as Guest;
+  };
+
   return {
     listGuest,
     createGuest,
+    getGuest,
   };
 }

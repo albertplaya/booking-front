@@ -24,7 +24,15 @@ export function useGuestPass() {
     return guestPassResult;
   };
 
+  const getGuestPassesByGuest = async (guestId: string): Promise<any> => {
+    const guestResult = await getData(
+      endpoints.v1.guest_pass_get_by_guest.replace("{guestId}", guestId)
+    );
+    return guestResult.data as Guest;
+  };
+
   return {
     createGuestPass,
+    getGuestPassesByGuest,
   };
 }
