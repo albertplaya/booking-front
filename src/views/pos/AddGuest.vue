@@ -2,7 +2,7 @@
   <q-page class="flex justify-center bg-white" padding>
     <div class="q-pa-md flex-grow" style="max-width: 400px">
       <div class="pb-4 flex row-auto justify-between" style="min-width: 320px">
-        <h3 class="text-2xl">Add guest</h3>
+        <h3 class="text-2xl">Add guest & pass</h3>
         <BackButton />
       </div>
       <ErrorNotification :error="error" />
@@ -24,6 +24,20 @@
             </q-item>
           </template>
         </q-select>
+        <div v-if="guestPasses && guestPasses.length">
+          <h3 class="mt-6 text-lg font-bold">Assign pass</h3>
+          <div
+            class="flex justify-around mt-4"
+            v-for="pass in guestPasses"
+            :key="pass.pass_id"
+          >
+            <GuestPassCard
+              :pass="pass"
+              :selected="selectedPass == pass"
+              @click="selectPass(pass)"
+            />
+          </div>
+        </div>
       </div>
       <div style="max-width: 400px">
         <q-btn
@@ -31,7 +45,7 @@
           label="Save"
           type="submit"
           color="primary"
-          @click="addGuestSession"
+          @click="addGuestPassAndBookingSession"
         />
       </div>
     </div>
@@ -39,15 +53,19 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from "vue";
+import { onMounted, ref, watch } from "vue";
 import { useBookingSession } from "@/use/BookingSession";
 import { useGuest } from "@/use/Guest";
 import BackButton from "@/components/button/Back.vue";
 import ErrorNotification from "@/components/notification/Error.vue";
 import router from "@/router";
 import { Guest } from "@/types/Guest";
+import { Pass } from "@/types/Pass";
 import { useAuth } from "@/use/Authentication";
 import { Partner } from "@/types/Partner";
+import { useGuestPass } from "@/use/GuestPass";
+import { GuestPass } from "@/types/GuestPass";
+import GuestPassCard from "@/components/pass/GuestPassCard.vue";
 
 const props = defineProps({
   eventId: {
@@ -65,6 +83,7 @@ const { initBookingSession, addGuest, finishBookingSession } =
   useBookingSession();
 const { listGuest } = useGuest();
 const { getPartner } = useAuth();
+const { getGuestPassesByGuest } = useGuestPass();
 
 const error = ref<string>("");
 
@@ -72,6 +91,8 @@ const partner: Partner = getPartner();
 const currentGuest = ref<{ label: string; value: Guest }>();
 const stringOptions = ref<{ label: string; value: Guest }[]>([]);
 const options = ref<{ label: string; value: Guest }[]>([]);
+const guestPasses = ref<GuestPass[]>();
+const selectedPass = ref<GuestPass>();
 
 const getGuests = async () => {
   listGuest(partner.partner_id as string).then((result) => {
@@ -97,7 +118,24 @@ const filterByGuestName = (value: string, update: any) => {
   });
 };
 
-const addGuestSession = async () => {
+const getGuestPassesByGuestAction = async (guestId: string) => {
+  getGuestPassesByGuest(guestId).then((result) => (guestPasses.value = result));
+};
+
+watch(
+  () => currentGuest.value,
+  () => {
+    if (currentGuest.value) {
+      getGuestPassesByGuestAction(currentGuest.value.value.guest_id);
+    }
+  }
+);
+
+const selectPass = (pass: GuestPass) => {
+  selectedPass.value = pass;
+};
+
+const addGuestPassAndBookingSession = async () => {
   if (!currentGuest.value) {
     error.value = "No guest selected";
     return;
@@ -110,7 +148,11 @@ const addGuestSession = async () => {
     }
   );
   await new Promise((resolve) => setTimeout(resolve, 500));
-  await finishBookingSession(props.eventId)
+  const bookingType: string = selectedPass.value ? "pass" : "direct";
+  const guestPassId: string | null = selectedPass.value
+    ? selectedPass.value.guest_pass_id
+    : null;
+  await finishBookingSession(props.eventId, "pos", bookingType, guestPassId)
     .then(() => {})
     .catch((err) => {
       error.value = err;

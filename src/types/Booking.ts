@@ -1,4 +1,4 @@
-import { Guest } from './Guest';
+import { Guest } from "./Guest";
 export interface Booking {
   booking_id: string;
   event_id: string;
@@ -7,5 +7,8 @@ export interface Booking {
   title: string;
   start_date: string;
   duration: number;
+  price: number;
   guest: Guest;
+  source: string;
+  type: string;
 }

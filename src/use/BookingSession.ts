@@ -37,11 +37,19 @@ export function useBookingSession() {
     await postData(endpoints.v1.booking_add_guest, bookingSession);
   };
 
-  const finishBookingSession = async (eventId: string): Promise<string> => {
+  const finishBookingSession = async (
+    eventId: string,
+    source: string,
+    type: string,
+    guestPassId?: string | null
+  ): Promise<string> => {
     const bookingId = localStorage.getItem("booking_id") as string;
     await postData(endpoints.v1.booking_finish, {
       event_id: eventId,
       booking_id: bookingId,
+      source: source,
+      type: type,
+      guest_pass_id: guestPassId,
     }).then(() => {
       localStorage.removeItem("booking_id");
       localStorage.removeItem("booking_session");

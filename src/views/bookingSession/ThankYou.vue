@@ -85,7 +85,7 @@ const props = defineProps({
   },
 });
 onMounted(async () => {
-  finishBookingSession(props.eventId).then((bookingId: string) => {
+  finishBookingSession(props.eventId, 'landing', 'direct').then((bookingId: string) => {
     setTimeout(getBookingDetails, 1000, bookingId);
   });
 });

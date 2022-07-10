@@ -103,6 +103,30 @@
                             (val && val.length > 0) || 'Please type something',
                         ]"
                       />
+                      <q-input
+                        filled
+                        v-model="booking.type"
+                        label="Type"
+                        lazy-rules
+                        disable
+                        readonly
+                        :rules="[
+                          (val) =>
+                            (val && val.length > 0) || 'Please type something',
+                        ]"
+                      />
+                      <q-input
+                        filled
+                        v-model="booking.source"
+                        label="Source"
+                        lazy-rules
+                        disable
+                        readonly
+                        :rules="[
+                          (val) =>
+                            (val && val.length > 0) || 'Please type something',
+                        ]"
+                      />
                     </q-form>
                   </div>
                 </div>
