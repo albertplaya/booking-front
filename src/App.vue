@@ -1,9 +1,9 @@
 <template>
   <div v-if="showAppLayout">
-    <q-layout view="hHh LpR fFf">
+    <q-layout view="hHh lpR fFf">
       <Header />
       <FooterMobile />
-      <q-page-container>
+      <q-page-container class="bg-gray-50">
         <router-view />
       </q-page-container>
     </q-layout>

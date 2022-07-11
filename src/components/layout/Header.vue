@@ -1,6 +1,6 @@
 <template>
-  <q-header class="bg-gray-50 text-black z-40">
-    <q-toolbar class="flex justify-between">
+  <q-header class="header">
+    <q-toolbar class="toolbar">
       <div class="text-2xl">Header</div>
       <div>
         <div v-if="partner" class="flex flex-row visible-custom">
@@ -84,6 +84,14 @@ watch(
 </script>
 
 <style scoped>
+.header {
+  @apply bg-gray-50 text-black z-40;
+}
+
+.toolbar {
+  @apply flex justify-between;
+  max-height: 50px;
+}
 .visible-custom {
   visibility: hidden;
 }
