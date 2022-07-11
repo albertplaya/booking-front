@@ -1,22 +1,19 @@
 <template>
-  <q-card
-    class="m-2 rounded-md"
-    flat
-    bordered
-    style="width: 334px; height: fit-content"
-  >
-    <div
+  <q-card class="m-2 rounded-md" flat bordered style="width: 334px">
+    <q-img
+      v-if="activity.image_id"
+      :src="filesUrl(activity.image_id)"
+      class="cursor-pointer"
+      fit="cover"
+      style="max-width: 334px; height: 334px"
+      @click="goToActivityEventList(activity.activity_id)"
+    />
+    <DefaultImage
+      v-else
+      :activity="activity"
       class="cursor-pointer"
       @click="goToActivityEventList(activity.activity_id)"
-    >
-      <q-img
-        v-if="activity.image_id"
-        :src="filesUrl(activity.image_id)"
-        fit="cover"
-        style="max-width: 334px; height: 334px"
-      />
-      <DefaultImage v-else :activity="activity" />
-    </div>
+    />
 
     <q-card-section horizontal>
       <div @click="goToActivityEventList(activity.activity_id)">
