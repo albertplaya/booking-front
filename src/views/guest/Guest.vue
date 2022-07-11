@@ -2,32 +2,30 @@
   <q-page class="flex justify-center bg-gray-50" padding>
     <div style="width: 895px">
       <div class="flex justify-between">
-        <h3 class="text-2xl ml-2">Guest</h3>
+        <h3 v-if="guest" class="text-2xl ml-2">
+          {{ guest.first_name }} {{ guest.last_name }}
+        </h3>
         <q-separator />
         <BackButton />
       </div>
-      <div class="flex flex-col mt-4">
+      <div class="flex flex-col mt-4 ml-2">
         <div v-if="guest">
-          <div class="text-sm text-center">
-            {{ guest.first_name }}
-            {{ guest.last_name }}
-          </div>
-          <div class="text-sm text-center">
+          <div class="text-sm flex items-center">
+            <q-icon class="icon" name="email" />
             {{ guest.email }}
           </div>
-          <div class="text-sm text-center">
+          <div class="text-sm flex items-center">
+            <q-icon class="icon" name="phone" />
             {{ guest.phone }}
           </div>
         </div>
       </div>
-      <div class="text-lg font-bold">Passes</div>
-      <div v-if="guestPasses && !guestPasses.length" class="flex">
-        <div
-          class="flex justify-center flex-grow text-2xl bg-gray-50 border-2 rounded-md mt-4 p-4"
-        >
-          No passes assigned
-        </div>
-      </div>
+      <div class="text-lg font-bold mt-4 ml-2">Passes</div>
+      <AddWhenEmptyList
+        v-if="guestPasses && !guestPasses.length"
+        label="Assign new pass"
+        to="pass-assign"
+      />
       <div v-else-if="guestPasses" class="flex flex-col mt-4">
         <div class="grid grid-cols-4 gap-4 center m-1 p-1">
           <div class="text-md font-bold flex justify-center">Title</div>
@@ -88,6 +86,7 @@ import { Partner } from "@/types/Partner";
 import { GuestPass } from "@/types/GuestPass";
 import { useAuth } from "@/use/Authentication";
 import BackButton from "@/components/button/Back.vue";
+import AddWhenEmptyList from "@/components/button/AddWhenEmptyList.vue";
 import router from "@/router";
 
 const props = defineProps({
@@ -136,5 +135,11 @@ const getGuestPassesByGuestAction = async () => {
 .guest-list:hover {
   --tw-bg-opacity: 1;
   background-color: rgba(249, 250, 251, var(--tw-bg-opacity)) !important;
+}
+
+.icon {
+  @apply mr-1;
+  color: $teal;
+  font-size: 1.5rem;
 }
 </style>
