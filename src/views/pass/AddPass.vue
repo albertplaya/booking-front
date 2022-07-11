@@ -26,9 +26,6 @@
             v-model="description"
             label="Description"
             lazy-rules
-            :rules="[
-              (val) => (val && val.length > 0) || 'Please type something',
-            ]"
           />
 
           <q-input
@@ -88,7 +85,7 @@ const { createPass } = usePass();
 const { getPartner } = useAuth();
 
 const title = ref<string>("");
-const description = ref<string>("");
+const description = ref<string>();
 const quantity = ref<number>(10);
 const price = ref<number>(0);
 const currency = ref<string>("EUR");
