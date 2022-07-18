@@ -1,7 +1,16 @@
 <template>
   <q-header class="header">
     <q-toolbar class="toolbar">
-      <div class="text-2xl">Header</div>
+      <div
+        class="flex justify-between items-center py-4 md:justify-start md:space-x-10"
+      >
+        <div class="flex justify-start lg:flex-1 lg:ml-12">
+          <a href="#">
+            <span class="sr-only">Workflow</span>
+            <img class="h-20 w-auto sm:h-12" src="/logo.svg" alt="" />
+          </a>
+        </div>
+      </div>
       <div>
         <div v-if="partner" class="flex flex-row visible-custom">
           <q-btn
