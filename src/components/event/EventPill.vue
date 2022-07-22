@@ -24,7 +24,7 @@
     </div>
   </div>
   <div class="text-center">
-    <ShareBooking />
+    <ShareBooking :event="event" />
   </div>
 </template>
 

@@ -1,9 +1,23 @@
 const colors = require("tailwindcss/colors");
 
 module.exports = {
+  content: ["./src/**/*.{vue,js,ts}"],
   purge: ["./index.html", "./src/**/*.{vue,js,ts,jsx,tsx}"],
   presets: [],
   darkMode: false, // or 'media' or 'class'
+  daisyui: {
+    themes: [
+      {
+        bookingcat: {
+          primary: "#a991f7",
+          secondary: "#f6d860",
+          accent: "#37cdbe",
+          neutral: "#3d4451",
+          "base-100": "#ffffff",
+        },
+      },
+    ],
+  },
   theme: {
     screens: {
       sm: "640px",
@@ -1030,5 +1044,5 @@ module.exports = {
     wordBreak: ["responsive"],
     zIndex: ["responsive", "focus-within", "focus"],
   },
-  plugins: [],
+  plugins: [require("daisyui")],
 };
