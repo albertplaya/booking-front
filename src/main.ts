@@ -7,6 +7,7 @@ import quasarUserOptions from "@/quasar-user-options";
 import VueAuth0Plugin from "vue-auth0-plugin";
 import "./assets/tailwind.css";
 import store from "@/store";
+import "vue-datetime/dist/vue-datetime.css";
 
 loadFonts();
 

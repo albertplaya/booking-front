@@ -12,19 +12,24 @@
       >
         <q-form class="q-gutter-md pt-4">
           <q-input v-model="date" filled>
-            <template #prepend>
+            <template v-slot:prepend>
               <q-icon name="event" class="cursor-pointer">
                 <q-popup-proxy
                   ref="qDateProxy"
+                  cover
                   transition-show="scale"
                   transition-hide="scale"
                 >
                   <q-date
                     v-model="date"
+                    first-day-of-week="1"
                     cover
+                    today-btn
                     mask="YYYY-MM-DD"
-                    @click="$refs.qDateProxy.hide()"
                   >
+                    <div class="row items-center justify-end">
+                      <q-btn v-close-popup label="Close" color="primary" flat />
+                    </div>
                   </q-date>
                 </q-popup-proxy>
               </q-icon>
@@ -32,7 +37,7 @@
           </q-input>
 
           <q-input v-model="time" filled mask="time" :rules="['time']">
-            <template #prepend>
+            <template v-slot:prepend>
               <q-icon name="access_time" class="cursor-pointer">
                 <q-popup-proxy
                   ref="qTimeProxy"
@@ -100,6 +105,7 @@ import BackButton from "@/components/button/Back.vue";
 import ErrorNotification from "@/components/notification/Error.vue";
 import router from "@/router";
 import { date as dateHelper } from "quasar";
+import { Datetime } from "vue-datetime";
 
 const props = defineProps({
   activityId: {
