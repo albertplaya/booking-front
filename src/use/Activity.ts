@@ -18,6 +18,7 @@ export function useActivity() {
       description: activity.description,
       price: activity.price,
       currency: activity.currency,
+      location: activity.location,
       image_id: activity.image_id,
     };
 
@@ -35,6 +36,7 @@ export function useActivity() {
       description: activity.description,
       price: activity.price,
       currency: activity.currency,
+      location: activity.location,
       image_id: activity.image_id,
     };
 

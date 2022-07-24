@@ -9,8 +9,8 @@ module.exports = {
     themes: [
       {
         bookingcat: {
-          primary: "#a991f7",
-          secondary: "#f6d860",
+          primary: "#121212",
+          secondary: "#48ac98",
           accent: "#37cdbe",
           neutral: "#3d4451",
           "base-100": "#ffffff",

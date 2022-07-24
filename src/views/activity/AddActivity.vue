@@ -36,6 +36,17 @@
 
           <q-input
             filled
+            v-model="location"
+            label="Location"
+            lazy-rules
+            autogrow
+            :rules="[
+              (val) => (val && val.length > 0) || 'Please type something',
+            ]"
+          />
+
+          <q-input
+            filled
             v-model="price"
             label="Price"
             lazy-rules
@@ -82,6 +93,7 @@ const { getPartner } = useAuth();
 
 const title = ref<string>("");
 const description = ref<string>("");
+const location = ref<string | null>(null);
 const price = ref<number>(0);
 const currency = ref<string>("EUR");
 const activityImageId = ref<string | null>(null);
@@ -99,9 +111,13 @@ const saveActivity = () => {
     description: description.value,
     price: price.value * 100,
     currency: currency.value,
+    location: location.value,
     image_id: activityImageId.value,
   } as Activity)
-    .then(() => router.push({ name: "activity-list" }))
+    .then(async () => {
+      await new Promise((resolve) => setTimeout(resolve, 500));
+      router.push({ name: "activity-list" });
+    })
     .catch((err) => {
       error.value = err;
     });

@@ -39,12 +39,20 @@
           :key="activity.activity_id"
           style="width: 334px"
         >
-          <q-img
-            v-if="activity.image_id"
-            :src="filesUrl(activity.image_id)"
-            fit="cover"
-            style="max-width: 334px; height: 334px"
-          />
+          <div v-if="activity.image_id" class="image-container">
+            <q-img
+              :src="filesUrl(activity.image_id)"
+              fit="cover"
+              style="max-width: 334px; height: 334px"
+            />
+            <div
+              v-if="activity.location"
+              class="text-bottom-right flex items-center bg-secondary/70 rounded-md p-1"
+            >
+              <q-icon size="2em" name="place" />
+              {{ activity.location }}
+            </div>
+          </div>
           <DefaultImage v-else :activity="activity" />
           <q-card-section horizontal>
             <q-card-section class="q-pt-xs">
@@ -69,9 +77,8 @@
             </q-btn>
             <q-space />
             <q-btn
+              class="text-primary"
               flat
-              class
-              color="primary"
               :to="{
                 name: 'activity-update',
                 params: { activityId: activity.activity_id },
@@ -128,5 +135,20 @@ const landingPageUrl =
   line-clamp: 2;
   -webkit-box-orient: vertical;
   min-height: 60px;
+}
+
+.image-container {
+  position: relative;
+  text-align: center;
+  color: white;
+  padding-left: 0rem;
+  padding-right: 0rem;
+}
+
+.text-bottom-right {
+  position: absolute;
+  bottom: 0.3rem;
+  right: 0.3rem;
+  padding-right: 0.6rem;
 }
 </style>
