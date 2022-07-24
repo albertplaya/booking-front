@@ -105,7 +105,6 @@ import BackButton from "@/components/button/Back.vue";
 import ErrorNotification from "@/components/notification/Error.vue";
 import router from "@/router";
 import { date as dateHelper } from "quasar";
-import { Datetime } from "vue-datetime";
 
 const props = defineProps({
   activityId: {
