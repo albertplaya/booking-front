@@ -49,7 +49,7 @@
               v-if="activity.location"
               class="text-bottom-right flex items-center bg-secondary/70 rounded-md p-1"
             >
-              <q-icon size="2em" name="place" />
+              <q-icon size="1em" name="place" />
               {{ activity.location }}
             </div>
           </div>
