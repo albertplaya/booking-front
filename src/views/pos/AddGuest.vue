@@ -28,13 +28,14 @@
           <h3 class="mt-6 text-lg font-bold">Assign pass</h3>
           <div
             class="flex justify-around mt-4"
-            v-for="pass in guestPasses"
-            :key="pass.pass_id"
+            v-for="guestPass in guestPasses"
+            :key="guestPass.pass_id"
           >
             <GuestPassCard
-              :pass="pass"
-              :selected="selectedPass == pass"
-              @click="selectPass(pass)"
+              v-if="guestPass.current_quantity < guestPass.quantity"
+              :pass="guestPass"
+              :selected="selectedPass == guestPass"
+              @click="selectPass(guestPass)"
             />
           </div>
         </div>
