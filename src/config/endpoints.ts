@@ -24,6 +24,7 @@ export const endpoints = {
     booking_list_with_filter: "/bookings",
     booking_update: "/booking",
     guest_create: "/guest",
+    guest_update: "/guest",
     guest_list: "/guests/{partnerId}",
     guest_get: "/guest/{guestId}",
     pass_create: "/pass",

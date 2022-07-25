@@ -2,24 +2,30 @@
   <q-page class="flex justify-center bg-gray-50" padding>
     <div style="width: 895px">
       <div class="flex justify-between">
-        <h3 v-if="guest" class="text-2xl ml-2">
-          {{ guest.first_name }} {{ guest.last_name }}
-        </h3>
+        <h3 class="text-2xl ml-2">Guest information</h3>
         <q-separator />
         <BackButton />
       </div>
-      <div class="flex flex-col mt-4 ml-2">
-        <div v-if="guest">
-          <div class="text-sm flex items-center">
-            <q-icon class="icon" name="email" />
-            {{ guest.email }}
-          </div>
-          <div class="text-sm flex items-center">
-            <q-icon class="icon" name="phone" />
-            {{ guest.phone }}
-          </div>
+      <label
+        for="guest-modal"
+        v-if="guest"
+        class="guest flex justify-around py-2 my-4 mb-2 bg-white rounded-md items-center border-gray-200 border-2"
+        flat
+        bordered
+      >
+        <h3 class="text-xl ml-2">
+          {{ guest.first_name }} {{ guest.last_name }}
+        </h3>
+        <div class="text-sm flex items-center">
+          <q-icon class="icon" name="email" />
+          {{ guest.email }}
         </div>
-      </div>
+        <div class="text-sm flex items-center">
+          <q-icon class="icon" name="phone" />
+          {{ guest.phone }}
+        </div>
+      </label>
+      <GuestModal v-if="guest" :guest="guest" />
       <div class="text-lg font-bold mt-4 ml-2">Passes</div>
       <AddWhenEmptyList
         v-if="guestPasses && !guestPasses.length"
@@ -87,6 +93,7 @@ import { GuestPass } from "@/types/GuestPass";
 import { useAuth } from "@/use/Authentication";
 import BackButton from "@/components/button/Back.vue";
 import AddWhenEmptyList from "@/components/button/AddWhenEmptyList.vue";
+import GuestModal from "@/components/guest/GuestModal.vue";
 import router from "@/router";
 
 const props = defineProps({
@@ -126,13 +133,10 @@ const getGuestPassesByGuestAction = async () => {
 </script>
 
 <style scoped lang="scss">
-.grid-title {
-  @apply text-lg font-bold flex justify-center;
-}
-.guest-list {
+.guest {
   cursor: pointer;
 }
-.guest-list:hover {
+.guest:hover {
   --tw-bg-opacity: 1;
   background-color: rgba(249, 250, 251, var(--tw-bg-opacity)) !important;
 }

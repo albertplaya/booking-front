@@ -28,7 +28,7 @@
         </div>
 
         <div
-          class="mb-2 bg-white rounded-md tems-center border-gray-200 border-2"
+          class="mb-2 bg-white rounded-md items-center border-gray-200 border-2"
           flat
           bordered
         >

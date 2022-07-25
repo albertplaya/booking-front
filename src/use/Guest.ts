@@ -1,7 +1,7 @@
 import { ulid } from "ulid";
 import { Guest } from "./../types/Guest";
 import { endpoints } from "@/config/endpoints";
-import { getData, postData } from "@/infrastructure/ApiHandler";
+import { getData, postData, putData } from "@/infrastructure/ApiHandler";
 
 export function useGuest() {
   const listGuest = async (partnerId: string): Promise<Guest[]> => {
@@ -30,9 +30,26 @@ export function useGuest() {
     return guestResult.data as Guest;
   };
 
+  const updateGuest = async (guest: Guest): Promise<Guest> => {
+    const payload = {
+      guest_id: guest.guest_id,
+      first_name: guest.first_name,
+      last_name: guest.last_name,
+      email: guest.email,
+      phone: guest.phone,
+    };
+
+    const guestResult: Promise<Guest> = await putData(
+      endpoints.v1.guest_update,
+      payload
+    );
+    return guestResult;
+  };
+
   return {
     listGuest,
     createGuest,
+    updateGuest,
     getGuest,
   };
 }

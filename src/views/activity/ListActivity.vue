@@ -66,8 +66,8 @@
           <q-separator />
           <q-card-actions>
             <q-btn
+              class="primary"
               flat
-              color="primary"
               :to="{
                 name: 'event-list',
                 params: { activityId: activity.activity_id },
@@ -77,7 +77,7 @@
             </q-btn>
             <q-space />
             <q-btn
-              class="text-primary"
+              class="primary"
               flat
               :to="{
                 name: 'activity-update',
