@@ -32,8 +32,16 @@ export function useGuestPass() {
     return guestResult.data as GuestPass[];
   };
 
+  const updateGuestPassStatus = async (guestPass: GuestPass): Promise<void> => {
+    await putData(endpoints.v1.guest_pass_update, {
+      guest_pass_id: guestPass.guest_pass_id,
+      status: guestPass.status,
+    });
+  };
+
   return {
     createGuestPass,
     getGuestPassesByGuest,
+    updateGuestPassStatus,
   };
 }

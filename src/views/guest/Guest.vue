@@ -9,7 +9,7 @@
       <label
         for="guest-modal"
         v-if="guest"
-        class="guest flex justify-around py-2 my-4 mb-2 bg-white rounded-md items-center border-gray-200 border-2"
+        class="cell flex justify-around py-2 my-4 mb-2 bg-white rounded-md items-center border-gray-200 border-2"
         flat
         bordered
       >
@@ -46,8 +46,10 @@
           bordered
         >
           <div v-for="guestPass in guestPasses" :key="guestPass.guest_pass_id">
-            <div
-              class="booking grid grid-cols-4 gap-4 p-2 bg-white rounded-md items-center"
+            <label
+              for="guest-pass-modal"
+              class="cell grid grid-cols-4 gap-4 p-2 bg-white rounded-md items-center"
+              @click="selectedGuestPass = guestPass"
             >
               <div class="text-sm text-center">
                 {{ guestPass.title }}
@@ -70,7 +72,11 @@
                   {{ guestPass.status }}
                 </div>
               </div>
-            </div>
+            </label>
+            <GuestPassModal
+              v-if="selectedGuestPass"
+              :guestPass="selectedGuestPass"
+            />
             <div
               v-if="guestPasses[guestPasses.length - 1] !== guestPass"
               q-space
@@ -94,6 +100,7 @@ import { useAuth } from "@/use/Authentication";
 import BackButton from "@/components/button/Back.vue";
 import AddWhenEmptyList from "@/components/button/AddWhenEmptyList.vue";
 import GuestModal from "@/components/guest/GuestModal.vue";
+import GuestPassModal from "@/components/guestPass/GuestPassModal.vue";
 import router from "@/router";
 
 const props = defineProps({
@@ -115,6 +122,7 @@ const { getGuestPassesByGuest } = useGuestPass();
 const guest = ref<Guest>();
 const partner = ref<Partner>();
 const guestPasses = ref<GuestPass[]>();
+const selectedGuestPass = ref<GuestPass>();
 
 const getGuestAction = async () => {
   partner.value = getPartner();
@@ -133,10 +141,10 @@ const getGuestPassesByGuestAction = async () => {
 </script>
 
 <style scoped lang="scss">
-.guest {
+.cell {
   cursor: pointer;
 }
-.guest:hover {
+.cell:hover {
   --tw-bg-opacity: 1;
   background-color: rgba(249, 250, 251, var(--tw-bg-opacity)) !important;
 }
