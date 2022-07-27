@@ -17,6 +17,8 @@
             label="Name"
             lazy-rules
             autogrow
+            :error="formErrors.get('first_name') != null"
+            :error-message="formErrors.get('first_name')?.message"
             :rules="[
               (val) => (val && val.length > 0) || 'Please type something',
             ]"
@@ -28,6 +30,8 @@
             label="Last name"
             lazy-rules
             autogrow
+            :error="formErrors.get('last_name') != null"
+            :error-message="formErrors.get('lasst_name')?.message"
             :rules="[
               (val) => (val && val.length > 0) || 'Please type something',
             ]"
@@ -39,6 +43,8 @@
             autogrow
             label="Email"
             type="email"
+            :error="formErrors.get('email') != null"
+            :error-message="formErrors.get('email')?.message"
             :rules="[
               (val) => (val && val.length > 0) || 'Please type something',
             ]"
@@ -49,6 +55,8 @@
             lazy-rules
             autogrow
             label="Phone"
+            :error="formErrors.get('phone') != null"
+            :error-message="formErrors.get('phone')?.message"
             :rules="[
               (val) => (val && val.length > 0) || 'Please type something',
             ]"
@@ -72,11 +80,12 @@
 import { onMounted, ref } from "vue";
 import { useBookingSession } from "@/use/BookingSession";
 import BackButton from "@/components/button/Back.vue";
-import ErrorNotification from "@/components/notification/Error.vue";
+import ErrorNotification from "@/components/notification/ErrorNotification.vue";
 import router from "@/router";
 import { Guest } from "@/types/Guest";
 import { Partner } from "@/types/Partner";
 import { ulid } from "ulid";
+import { ErrorResponse, InputErrorResponse } from "@/types/Form/ErrorResponse";
 
 const props = defineProps({
   eventId: {
@@ -95,7 +104,8 @@ const name = ref<string>("");
 const lastName = ref<string>("");
 const email = ref<string>("");
 const phone = ref<string>("");
-const error = ref<any>("");
+const error = ref<string>("");
+const formErrors = ref(new Map<string, InputErrorResponse>());
 
 const addGuestSession = () => {
   const partner = getPartner();
@@ -113,8 +123,12 @@ const addGuestSession = () => {
         params: { eventId: props.eventId },
       });
     })
-    .catch((err) => {
-      error.value = err;
+    .catch((errorResult: ErrorResponse | string) => {
+      if (typeof errorResult === "string") {
+        error.value = errorResult;
+      } else {
+        formErrors.value = errorResult.errors;
+      }
     });
 };
 

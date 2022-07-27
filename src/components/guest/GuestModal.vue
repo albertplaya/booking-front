@@ -9,6 +9,7 @@
           ><q-icon class="cursor-pointer" size="2em" name="close"
         /></label>
       </div>
+      <ErrorNotification class="px-4" :error="error" />
       <div class="bg-whitept-5">
         <div v-if="guest" class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
           <div class="mt-2">
@@ -18,6 +19,8 @@
                 v-model="guest.first_name"
                 label="First Name"
                 lazy-rules
+                :error="formErrors.get('first_name') != null"
+                :error-message="formErrors.get('first_name')?.message"
                 :rules="[
                   (val) => (val && val.length > 0) || 'Please type something',
                 ]"
@@ -27,6 +30,8 @@
                 v-model="guest.last_name"
                 label="Last Name"
                 lazy-rules
+                :error="formErrors.get('last_name') != null"
+                :error-message="formErrors.get('last_name')?.message"
                 :rules="[
                   (val) => (val && val.length > 0) || 'Please type something',
                 ]"
@@ -36,6 +41,8 @@
                 v-model="guest.email"
                 label="Email"
                 lazy-rules
+                :error="formErrors.get('email') != null"
+                :error-message="formErrors.get('email')?.message"
                 :rules="[
                   (val) => (val && val.length > 0) || 'Please type something',
                 ]"
@@ -45,6 +52,8 @@
                 v-model="guest.phone"
                 label="Phone"
                 lazy-rules
+                :error="formErrors.get('phone') != null"
+                :error-message="formErrors.get('phone')?.message"
                 :rules="[
                   (val) => (val && val.length > 0) || 'Please type something',
                 ]"
@@ -66,9 +75,11 @@
   </label>
 </template>
 <script setup lang="ts">
-import { PropType } from "vue";
+import { PropType, ref } from "vue";
 import { Guest } from "@/types/Guest";
 import { useGuest } from "@/use/Guest";
+import { ErrorResponse, InputErrorResponse } from "@/types/Form/ErrorResponse";
+import ErrorNotification from "@/components/notification/ErrorNotification.vue";
 import router from "@/router";
 
 const props = defineProps({
@@ -79,6 +90,8 @@ const props = defineProps({
 });
 
 const { updateGuest } = useGuest();
+const error = ref<string>("");
+const formErrors = ref(new Map<string, InputErrorResponse>());
 
 const updateGuestAndCloseModal = async () => {
   if (!props.guest) {
@@ -88,8 +101,12 @@ const updateGuestAndCloseModal = async () => {
     .then(async () => {
       closeModal();
     })
-    .catch((e) => {
-      return router.push({ name: "not-found" });
+    .catch((errorResult) => {
+      if (typeof errorResult === "string") {
+        error.value = errorResult;
+      } else {
+        formErrors.value = errorResult.errors;
+      }
     });
 };
 

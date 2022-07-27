@@ -58,7 +58,7 @@ import { onMounted, ref, watch } from "vue";
 import { useBookingSession } from "@/use/BookingSession";
 import { useGuest } from "@/use/Guest";
 import BackButton from "@/components/button/Back.vue";
-import ErrorNotification from "@/components/notification/Error.vue";
+import ErrorNotification from "@/components/notification/ErrorNotification.vue";
 import router from "@/router";
 import { Guest } from "@/types/Guest";
 import { Pass } from "@/types/Pass";

@@ -66,7 +66,7 @@ import { ref, onMounted, watch } from "vue";
 import { usePass } from "@/use/Pass";
 import { useGuest } from "@/use/Guest";
 import BackButton from "@/components/button/Back.vue";
-import ErrorNotification from "@/components/notification/Error.vue";
+import ErrorNotification from "@/components/notification/ErrorNotification.vue";
 import router from "@/router";
 import { useAuth } from "@/use/Authentication";
 import { useGuestPass } from "@/use/GuestPass";

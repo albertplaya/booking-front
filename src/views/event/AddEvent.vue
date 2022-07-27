@@ -66,6 +66,8 @@
             label="Duration in minuts"
             lazy-rules
             autogrow
+            :error="formErrors.get('duration') != null"
+            :error-message="formErrors.get('duration')?.message"
             :rules="[
               (val) => (val && val.length > 0) || 'Please type something',
             ]"
@@ -77,6 +79,8 @@
             label="Number of participants"
             lazy-rules
             autogrow
+            :error="formErrors.get('capacity') != null"
+            :error-message="formErrors.get('capacity')?.message"
             :rules="[
               (val) => (val && val.length > 0) || 'Please type something',
             ]"
@@ -102,7 +106,8 @@
 import { ref } from "vue";
 import { useEvent } from "@/use/Event";
 import BackButton from "@/components/button/Back.vue";
-import ErrorNotification from "@/components/notification/Error.vue";
+import ErrorNotification from "@/components/notification/ErrorNotification.vue";
+import { ErrorResponse, InputErrorResponse } from "@/types/Form/ErrorResponse";
 import router from "@/router";
 import { date as dateHelper } from "quasar";
 
@@ -118,7 +123,8 @@ const date = ref<string>(dateHelper.formatDate(new Date(), "YYYY-MM-DD"));
 const time = ref<string>("12:00");
 const duration = ref<string>("30");
 const capacity = ref<string>("10");
-const error = ref<any>("");
+const error = ref<string>("");
+const formErrors = ref(new Map<string, InputErrorResponse>());
 
 const saveEvent = () => {
   create({
@@ -133,8 +139,12 @@ const saveEvent = () => {
         params: { activityId: props.activityId },
       })
     )
-    .catch((err) => {
-      error.value = err;
+    .catch((errorResult) => {
+      if (typeof errorResult === "string") {
+        error.value = errorResult;
+      } else {
+        formErrors.value = errorResult.errors;
+      }
     });
 };
 </script>

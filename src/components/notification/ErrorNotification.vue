@@ -5,16 +5,11 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from "vue";
-
-export default defineComponent({
-  name: "ErrorNotification",
-  props: {
-    error: {
-      type: String,
-      required: true,
-    },
+<script setup lang="ts">
+const props = defineProps({
+  error: {
+    type: String,
+    default: "",
   },
 });
 </script>

@@ -1,3 +1,5 @@
+import { ErrorResponse } from "@/types/Form/ErrorResponse";
+
 export async function postData(url: string = "", data = {}) {
   const domain: string = import.meta.env.VITE_API_URL;
   const response = await fetch(domain + url, {
@@ -11,9 +13,13 @@ export async function postData(url: string = "", data = {}) {
     body: JSON.stringify(data),
   });
 
-  if (response.status !== 200) {
+  if (response.status === 400) {
     const result = await response.json();
-    return Promise.reject(result.errors[0].msg);
+    return Promise.reject(ErrorResponse(result.errors));
+  }
+
+  if (response.status !== 200) {
+    return Promise.reject("Server error");
   }
 
   return response.json();
@@ -32,9 +38,13 @@ export async function putData(url: string = "", data = {}) {
     body: JSON.stringify(data),
   });
 
-  if (response.status !== 200) {
+  if (response.status === 400) {
     const result = await response.json();
-    return Promise.reject(result.errors[0].msg);
+    return Promise.reject(ErrorResponse(result.errors));
+  }
+
+  if (response.status !== 200) {
+    return Promise.reject("Server error");
   }
 
   return response.json();

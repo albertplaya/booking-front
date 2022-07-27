@@ -16,6 +16,8 @@
             v-model="pass.title"
             label="Title"
             lazy-rules
+            :error="formErrors.get('title') != null"
+            :error-message="formErrors.get('title')?.message"
             :rules="[
               (val) => (val && val.length > 0) || 'Please type something',
             ]"
@@ -26,6 +28,8 @@
             v-model="pass.description"
             label="Description"
             lazy-rules
+            :error="formErrors.get('description') != null"
+            :error-message="formErrors.get('description')?.message"
             :rules="[
               (val) => (val && val.length > 0) || 'Please type something',
             ]"
@@ -37,6 +41,8 @@
             label="Quantity"
             lazy-rules
             autogrow
+            :error="formErrors.get('quantity') != null"
+            :error-message="formErrors.get('quantity')?.message"
             :rules="[
               (val) => (val && val.length > 0) || 'Please type something',
             ]"
@@ -48,9 +54,8 @@
             label="Price"
             lazy-rules
             autogrow
-            :rules="[
-              (val) => (val && val.length > 0) || 'Please type something',
-            ]"
+            :error="formErrors.get('price') != null"
+            :error-message="formErrors.get('price')?.message"
           >
             <template v-slot:append>
               <q-icon name="euro" />
@@ -86,11 +91,13 @@
 import { ref, onMounted } from "vue";
 import { usePass } from "@/use/Pass";
 import BackButton from "@/components/button/Back.vue";
-import ErrorNotification from "@/components/notification/Error.vue";
+import ErrorNotification from "@/components/notification/ErrorNotification.vue";
 import { Pass } from "@/types/Pass";
 import router from "@/router";
 import { useAuth } from "@/use/Authentication";
 import { Partner } from "@/types/Partner";
+import { InputErrorResponse } from "@/types/Form/ErrorResponse";
+const formErrors = ref(new Map<string, InputErrorResponse>());
 
 const props = defineProps({
   passId: {
@@ -123,14 +130,20 @@ const getPassAction = async (passId: string) => {
 };
 
 const updatePassAction = () => {
+  if (!pass.value) return;
+
   const partner: Partner = getPartner();
   updatePass(pass.value)
     .then(async () => {
       await new Promise((resolve) => setTimeout(resolve, 500));
       router.push({ name: "pass-list" });
     })
-    .catch((err) => {
-      error.value = err;
+    .catch((errorResult) => {
+      if (typeof errorResult === "string") {
+        error.value = errorResult;
+      } else {
+        formErrors.value = errorResult.errors;
+      }
     });
 };
 

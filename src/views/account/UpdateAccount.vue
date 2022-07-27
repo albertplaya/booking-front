@@ -105,7 +105,7 @@
 <script setup lang="ts">
 import { defineComponent, onMounted, ref } from "vue";
 import BackButton from "@/components/button/Back.vue";
-import ErrorNotification from "@/components/notification/Error.vue";
+import ErrorNotification from "@/components/notification/ErrorNotification.vue";
 import router from "@/router";
 import { usePartner } from "@/use/Partner";
 import { Partner } from "@/types/Partner";

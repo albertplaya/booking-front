@@ -16,6 +16,8 @@
             v-model="title"
             label="Title"
             lazy-rules
+            :error="formErrors.get('title') != null"
+            :error-message="formErrors.get('title')?.message"
             :rules="[
               (val) => (val && val.length > 0) || 'Please type something',
             ]"
@@ -26,6 +28,8 @@
             v-model="description"
             label="Description"
             lazy-rules
+            :error="formErrors.get('description') != null"
+            :error-message="formErrors.get('description')?.message"
           />
 
           <q-input
@@ -34,6 +38,8 @@
             label="Quantity"
             lazy-rules
             autogrow
+            :error="formErrors.get('quantity') != null"
+            :error-message="formErrors.get('quantity')?.message"
             :rules="[
               (val) => (val && val.length > 0) || 'Please type something',
             ]"
@@ -45,9 +51,8 @@
             label="Price"
             lazy-rules
             autogrow
-            :rules="[
-              (val) => (val && val.length > 0) || 'Please type something',
-            ]"
+            :error="formErrors.get('price') != null"
+            :error-message="formErrors.get('price')?.message"
           >
             <template v-slot:append>
               <q-icon name="euro" />
@@ -75,11 +80,12 @@
 import { ref } from "vue";
 import { usePass } from "@/use/Pass";
 import BackButton from "@/components/button/Back.vue";
-import ErrorNotification from "@/components/notification/Error.vue";
+import ErrorNotification from "@/components/notification/ErrorNotification.vue";
 import { Pass } from "@/types/Pass";
 import router from "@/router";
 import { useAuth } from "@/use/Authentication";
 import { Partner } from "@/types/Partner";
+import { InputErrorResponse } from "@/types/Form/ErrorResponse";
 
 const { createPass } = usePass();
 const { getPartner } = useAuth();
@@ -89,7 +95,8 @@ const description = ref<string>();
 const quantity = ref<number>(10);
 const price = ref<number>(0);
 const currency = ref<string>("EUR");
-const error = ref<any>("");
+const error = ref<string>("");
+const formErrors = ref(new Map<string, InputErrorResponse>());
 
 const savePass = () => {
   const partner: Partner = getPartner();
@@ -102,8 +109,12 @@ const savePass = () => {
     currency: currency.value,
   } as Pass)
     .then(() => router.push({ name: "pass-list" }))
-    .catch((err) => {
-      error.value = err;
+    .catch((errorResult) => {
+      if (typeof errorResult === "string") {
+        error.value = errorResult;
+      } else {
+        formErrors.value = errorResult.errors;
+      }
     });
 };
 </script>

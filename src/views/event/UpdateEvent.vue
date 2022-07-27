@@ -59,6 +59,8 @@
             label="Duration in minuts"
             lazy-rules
             autogrow
+            :error="formErrors.get('duration') != null"
+            :error-message="formErrors.get('duration')?.message"
             :rules="[
               (val) => (val && val.length > 0) || 'Please type something',
             ]"
@@ -70,6 +72,8 @@
             label="Number of participants"
             lazy-rules
             autogrow
+            :error="formErrors.get('capacity') != null"
+            :error-message="formErrors.get('capacity')?.message"
             :rules="[
               (val) => (val && val.length > 0) || 'Please type something',
             ]"
@@ -103,9 +107,10 @@
 import { ref, onMounted } from "vue";
 import { useEvent } from "@/use/Event";
 import BackButton from "@/components/button/Back.vue";
-import ErrorNotification from "@/components/notification/Error.vue";
+import ErrorNotification from "@/components/notification/ErrorNotification.vue";
 import router from "@/router";
 import { Event } from "@/types/Event";
+import { ErrorResponse, InputErrorResponse } from "@/types/Form/ErrorResponse";
 
 const props = defineProps({
   eventId: {
@@ -119,7 +124,8 @@ const { get, update, remove } = useEvent();
 const date = ref<string>("");
 const time = ref<string>("");
 const event = ref<Event>();
-const error = ref<any>("");
+const error = ref<string>("");
+const formErrors = ref(new Map<string, InputErrorResponse>());
 
 onMounted(() => {
   getEvent(props.eventId);
@@ -163,8 +169,12 @@ const updateEvent = () => {
         params: { activityId: event.value.activity_id },
       })
     )
-    .catch((err) => {
-      error.value = err;
+    .catch((errorResult) => {
+      if (typeof errorResult === "string") {
+        error.value = errorResult;
+      } else {
+        formErrors.value = errorResult.errors;
+      }
     });
 };
 

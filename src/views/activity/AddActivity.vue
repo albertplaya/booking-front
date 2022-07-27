@@ -5,7 +5,7 @@
         <h3 class="text-2xl ml-2">Add activity</h3>
         <BackButton />
       </div>
-      <ErrorNotification :error="error" />
+      <ErrorNotification v-if="error" :error="error" />
       <div
         class="q-pa-md pt-4 border border-solid rounded-md border-gray-200"
         style="max-width: 400px"
@@ -18,6 +18,8 @@
             v-model="title"
             label="Title"
             lazy-rules
+            :error="formErrors.get('title') != null"
+            :error-message="formErrors.get('title')?.message"
             :rules="[
               (val) => (val && val.length > 0) || 'Please type something',
             ]"
@@ -29,6 +31,8 @@
             label="Description"
             lazy-rules
             autogrow
+            :error="formErrors.get('description') != null"
+            :error-message="formErrors.get('description')?.message"
             :rules="[
               (val) => (val && val.length > 0) || 'Please type something',
             ]"
@@ -40,6 +44,8 @@
             label="Location"
             lazy-rules
             autogrow
+            :error="formErrors.get('location') != null"
+            :error-message="formErrors.get('location')?.message"
             :rules="[
               (val) => (val && val.length > 0) || 'Please type something',
             ]"
@@ -51,9 +57,8 @@
             label="Price"
             lazy-rules
             autogrow
-            :rules="[
-              (val) => (val && val.length > 0) || 'Please type something',
-            ]"
+            :error="formErrors.get('price') != null"
+            :error-message="formErrors.get('price')?.message"
           >
             <template v-slot:append>
               <q-icon name="euro" />
@@ -78,15 +83,16 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, reactive } from "vue";
 import { useActivity } from "@/use/Activity";
 import BackButton from "@/components/button/Back.vue";
-import ErrorNotification from "@/components/notification/Error.vue";
+import ErrorNotification from "@/components/notification/ErrorNotification.vue";
 import ImageUploader from "@/components/activity/ImageUploader.vue";
 import { Activity } from "@/types/Activity";
 import router from "@/router";
 import { useAuth } from "@/use/Authentication";
 import { Partner } from "@/types/Partner";
+import { ErrorResponse, InputErrorResponse } from "@/types/Form/ErrorResponse";
 
 const { create } = useActivity();
 const { getPartner } = useAuth();
@@ -97,7 +103,8 @@ const location = ref<string | null>(null);
 const price = ref<number>(0);
 const currency = ref<string>("EUR");
 const activityImageId = ref<string | null>(null);
-const error = ref<any>("");
+const error = ref<string>("");
+const formErrors = ref(new Map<string, InputErrorResponse>());
 
 const updateImageActivity = (imageId: string): void => {
   activityImageId.value = imageId;
@@ -118,8 +125,12 @@ const saveActivity = () => {
       await new Promise((resolve) => setTimeout(resolve, 500));
       router.push({ name: "activity-list" });
     })
-    .catch((err) => {
-      error.value = err;
+    .catch((errorResult: ErrorResponse | string) => {
+      if (typeof errorResult === "string") {
+        error.value = errorResult;
+      } else {
+        formErrors.value = errorResult.errors;
+      }
     });
 };
 </script>

@@ -16,6 +16,8 @@
             v-model="firstName"
             label="First Name"
             lazy-rules
+            :error="formErrors.get('first_name') != null"
+            :error-message="formErrors.get('first_name')?.message"
             :rules="[
               (val) => (val && val.length > 0) || 'Please type something',
             ]"
@@ -27,6 +29,8 @@
             label="Last Name"
             lazy-rules
             autogrow
+            :error="formErrors.get('last_name') != null"
+            :error-message="formErrors.get('last_name')?.message"
             :rules="[
               (val) => (val && val.length > 0) || 'Please type something',
             ]"
@@ -38,6 +42,8 @@
             label="Email"
             lazy-rules
             autogrow
+            :error="formErrors.get('email') != null"
+            :error-message="formErrors.get('email')?.message"
             :rules="[
               (val) => (val && val.length > 0) || 'Please type something',
             ]"
@@ -49,6 +55,8 @@
             label="Phone"
             lazy-rules
             autogrow
+            :error="formErrors.get('phone') != null"
+            :error-message="formErrors.get('phone')?.message"
             :rules="[
               (val) => (val && val.length > 0) || 'Please type something',
             ]"
@@ -75,11 +83,12 @@
 import { ref } from "vue";
 import { useGuest } from "@/use/Guest";
 import BackButton from "@/components/button/Back.vue";
-import ErrorNotification from "@/components/notification/Error.vue";
+import ErrorNotification from "@/components/notification/ErrorNotification.vue";
 import router from "@/router";
 import { useAuth } from "@/use/Authentication";
 import { Partner } from "@/types/Partner";
 import { Guest } from "@/types/Guest";
+import { ErrorResponse, InputErrorResponse } from "@/types/Form/ErrorResponse";
 
 const { createGuest } = useGuest();
 const { getPartner } = useAuth();
@@ -88,7 +97,8 @@ const firstName = ref<string>("");
 const lastName = ref<string>("");
 const email = ref<string>("");
 const phone = ref<string>("");
-const error = ref<any>("");
+const error = ref<string>("");
+const formErrors = ref(new Map<string, InputErrorResponse>());
 
 const saveGuest = () => {
   const partner: Partner = getPartner();
@@ -100,8 +110,12 @@ const saveGuest = () => {
     phone: phone.value,
   } as Guest)
     .then(() => router.push({ name: "guest-list" }))
-    .catch((err) => {
-      error.value = err;
+    .catch((errorResult: ErrorResponse | string) => {
+      if (typeof errorResult === "string") {
+        error.value = errorResult;
+      } else {
+        formErrors.value = errorResult.errors;
+      }
     });
 };
 </script>

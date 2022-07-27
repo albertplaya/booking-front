@@ -152,11 +152,8 @@
 
 <script setup lang="ts">
 import { onMounted, ref } from "vue";
-import { date } from "quasar";
 import { useBooking } from "@/use/Booking";
 import { Booking } from "@/types/Booking";
-import { Partner } from "@/types/Partner";
-import { useAuth } from "@/use/Authentication";
 import router from "@/router";
 
 import {
