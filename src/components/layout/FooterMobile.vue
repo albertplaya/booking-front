@@ -72,11 +72,11 @@ watch(
 
 <style scoped>
 .visible-custom {
-  visibility: hidden;
+  display: none;
 }
 @media only screen and (min-width: 640px) {
   .visible-custom {
-    visibility: visible !important;
+    display: block !important;
   }
 }
 </style>

@@ -7,7 +7,7 @@
         <div class="flex justify-start lg:flex-1 lg:ml-12">
           <a href="#">
             <span class="sr-only">Workflow</span>
-            <img class="h-20 w-auto sm:h-12" src="/logo.svg" alt="" />
+            <img class="h-12 w-auto" src="/logo.svg" alt="" />
           </a>
         </div>
       </div>
@@ -102,11 +102,11 @@ watch(
   max-height: 50px;
 }
 .visible-custom {
-  visibility: hidden;
+  display: none;
 }
 @media only screen and (min-width: 640px) {
   .visible-custom {
-    visibility: visible !important;
+    display: block !important;
   }
 }
 </style>
