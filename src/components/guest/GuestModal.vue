@@ -61,12 +61,18 @@
             </q-form>
           </div>
           <div class="flex flex-row-reverse">
-            <div class="modal-action">
-              <label
-                class="btn btn-secondary cursor-pointer text-white"
-                @click="updateGuestAndCloseModal"
-                >Save</label
-              >
+            <div class="modal-action mt-0">
+              <label>
+                <q-btn
+                  no-caps
+                  style="color: typography-primary-inverted"
+                  class="float-right"
+                  label="Save"
+                  type="submit"
+                  color="teal"
+                  @click="updateGuestAndCloseModal"
+                />
+              </label>
             </div>
           </div>
         </div>
