@@ -1,5 +1,5 @@
 <template>
-  <q-btn no-caps flat color="primary" @click.stop="openModal">
+  <q-btn no-caps flat @click.stop="openModal">
     <q-icon size="2em" name="ios_share" />
   </q-btn>
 
@@ -41,7 +41,7 @@
                 >
                   Add to your calendar:
                 </DialogTitle>
-                <q-btn no-caps flat color="primary" @click="closeModal">
+                <q-btn no-caps flat @click="closeModal">
                   <q-icon size="2em" name="close" />
                 </q-btn>
               </div>
