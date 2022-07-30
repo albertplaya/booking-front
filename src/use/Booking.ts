@@ -3,8 +3,7 @@ import { endpoints } from "@/config/endpoints";
 import { getData, putData } from "@/infrastructure/ApiHandler";
 
 export interface BookingListFilterCriteria {
-  filter: string;
-  partner_id?: string;
+  partner: string;
 }
 
 export function useBooking() {

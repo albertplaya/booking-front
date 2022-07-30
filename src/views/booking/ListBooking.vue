@@ -107,8 +107,7 @@ const showBookingModal = (booking: Booking) => {
 const listBookings = async () => {
   partner.value = getPartner();
   listWithFilter({
-    filter: "partner",
-    partner_id: partner.value.partner_id,
+    partner: partner.value.partner_id,
   })
     .then((result) => (bookings.value = result))
     .catch((e) => {
