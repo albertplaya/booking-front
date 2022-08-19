@@ -7,7 +7,7 @@
         <div class="flex justify-start lg:flex-1 lg:ml-12">
           <a href="#">
             <span class="sr-only">Workflow</span>
-            <img class="h-12 w-auto" src="/logo.svg" alt="" />
+            <img class="h-8 w-auto" src="/logo.svg" alt="" />
           </a>
         </div>
       </div>
