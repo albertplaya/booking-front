@@ -45,7 +45,7 @@
           class="float-right"
           label="Save"
           type="submit"
-          color="primary"
+          color="teal"
           @click="addGuestPassAndBookingSession"
         />
       </div>
