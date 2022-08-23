@@ -4,6 +4,7 @@ module.exports = {
   content: ["./src/**/*.{vue,js,ts}"],
   purge: ["./index.html", "./src/**/*.{vue,js,ts,jsx,tsx}"],
   presets: [],
+  base: false,
   darkMode: false, // or 'media' or 'class'
   daisyui: {
     themes: [
@@ -32,7 +33,7 @@ module.exports = {
 
       black: colors.black,
       white: colors.white,
-      gray: colors.coolGray,
+      gray: colors.gray,
       red: colors.red,
       yellow: colors.amber,
       green: colors.emerald,

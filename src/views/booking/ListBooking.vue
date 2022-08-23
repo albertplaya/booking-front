@@ -92,7 +92,7 @@ onMounted(() => {
 });
 
 const { getPartner } = useAuth();
-const { listWithFilter } = useBooking();
+const { listBookingsWithFilter } = useBooking();
 
 const bookings = ref<Booking[]>([]);
 const partner = ref<Partner>();
@@ -106,7 +106,7 @@ const showBookingModal = (booking: Booking) => {
 
 const listBookings = async () => {
   partner.value = getPartner();
-  listWithFilter({
+  listBookingsWithFilter({
     partner: partner.value.partner_id,
   })
     .then((result) => (bookings.value = result))

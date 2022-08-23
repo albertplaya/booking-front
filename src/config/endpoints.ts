@@ -35,5 +35,6 @@ export const endpoints = {
     guest_pass_create: "/guestpass",
     guest_pass_update: "/guestpass",
     guest_pass_get_by_guest: "/guestpass/guest/{guestId}",
+    guest_pass_list_with_filter: "/guestpass",
   },
 };

@@ -8,4 +8,5 @@ export interface GuestPass {
   price: number;
   currency: string;
   status: string;
+  created_date?: string;
 }

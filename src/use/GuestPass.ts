@@ -10,6 +10,10 @@ import {
   deleteData,
 } from "@/infrastructure/ApiHandler";
 
+export interface GuestPassListFilterCriteria {
+  partner: string;
+}
+
 export function useGuestPass() {
   const createGuestPass = async (pass: Pass, guest: Guest): Promise<any> => {
     const payload = {
@@ -39,9 +43,20 @@ export function useGuestPass() {
     });
   };
 
+  const listGuestPassWithFilter = async (
+    filterCriteria: GuestPassListFilterCriteria
+  ): Promise<GuestPass[]> => {
+    const guestPasses = await getData(
+      endpoints.v1.guest_pass_list_with_filter,
+      filterCriteria
+    );
+    return guestPasses.data as GuestPass[];
+  };
+
   return {
     createGuestPass,
     getGuestPassesByGuest,
     updateGuestPassStatus,
+    listGuestPassWithFilter,
   };
 }

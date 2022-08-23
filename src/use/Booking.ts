@@ -14,7 +14,7 @@ export function useBooking() {
     return bookings.data as Booking[];
   };
 
-  const listWithFilter = async (
+  const listBookingsWithFilter = async (
     filterCriteria: BookingListFilterCriteria
   ): Promise<Booking[]> => {
     const bookings = await getData(
@@ -41,7 +41,7 @@ export function useBooking() {
   return {
     getBooking,
     listByEventId,
-    listWithFilter,
+    listBookingsWithFilter,
     updateBookingStatus,
   };
 }
