@@ -1,13 +1,21 @@
 <template>
   <q-card class="m-2 rounded-md" flat bordered style="width: 334px">
-    <q-img
-      v-if="activity.image_id"
-      :src="filesUrl(activity.image_id)"
-      class="cursor-pointer"
-      fit="cover"
-      style="max-width: 334px; height: 334px"
-      @click="goToActivityEventList(activity.activity_id)"
-    />
+    <div v-if="activity.image_id" class="image-container">
+      <q-img
+        :src="filesUrl(activity.image_id)"
+        class="cursor-pointer"
+        fit="cover"
+        style="max-width: 334px; height: 334px"
+        @click="goToActivityEventList(activity.activity_id)"
+      />
+      <div
+        v-if="activity.location"
+        class="text-bottom-right flex items-center bg-secondary/70 rounded-md p-1"
+      >
+        <q-icon size="1em" name="place" />
+        {{ activity.location }}
+      </div>
+    </div>
     <DefaultImage
       v-else
       :activity="activity"
@@ -79,5 +87,20 @@ const goToActivityEventList = async (activityId: string) => {
   line-clamp: 2;
   -webkit-box-orient: vertical;
   min-height: 60px;
+}
+
+.image-container {
+  position: relative;
+  text-align: center;
+  color: white;
+  padding-left: 0rem;
+  padding-right: 0rem;
+}
+
+.text-bottom-right {
+  position: absolute;
+  bottom: 0.3rem;
+  right: 0.3rem;
+  padding-right: 0.6rem;
 }
 </style>
