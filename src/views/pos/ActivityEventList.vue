@@ -17,6 +17,7 @@
               :options="disabledDays"
               :flat="true"
               :square="true"
+              color="teal"
             />
           </div>
         </div>
