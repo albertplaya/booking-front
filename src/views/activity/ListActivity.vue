@@ -94,7 +94,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from "vue";
+import { onMounted, ref, inject } from "vue";
 import { useActivity } from "@/use/Activity";
 import { Activity } from "@/types/Activity";
 import AddWhenEmptyList from "@/components/button/AddWhenEmptyList.vue";

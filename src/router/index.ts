@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
 import { AuthenticationGuard } from "vue-auth0-plugin";
+import Authentication from "@/views/auth/Authentication.vue";
 import AddActivity from "@/views/activity/AddActivity.vue";
 import UpdateActivity from "@/views/activity/UpdateActivity.vue";
 import ListActivity from "@/views/activity/ListActivity.vue";
@@ -28,6 +29,12 @@ import AssignPass from "@/views/guestPass/AssignPass.vue";
 import Wallet from "@/views/wallet/Wallet.vue";
 
 const routes: Array<RouteRecordRaw> = [
+  {
+    path: "/auth",
+    name: "authentication",
+    component: Authentication,
+    props: true,
+  },
   {
     path: "/",
     name: "activity-cards",
