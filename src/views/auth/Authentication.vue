@@ -10,7 +10,7 @@ onMounted(() => {
 const auth: any = inject("auth");
 const login = () => {
   auth.loginWithRedirect({
-    redirect_uri: import.meta.env.VITE_URL_LOGIN_CALLBACK,
+    redirect_uri: "https://app.obboco.com/activity",
   });
 };
 </script>
