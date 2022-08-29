@@ -8,9 +8,12 @@ onMounted(() => {
 });
 
 const auth: any = inject("auth");
-const login = () => {
-  auth.loginWithRedirect({
-    redirect_uri: "https://app.obboco.com/activity",
-  });
+const login = async () => {
+  if (auth.loading === false && !auth.isAuthenticated) {
+    await auth.loginWithRedirect({
+      appState: { targetUrl: import.meta.env.VITE_URL_LOGIN_CALLBACK },
+      //redirect_uri: import.meta.env.VITE_URL_LOGIN_CALLBACK,
+    });
+  }
 };
 </script>
