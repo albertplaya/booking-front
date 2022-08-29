@@ -9,10 +9,9 @@ onMounted(() => {
 
 const auth: any = inject("auth");
 const login = async () => {
-  if (auth.loading === false && !auth.isAuthenticated) {
+  if (auth.loading === false) {
     await auth.loginWithRedirect({
-      appState: { targetUrl: import.meta.env.VITE_URL_LOGIN_CALLBACK },
-      //redirect_uri: import.meta.env.VITE_URL_LOGIN_CALLBACK,
+      redirect_uri: import.meta.env.VITE_URL_LOGIN_CALLBACK,
     });
   }
 };
