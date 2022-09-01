@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
-import { AuthenticationGuard } from "vue-auth0-plugin";
-import Authentication from "@/views/auth/Authentication.vue";
+import Register from "@/views/auth/Register.vue";
+import Login from "@/views/auth/Login.vue";
 import AddActivity from "@/views/activity/AddActivity.vue";
 import UpdateActivity from "@/views/activity/UpdateActivity.vue";
 import ListActivity from "@/views/activity/ListActivity.vue";
@@ -27,18 +27,24 @@ import AddPass from "@/views/pass/AddPass.vue";
 import UpdatePass from "@/views/pass/UpdatePass.vue";
 import AssignPass from "@/views/guestPass/AssignPass.vue";
 import Wallet from "@/views/wallet/Wallet.vue";
+import { getAuth, onAuthStateChanged } from "@firebase/auth";
 
 const routes: Array<RouteRecordRaw> = [
   {
-    path: "/auth",
-    name: "authentication",
-    component: Authentication,
+    path: "/",
+    name: "home",
+    redirect: { name: "activity-list" },
+  },
+  {
+    path: "/login",
+    name: "login",
+    component: Login,
     props: true,
   },
   {
-    path: "/",
-    name: "activity-cards",
-    component: ActivityCards,
+    path: "/register",
+    name: "register",
+    component: Register,
     props: true,
   },
   {
@@ -56,7 +62,9 @@ const routes: Array<RouteRecordRaw> = [
     path: "/activity",
     name: "activity-list",
     component: ListActivity,
-    //beforeEnter: AuthenticationGuard,
+    meta: {
+      requiresAuth: true,
+    },
   },
   {
     path: "/event/add/:activityId",
@@ -229,6 +237,15 @@ router.beforeEach((to, from, next) => {
     subdomain != "booking"
   ) {
     to.params["subdomain"] = subdomain;
+  }
+
+  if (to.matched.some((record) => record.meta.requiresAuth)) {
+    const auth = getAuth();
+    onAuthStateChanged(auth, (user) => {
+      if (!user) {
+        next({ name: "register" });
+      }
+    });
   }
   next();
 });

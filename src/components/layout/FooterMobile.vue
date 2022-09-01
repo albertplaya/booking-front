@@ -1,5 +1,8 @@
 <template>
-  <div class="visible sm:invisible">
+  <div
+    class="visible sm:invisible"
+    v-if="currentRoute !== 'register' && currentRoute !== 'login'"
+  >
     <q-footer
       elevated
       class="bg-gray-50 text-black flex justify-around"

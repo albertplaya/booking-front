@@ -1,5 +1,8 @@
 <template>
-  <q-header class="header">
+  <q-header
+    class="header"
+    v-if="currentRoute !== 'register' && currentRoute !== 'login'"
+  >
     <q-toolbar class="toolbar">
       <div
         class="flex justify-between items-center py-4 md:justify-start md:space-x-10"
@@ -54,7 +57,6 @@
             :to="{ name: 'wallet' }"
           />
         </div>
-        <q-btn v-else @click="login" color="primary" label="login" />
       </div>
     </q-toolbar>
   </q-header>
@@ -63,26 +65,13 @@
 <script setup lang="ts">
 import { Partner } from "@/types/Partner";
 import { useAuth } from "@/use/Authentication";
-import { inject, watch, ref, computed, ComputedRef } from "vue";
+import { watch, ref, computed, ComputedRef } from "vue";
 import { useRoute } from "vue-router";
 
-const auth: any = inject("auth");
 const route = useRoute();
 const currentRoute = ref<string>("");
 const { getPartner } = useAuth();
-
 const partner: ComputedRef<Partner> = computed(() => getPartner());
-
-const login = () => {
-  auth.loginWithPopup({
-    redirect_uri: window.location.origin,
-  });
-};
-const logout = () => {
-  auth.logout({
-    returnTo: window.location.origin,
-  });
-};
 
 watch(
   () => route.name,

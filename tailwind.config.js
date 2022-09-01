@@ -9,7 +9,7 @@ module.exports = {
   daisyui: {
     themes: [
       {
-        bookingcat: {
+        obboco: {
           primary: "#121212",
           secondary: "#48ac98",
           accent: "#37cdbe",

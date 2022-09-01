@@ -1,61 +1,64 @@
 import { Partner } from "@/types/Partner";
-import { useStore } from "vuex";
-import { inject, watch } from "vue";
 import { usePartner } from "@/use/Partner";
 import { ulid } from "ulid";
+import { getUserLocale } from "get-user-locale";
+
+export interface userAuth {
+  email: string;
+  photoURL: string | null;
+  displayName: string | null;
+}
 
 export function useAuth() {
-  const auth: any = inject("auth");
+  const { create, getByEmail } = usePartner();
 
-  //const store = useStore();
+  const registerPartner = async (user: userAuth) => {
+    try {
+      const partnerAlreadyStored: Partner = await getByEmail(user.email);
+      if (partnerAlreadyStored) {
+        loginPartner(partnerAlreadyStored);
+        return;
+      }
+    } catch (e) {}
 
-  const storePartner = (partner: Partner) => {
-    //store.commit("auth/set", partner);
+    const newPartner: Partner = initializePartner(user);
+    await create(newPartner);
+    loginPartner(newPartner);
+  };
+
+  const loginPartner = (partner: Partner) => {
     localStorage.setItem("partner", JSON.stringify(partner));
   };
 
   const removePartner = async (): Promise<void> => {
-    //store.commit("auth/remove");
     localStorage.removeItem("partner");
   };
 
   const getPartner = (): Partner => {
     return JSON.parse(localStorage.getItem("partner")) as Partner;
-    //return store.getters["auth/user"] as Partner;
   };
 
-  const authPartner = () => {
-    const { create, getByEmail } = usePartner();
+  const initializePartner = (user: userAuth): Partner => {
+    let givenName = null;
+    let familyName = null;
+    if (user.displayName) {
+      const splitFullName = user.displayName.split(" ");
+      givenName = splitFullName.length !== 0 ? splitFullName[0] : null;
+      familyName = 1 in splitFullName ? splitFullName[1] : null;
+    }
 
-    watch(
-      () => auth.user,
-      async () => {
-        if (auth.user) {
-          const partner: Partner = await getByEmail(auth.user.email);
-          if (partner) {
-            storePartner(partner);
-          } else {
-            const partner: Partner = initializePartner(auth.user);
-            create(partner);
-            storePartner(partner);
-          }
-        } else {
-          removePartner();
-        }
-      }
-    );
-  };
-
-  const initializePartner = (user: any): Partner => {
     return {
       partner_id: ulid(),
       email: user.email,
-      given_name: user.given_name,
-      family_name: user.family_name,
-      picture: user.picture,
-      locale: user.locale,
+      given_name: givenName,
+      family_name: familyName,
+      picture: user.photoURL ? user.photoURL : null,
+      locale: getUserLocale(),
       subscription_plan: "BETA",
-      subdomain: generateSubdomain(user.given_name, user.family_name),
+      subdomain:
+        givenName && familyName
+          ? generateSubdomain(givenName, familyName)
+          : null,
     } as Partner;
   };
 
@@ -75,5 +78,5 @@ export function useAuth() {
       .replace(/(^-+|-+$)/g, ""); // Remove extra hyphens from beginning or end of the string
   };
 
-  return { authPartner, getPartner };
+  return { registerPartner, getPartner };
 }

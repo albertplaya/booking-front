@@ -9,7 +9,6 @@
     "format": "prettier .  --write"
   },
   "dependencies": {
-    "@auth0/auth0-spa-js": "^1.19.4",
     "@headlessui/vue": "^1.4.3",
     "@mdi/font": "5.9.55",
     "@quasar/extras": "^1.12.4",
@@ -18,13 +17,14 @@
     "daisyui": "^2.19.0",
     "datebook": "^7.0.8",
     "dotenv": "^16.0.0",
+    "firebase": "^9.9.3",
+    "get-user-locale": "^1.5.1",
     "postcss": "^7",
     "quasar": "^2.5.0",
     "roboto-fontface": "*",
     "tailwindcss": "^3.1.6",
     "ulid": "^2.3.0",
     "vue": "^3.2.29",
-    "vue-auth0-plugin": "^2.4.4",
     "vue-class-component": "^8.0.0-0",
     "vue-router": "^4.0.12",
     "vuestic-ui": "^1.3.4",
@@ -43,7 +43,7 @@
     "sass": "^1.49.4",
     "sass-loader": "^10.1.0",
     "typescript": "~4.1.5",
-    "vite": "^2.5.4",
+    "vite": "^2.9.15",
     "vue-cli-plugin-quasar": "~4.0.4",
     "vue-tsc": "^0.0.24"
   }
