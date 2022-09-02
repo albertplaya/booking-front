@@ -67,8 +67,7 @@ const props = defineProps({
 
 const expanded = ref<Boolean>(false);
 
-const filesUrl = (id: string) =>
-  `${import.meta.env.VITE_API_FILES}/booking/${id}.jpg`;
+const filesUrl = (id: string) => `${import.meta.env.VITE_API_FILES}/${id}.jpg`;
 
 const goToActivityEventList = async (activityId: string) => {
   return router.push({

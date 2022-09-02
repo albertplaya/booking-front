@@ -65,13 +65,17 @@
 <script setup lang="ts">
 import { Partner } from "@/types/Partner";
 import { useAuth } from "@/use/Authentication";
-import { watch, ref, computed, ComputedRef } from "vue";
+import { watch, ref, computed, ComputedRef, onMounted } from "vue";
 import { useRoute } from "vue-router";
 
 const route = useRoute();
 const currentRoute = ref<string>("");
 const { getPartner } = useAuth();
-const partner: ComputedRef<Partner> = computed(() => getPartner());
+const partner = ref<Partner>();
+
+onMounted(() => {
+  partner.value = getPartner();
+});
 
 watch(
   () => route.name,

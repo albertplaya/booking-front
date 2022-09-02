@@ -119,8 +119,7 @@ const listActivities = async () => {
       return router.push({ name: "not-found" });
     });
 };
-const filesUrl = (id: string) =>
-  `${import.meta.env.VITE_API_FILES}/booking/${id}.jpg`;
+const filesUrl = (id: string) => `${import.meta.env.VITE_API_FILES}/${id}.jpg`;
 
 const landingPageUrl =
   "https://" + window.location.host.replace("app", partner.subdomain);
