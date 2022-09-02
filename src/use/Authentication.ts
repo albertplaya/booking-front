@@ -16,17 +16,27 @@ export function useAuth() {
     try {
       const partnerAlreadyStored: Partner = await getByEmail(user.email);
       if (partnerAlreadyStored) {
-        loginPartner(partnerAlreadyStored);
+        storePartner(partnerAlreadyStored);
         return;
       }
     } catch (e) {}
 
     const newPartner: Partner = initializePartner(user);
     await create(newPartner);
-    loginPartner(newPartner);
+    storePartner(newPartner);
   };
 
-  const loginPartner = (partner: Partner) => {
+  const loginPartner = async (email: string) => {
+    try {
+      const partner: Partner = await getByEmail(email);
+      if (partner) {
+        storePartner(partner);
+        return;
+      }
+    } catch (e) {}
+  };
+
+  const storePartner = (partner: Partner) => {
     localStorage.setItem("partner", JSON.stringify(partner));
   };
 
@@ -78,5 +88,5 @@ export function useAuth() {
       .replace(/(^-+|-+$)/g, ""); // Remove extra hyphens from beginning or end of the string
   };
 
-  return { registerPartner, getPartner };
+  return { registerPartner, loginPartner, getPartner };
 }

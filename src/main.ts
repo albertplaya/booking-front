@@ -10,26 +10,14 @@ import { initializeApp } from "firebase/app";
 
 loadFonts();
 
-// Firebase
-/*
 const firebaseConfig = {
-  apiKey: "AIzaSyAVJa4IuoypObez2dyjDdPhabwks7WLKoY",
-  authDomain: "obboco-26b46.firebaseapp.com",
-  projectId: "obboco-26b46",
-  storageBucket: "obboco-26b46.appspot.com",
-  messagingSenderId: "1098902585298",
-  appId: "1:1098902585298:web:259eeb05cf7dcadf97920b",
-  measurementId: "G-95DBCQF4HJ",
-};*/
-
-const firebaseConfig = {
-  apiKey: "AIzaSyA9Dukdf3FQyKUCdG_hevYqCffY1uAQAS8",
-  authDomain: "obboco-dev.firebaseapp.com",
-  projectId: "obboco-dev",
-  storageBucket: "obboco-dev.appspot.com",
-  messagingSenderId: "420971401417",
-  appId: "1:420971401417:web:5afc6f77603602788b7d18",
-  measurementId: "G-30QF8B26R8",
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID,
+  measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID,
 };
 
 initializeApp(firebaseConfig);

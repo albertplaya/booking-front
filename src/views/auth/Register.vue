@@ -90,12 +90,19 @@
               filled
               v-model="password"
               label="Password"
-              lazy-rules
-              autogrow
+              :type="isPwd ? 'password' : 'text'"
               :rules="[
                 (val) => (val && val.length > 0) || 'Please type something',
               ]"
-            />
+            >
+              <template v-slot:append>
+                <q-icon
+                  :name="isPwd ? 'visibility_off' : 'visibility'"
+                  class="cursor-pointer"
+                  @click="isPwd = !isPwd"
+                />
+              </template>
+            </q-input>
           </q-form>
           <q-btn
             @click="registerWithEmailAndPassword"
@@ -117,12 +124,12 @@
           <div>Back</div>
         </q-btn>
       </div>
-      <!--
-      <h3 class="text-lg pt-2 text-center">
-        New user?
-        <span class="font-bold text-primary">Start here</span>
+      <h3 v-if="showSocialLogin" class="text-lg pt-2 text-center">
+        Already registerd?
+        <router-link :to="{ name: 'login' }">
+          <span class="font-bold text-primary">Login here</span>
+        </router-link>
       </h3>
-      -->
     </div>
   </q-page>
 </template>
@@ -143,6 +150,7 @@ import { useAuth } from "@/use/Authentication";
 const showSocialLogin = ref<boolean>(true);
 const email = ref<string>("");
 const password = ref<string>("");
+const isPwd = ref<boolean>(true);
 const errorMessage = ref();
 
 const router = useRouter();
@@ -159,7 +167,6 @@ const registerWithEmailAndPassword = () => {
       router.push({ name: "home" });
     })
     .catch((error) => {
-      console.log(error);
       errorMessage.value = makeErrorMessage(error);
     });
 };

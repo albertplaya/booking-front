@@ -51,12 +51,18 @@ const routes: Array<RouteRecordRaw> = [
     path: "/activity/add",
     name: "activity-add",
     component: AddActivity,
+    meta: {
+      requiresAuth: true,
+    },
   },
   {
     path: "/activity/update/:activityId",
     name: "activity-update",
     component: UpdateActivity,
     props: true,
+    meta: {
+      requiresAuth: true,
+    },
   },
   {
     path: "/activity",
@@ -71,18 +77,27 @@ const routes: Array<RouteRecordRaw> = [
     name: "event-add",
     component: AddEvent,
     props: true,
+    meta: {
+      requiresAuth: true,
+    },
   },
   {
     path: "/events/:activityId",
     name: "event-list",
     component: ListEvent,
     props: true,
+    meta: {
+      requiresAuth: true,
+    },
   },
   {
     path: "/event/update/:eventId",
     name: "event-update",
     component: UpdateEvent,
     props: true,
+    meta: {
+      requiresAuth: true,
+    },
   },
 
   //Booking session
@@ -111,11 +126,17 @@ const routes: Array<RouteRecordRaw> = [
     name: "booking-list-by-event",
     component: ListBookingByEvent,
     props: true,
+    meta: {
+      requiresAuth: true,
+    },
   },
   {
     path: "/bookings",
     name: "booking-list",
     component: ListBooking,
+    meta: {
+      requiresAuth: true,
+    },
   },
 
   //Partner page
@@ -132,6 +153,9 @@ const routes: Array<RouteRecordRaw> = [
     name: "account",
     component: UpdateAccount,
     props: true,
+    meta: {
+      requiresAuth: true,
+    },
   },
 
   // Guest
@@ -140,18 +164,27 @@ const routes: Array<RouteRecordRaw> = [
     name: "guest-list",
     component: ListGuest,
     props: true,
+    meta: {
+      requiresAuth: true,
+    },
   },
   {
     path: "/guest/:guestId",
     name: "guest",
     component: Guest,
     props: true,
+    meta: {
+      requiresAuth: true,
+    },
   },
   {
     path: "/guest/add",
     name: "guest-add",
     component: CreateGuest,
     props: true,
+    meta: {
+      requiresAuth: true,
+    },
   },
 
   //POS
@@ -160,18 +193,27 @@ const routes: Array<RouteRecordRaw> = [
     name: "pos-activity-list",
     component: PosListActivity,
     props: true,
+    meta: {
+      requiresAuth: true,
+    },
   },
   {
     path: "/pos/activity/:activityId",
     name: "pos-activity-event-list",
     component: PosActivityEventList,
     props: true,
+    meta: {
+      requiresAuth: true,
+    },
   },
   {
     path: "/pos/guest/:eventId",
     name: "pos-activity-guest",
     component: PosAddGuest,
     props: true,
+    meta: {
+      requiresAuth: true,
+    },
   },
 
   //Pass
@@ -180,18 +222,27 @@ const routes: Array<RouteRecordRaw> = [
     name: "pass-list",
     component: ListPass,
     props: true,
+    meta: {
+      requiresAuth: true,
+    },
   },
   {
     path: "/pass/add",
     name: "pass-add",
     component: AddPass,
     props: true,
+    meta: {
+      requiresAuth: true,
+    },
   },
   {
     path: "/pass/update/:passId",
     name: "pass-update",
     component: UpdatePass,
     props: true,
+    meta: {
+      requiresAuth: true,
+    },
   },
 
   // Pass Guest
@@ -200,6 +251,9 @@ const routes: Array<RouteRecordRaw> = [
     name: "pass-assign",
     component: AssignPass,
     props: true,
+    meta: {
+      requiresAuth: true,
+    },
   },
 
   //Wallet
@@ -208,6 +262,9 @@ const routes: Array<RouteRecordRaw> = [
     name: "wallet",
     component: Wallet,
     props: false,
+    meta: {
+      requiresAuth: true,
+    },
   },
   //Error
   /*
