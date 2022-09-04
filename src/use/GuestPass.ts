@@ -20,6 +20,7 @@ export function useGuestPass() {
       guest_pass_id: ulid(),
       pass_id: pass.pass_id,
       guest_id: guest.guest_id,
+      partner_id: guest.partner_id,
     };
 
     const guestPassResult: Promise<any> = await postData(
