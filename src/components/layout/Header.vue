@@ -1,6 +1,6 @@
 <template>
   <q-header
-    class="header"
+    class="header flex justify-center"
     v-if="currentRoute !== 'register' && currentRoute !== 'login'"
   >
     <q-toolbar class="toolbar">
@@ -92,6 +92,7 @@ watch(
 
 .toolbar {
   @apply flex justify-between;
+  max-width: 1200px;
   max-height: 50px;
 }
 .visible-custom {

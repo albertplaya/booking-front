@@ -100,7 +100,7 @@ const routes: Array<RouteRecordRaw> = [
     },
   },
 
-  //Booking session
+  //Booking session thought partner landing
   {
     path: "/booking/event/:eventId",
     name: "booking-event",
