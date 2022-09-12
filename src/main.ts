@@ -23,8 +23,11 @@ const firebaseConfig = {
 initializeApp(firebaseConfig);
 //const analytics = getAnalytics(app);
 
+import JsonCSV from "vue-json-csv";
+
 createApp(App)
   .use(Quasar, quasarUserOptions)
   .use(router)
   .use(store)
+  .component("downloadCsv", JsonCSV)
   .mount("#app");

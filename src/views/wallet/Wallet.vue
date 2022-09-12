@@ -4,17 +4,29 @@
       <div class="flex justify-between">
         <h3 class="text-2xl ml-2">Wallet</h3>
         <q-separator />
-        <q-btn
-          color="teal"
-          no-caps
-          type="submit"
-          :to="{
-            name: 'pass-list',
-          }"
-        >
-          <q-icon left size="2em" name="local_activity" />
-          <div>Passes</div>
-        </q-btn>
+        <div class="flex">
+          <download-csv :data="walletResumeLine">
+            <q-btn
+              class="mr-2"
+              round
+              text-color="black"
+              color="lightgrey"
+              icon="download"
+              target="_blank"
+            />
+          </download-csv>
+          <q-btn
+            color="teal"
+            no-caps
+            type="submit"
+            :to="{
+              name: 'pass-list',
+            }"
+          >
+            <q-icon left size="2em" name="local_activity" />
+            <div>Passes</div>
+          </q-btn>
+        </div>
       </div>
       <div
         class="wallet-total-revenue"
@@ -100,6 +112,7 @@ import { Booking } from "@/types/Booking";
 import { date } from "quasar";
 import { useGuestPass } from "@/use/GuestPass";
 import { GuestPass } from "@/types/GuestPass";
+import { WalletResumeLine } from "@/types/WalletResumeLine";
 
 onMounted(async () => {
   await listBookings();
@@ -107,6 +120,7 @@ onMounted(async () => {
   totalBookingRevenue.value = sumTotalBookingRevenue();
   totalPassRevenue.value = sumTotalPassRevenue();
   calculateRevenueByMonth();
+  generateWalletResume();
 });
 
 const { getPartner } = useAuth();
@@ -121,6 +135,7 @@ const totalPassRevenue = ref<number>(0);
 const totalRevenueByMonth = ref<{ [key: string]: any }>({});
 const totalBookingRevenueByMonth = ref<{ [key: string]: any }>({});
 const totalPassRevenueByMonth = ref<{ [key: string]: any }>({});
+const walletResumeLine = ref<WalletResumeLine[]>([]);
 const showRevenue = ref<string>("totalRevenueByMonth");
 
 const listBookings = async () => {
@@ -200,6 +215,36 @@ const calculateRevenueByMonth = (): void => {
     }
     totalPassRevenueByMonth.value[key].revenue += curr.price;
     totalRevenueByMonth.value[key].revenue += curr.price;
+  });
+};
+
+const generateWalletResume = () => {
+  bookings.value.map((booking: Booking) => {
+    walletResumeLine.value.push({
+      id: booking.booking_id,
+      type: "booking",
+      title: booking.title,
+      status: booking.status,
+      month: new Date(booking.start_date).toLocaleString("default", {
+        month: "long",
+      }),
+      price: booking.price / 100,
+    });
+  });
+
+  guestPass.value.map((guestPass: GuestPass) => {
+    walletResumeLine.value.push({
+      id: guestPass.guest_pass_id,
+      type: "pass",
+      title: guestPass.title,
+      status: guestPass.status,
+      month: guestPass.created_date
+        ? new Date(guestPass.created_date).toLocaleString("default", {
+            month: "long",
+          })
+        : "",
+      price: guestPass.price / 100,
+    });
   });
 };
 </script>
