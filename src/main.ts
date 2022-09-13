@@ -7,6 +7,8 @@ import quasarUserOptions from "@/quasar-user-options";
 import "./assets/tailwind.css";
 import store from "@/store";
 import { initializeApp } from "firebase/app";
+import * as Sentry from "@sentry/vue";
+import { BrowserTracing } from "@sentry/tracing";
 
 loadFonts();
 
@@ -25,7 +27,24 @@ initializeApp(firebaseConfig);
 
 import JsonCSV from "vue-json-csv";
 
-createApp(App)
+const app = createApp(App);
+
+Sentry.init({
+  app,
+  dsn: "https://7456504253ae44be808f8fec20fa9823@o1409212.ingest.sentry.io/6745240",
+  integrations: [
+    new BrowserTracing({
+      routingInstrumentation: Sentry.vueRouterInstrumentation(router),
+      tracingOrigins: ["app.booking.dev:8080", "app.obboco.com", /^\//],
+    }),
+  ],
+  // Set tracesSampleRate to 1.0 to capture 100%
+  // of transactions for performance monitoring.
+  // We recommend adjusting this value in production
+  tracesSampleRate: 1.0,
+});
+
+app
   .use(Quasar, quasarUserOptions)
   .use(router)
   .use(store)

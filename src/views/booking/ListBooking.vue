@@ -117,7 +117,6 @@ const { getPartner } = useAuth();
 const { listBookingsWithFilter } = useBooking();
 
 const bookings = ref<Booking[]>([]);
-const partner = ref<Partner>();
 const showModal = ref<boolean>(false);
 const selectedBooking = ref<Booking>();
 const filterCriteria = ref<FilterCriteria>(new FilterCriteria([]));
