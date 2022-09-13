@@ -72,7 +72,7 @@ const year = ref<string>(
 );
 
 const updateFilterAndCloseModal = async () => {
-  const currentDate = new Date(`${month.value} ${year.value}`);
+  const currentDate = new Date(`${month.value} 1 ${year.value}`);
   const startDate = new Date(
     currentDate.getFullYear(),
     currentDate.getMonth(),
