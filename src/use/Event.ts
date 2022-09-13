@@ -1,3 +1,4 @@
+import { FilterCriteria } from "./FilterCriteria";
 import { ulid } from "ulid";
 import { Event } from "@/types/Event";
 import { endpoints } from "@/config/endpoints";
@@ -26,24 +27,33 @@ export function useEvent() {
   };
 
   const listUpcomming = async (activityId: string): Promise<Event[]> => {
-    const payload = {
-      time: "future",
-    };
+    const filterCriterias = [
+      {
+        parameter: "time",
+        value: "future",
+      },
+    ];
+    const filterCriteria = new FilterCriteria(filterCriterias);
 
     const events = await getData(
       endpoints.v1.event_list.replace("{activityId}", activityId),
-      payload
+      filterCriteria
     );
     return events.data as Event[];
   };
 
   const listPast = async (activityId: string): Promise<Event[]> => {
-    const payload = {
-      time: "past",
-    };
+    const filterCriterias = [
+      {
+        parameter: "time",
+        value: "past",
+      },
+    ];
+    const filterCriteria = new FilterCriteria(filterCriterias);
+
     const events = await getData(
       endpoints.v1.event_list.replace("{activityId}", activityId),
-      payload
+      filterCriteria
     );
     return events.data as Event[];
   };

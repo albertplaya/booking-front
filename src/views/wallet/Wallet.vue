@@ -113,6 +113,7 @@ import { date } from "quasar";
 import { useGuestPass } from "@/use/GuestPass";
 import { GuestPass } from "@/types/GuestPass";
 import { WalletResumeLine } from "@/types/WalletResumeLine";
+import { FilterCriteria } from "@/use/FilterCriteria";
 
 onMounted(async () => {
   await listBookings();
@@ -139,10 +140,14 @@ const walletResumeLine = ref<WalletResumeLine[]>([]);
 const showRevenue = ref<string>("totalRevenueByMonth");
 
 const listBookings = async () => {
-  partner.value = getPartner();
-  await listBookingsWithFilter({
-    partner: partner.value.partner_id,
-  })
+  const filterCriterias = [
+    {
+      parameter: "partner",
+      value: getPartner().partner_id,
+    },
+  ];
+  const filterCriteria = new FilterCriteria(filterCriterias);
+  await listBookingsWithFilter(filterCriteria)
     .then((result) => (bookings.value = result))
     .catch((e) => {
       return router.push({ name: "not-found" });
@@ -150,10 +155,14 @@ const listBookings = async () => {
 };
 
 const listGuestPass = async () => {
-  partner.value = getPartner();
-  await listGuestPassWithFilter({
-    partner: partner.value.partner_id,
-  })
+  const filterCriterias = [
+    {
+      parameter: "partner",
+      value: getPartner().partner_id,
+    },
+  ];
+  const filterCriteria = new FilterCriteria(filterCriterias);
+  await listGuestPassWithFilter(filterCriteria)
     .then((result) => (guestPass.value = result))
     .catch((e) => {
       return router.push({ name: "not-found" });

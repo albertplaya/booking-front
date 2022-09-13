@@ -54,18 +54,11 @@ export async function putData(url: string = "", data = {}) {
 
 export async function getData(
   url: string = "",
-  filterCriteria: FilterCriteria
+  filterCriteria?: FilterCriteria
 ): Promise<any> {
   const domain: string = import.meta.env.VITE_API_URL;
 
-  let payload = "";
-  const searchParams = filterCriteria.criterias.map(
-    (criteria: Criteria, index) => {
-      payload += index == 0 ? "?" : "&";
-      payload += `${criteria.parameter}=${criteria.value}`;
-    }
-  );
-
+  const payload = filterCriteria ? filterCriteria.toQueryParams() : "";
   const response = await fetch(domain + url + payload, {
     method: "GET",
     mode: "cors",
