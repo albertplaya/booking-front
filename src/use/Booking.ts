@@ -1,10 +1,7 @@
+import { FilterCriteria } from "./FilterCriteria";
 import { Booking } from "./../types/Booking";
 import { endpoints } from "@/config/endpoints";
 import { getData, putData } from "@/infrastructure/ApiHandler";
-
-export interface BookingListFilterCriteria {
-  partner: string;
-}
 
 export function useBooking() {
   const listByEventId = async (eventId: string): Promise<Booking[]> => {
@@ -15,7 +12,7 @@ export function useBooking() {
   };
 
   const listBookingsWithFilter = async (
-    filterCriteria: BookingListFilterCriteria
+    filterCriteria: FilterCriteria
   ): Promise<Booking[]> => {
     const bookings = await getData(
       endpoints.v1.booking_list_with_filter,

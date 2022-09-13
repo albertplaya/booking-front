@@ -1,19 +1,31 @@
 <template>
   <q-page class="flex justify-center bg-gray-50" padding>
     <div style="width: 895px">
-      <div class="flex justify-between">
+      <div class="flex items-center justify-between">
         <h3 class="text-2xl ml-2">Bookings</h3>
+        <div class="flex">
+          <label for="filter-booking-modal">
+            <q-icon
+              class="cursor-pointer mr-2 rounded-full drop-shadow bg-white p-2"
+              text-color="black"
+              color="lightgrey"
+              size="2em"
+              name="tune"
+            />
+          </label>
 
-        <q-btn
-          no-caps
-          :to="{ name: 'pos-activity-list' }"
-          label="Add Booking"
-          type="submit"
-          color="teal"
-          icon="add"
-          style="color: typography-primary-inverted"
-        />
+          <q-btn
+            no-caps
+            :to="{ name: 'pos-activity-list' }"
+            label="Add Booking"
+            type="submit"
+            color="teal"
+            icon="add"
+            style="color: typography-primary-inverted"
+          />
+        </div>
       </div>
+      <FilterBookingModal @filterOutput="listBookingsWithFilters" />
       <BookingModal
         v-if="selectedBooking && showModal"
         :showModal="showModal"
@@ -85,9 +97,19 @@ import { Booking } from "@/types/Booking";
 import { Partner } from "@/types/Partner";
 import { useAuth } from "@/use/Authentication";
 import BookingModal from "@/components/booking/BookingModal.vue";
+import FilterBookingModal from "@/components/booking/FilterBookingModal.vue";
 import router from "@/router";
+import { FilterCriteria } from "@/use/FilterCriteria";
+import { Criteria } from "@/types/Criteria";
 
 onMounted(() => {
+  const filterCriterias = [
+    {
+      parameter: "partner",
+      value: getPartner().partner_id,
+    },
+  ];
+  filterCriteria.value = new FilterCriteria(filterCriterias);
   listBookings();
 });
 
@@ -98,6 +120,7 @@ const bookings = ref<Booking[]>([]);
 const partner = ref<Partner>();
 const showModal = ref<boolean>(false);
 const selectedBooking = ref<Booking>();
+const filterCriteria = ref<FilterCriteria>(new FilterCriteria([]));
 
 const showBookingModal = (booking: Booking) => {
   selectedBooking.value = booking;
@@ -105,14 +128,21 @@ const showBookingModal = (booking: Booking) => {
 };
 
 const listBookings = async () => {
-  partner.value = getPartner();
-  listBookingsWithFilter({
-    partner: partner.value.partner_id,
-  })
+  listBookingsWithFilter(filterCriteria.value)
     .then((result) => (bookings.value = result))
     .catch((e) => {
       return router.push({ name: "not-found" });
     });
+};
+
+const listBookingsWithFilters = async (filter: FilterCriteria) => {
+  const filterCriteriaFromUser: Array<Criteria> = filter.criterias;
+  filterCriteriaFromUser.push({
+    parameter: "partner",
+    value: getPartner().partner_id,
+  });
+  filterCriteria.value = new FilterCriteria(filterCriteriaFromUser);
+  listBookings();
 };
 
 const closeModalAndRefresh = () => {

@@ -1,3 +1,5 @@
+import { Criteria } from "./../types/Criteria";
+import { FilterCriteria } from "./../use/FilterCriteria";
 import { ErrorResponse } from "@/types/Form/ErrorResponse";
 
 export async function postData(url: string = "", data = {}) {
@@ -52,14 +54,19 @@ export async function putData(url: string = "", data = {}) {
 
 export async function getData(
   url: string = "",
-  payload: any = {}
+  filterCriteria: FilterCriteria
 ): Promise<any> {
   const domain: string = import.meta.env.VITE_API_URL;
 
-  const searchParams =
-    Object.keys(payload).length != 0 ? "?" + new URLSearchParams(payload) : "";
+  let payload = "";
+  const searchParams = filterCriteria.criterias.map(
+    (criteria: Criteria, index) => {
+      payload += index == 0 ? "?" : "&";
+      payload += `${criteria.parameter}=${criteria.value}`;
+    }
+  );
 
-  const response = await fetch(domain + url + searchParams, {
+  const response = await fetch(domain + url + payload, {
     method: "GET",
     mode: "cors",
     cache: "no-cache",
