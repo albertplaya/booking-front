@@ -15,7 +15,7 @@
         </div>
       </div>
       <div>
-        <div v-if="partner" class="flex flex-row visible-custom">
+        <div v-if="userAuth" class="flex flex-row visible-custom">
           <q-btn
             no-caps
             flat
@@ -63,18 +63,18 @@
 </template>
 
 <script setup lang="ts">
-import { Partner } from "@/types/Partner";
-import { useAuth } from "@/use/Authentication";
 import { watch, ref, computed, ComputedRef, onMounted } from "vue";
 import { useRoute } from "vue-router";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 const route = useRoute();
 const currentRoute = ref<string>("");
-const { getPartner } = useAuth();
-const partner = ref<Partner>();
+const userAuth = ref<boolean>(false);
 
 onMounted(() => {
-  partner.value = getPartner();
+  onAuthStateChanged(getAuth(), async (user) => {
+    if (user) userAuth.value = true;
+  });
 });
 
 watch(

@@ -7,7 +7,7 @@
       elevated
       class="bg-gray-50 text-black flex justify-around"
       style="height: 50px"
-      v-if="partner"
+      v-if="userAuth"
     >
       <q-btn
         :color="currentRoute == 'activity-list' ? 'teal' : 'black'"
@@ -56,16 +56,16 @@
 <script setup lang="ts">
 import { watch, ref, onMounted } from "vue";
 import { useRoute } from "vue-router";
-import { Partner } from "@/types/Partner";
-import { useAuth } from "@/use/Authentication";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 const route = useRoute();
-const { getPartner } = useAuth();
 const currentRoute = ref<string>("");
-const partner = ref<Partner>();
+const userAuth = ref<boolean>(false);
 
 onMounted(() => {
-  partner.value = getPartner();
+  onAuthStateChanged(getAuth(), async (user) => {
+    if (user) userAuth.value = true;
+  });
 });
 
 watch(
