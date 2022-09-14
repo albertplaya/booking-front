@@ -2,6 +2,7 @@ import { Partner } from "@/types/Partner";
 import { usePartner } from "@/use/Partner";
 import { ulid } from "ulid";
 import { getUserLocale } from "get-user-locale";
+import { useTracker } from "./Tracker";
 
 export interface userAuth {
   email: string;
@@ -11,11 +12,14 @@ export interface userAuth {
 
 export function useAuth() {
   const { create, getByEmail } = usePartner();
+  const { trackIdentify, trackEvent } = useTracker();
 
-  const registerPartner = async (user: userAuth) => {
+  const registerPartner = async (user: userAuth, source: string) => {
     try {
       const partnerAlreadyStored: Partner = await getByEmail(user.email);
       if (partnerAlreadyStored) {
+        trackIdentify(partnerAlreadyStored);
+        trackEvent("User logged", { source: source });
         storePartner(partnerAlreadyStored);
         return;
       }
@@ -23,13 +27,17 @@ export function useAuth() {
 
     const newPartner: Partner = initializePartner(user);
     await create(newPartner);
+    trackIdentify(newPartner);
+    trackEvent("User created", { source: source });
     storePartner(newPartner);
   };
 
-  const loginPartner = async (email: string) => {
+  const loginPartner = async (email: string, source: string) => {
     try {
       const partner: Partner = await getByEmail(email);
       if (partner) {
+        trackIdentify(partner);
+        trackEvent("User logged", { source: source });
         storePartner(partner);
         return;
       }

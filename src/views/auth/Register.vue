@@ -146,7 +146,9 @@ import {
 } from "firebase/auth";
 import ErrorNotification from "@/components/notification/ErrorNotification.vue";
 import { useAuth } from "@/use/Authentication";
+import { inject } from "vue";
 
+const mixpanel = inject("mixpanel");
 const showSocialLogin = ref<boolean>(true);
 const email = ref<string>("");
 const password = ref<string>("");
@@ -159,11 +161,14 @@ const { registerPartner } = useAuth();
 const registerWithEmailAndPassword = () => {
   createUserWithEmailAndPassword(getAuth(), email.value, password.value)
     .then(async (data) => {
-      await registerPartner({
-        email: email.value,
-        photoURL: null,
-        displayName: null,
-      });
+      await registerPartner(
+        {
+          email: email.value,
+          photoURL: null,
+          displayName: null,
+        },
+        "Email and password"
+      );
       router.push({ name: "home" });
     })
     .catch((error) => {
@@ -175,11 +180,14 @@ const registerWithGoogle = () => {
   const provider = new GoogleAuthProvider();
   signInWithPopup(getAuth(), provider)
     .then(async (data) => {
-      await registerPartner({
-        email: data.user.email as string,
-        photoURL: data.user.photoURL as string,
-        displayName: data.user.displayName as string,
-      });
+      await registerPartner(
+        {
+          email: data.user.email as string,
+          photoURL: data.user.photoURL as string,
+          displayName: data.user.displayName as string,
+        },
+        "Google"
+      );
       router.push({ name: "home" });
     })
     .catch((error) => {
@@ -191,11 +199,14 @@ const registerWithFacebook = () => {
   const provider = new FacebookAuthProvider();
   signInWithPopup(getAuth(), provider)
     .then(async (data) => {
-      await registerPartner({
-        email: data.user.email as string,
-        photoURL: data.user.photoURL as string,
-        displayName: data.user.displayName as string,
-      });
+      await registerPartner(
+        {
+          email: data.user.email as string,
+          photoURL: data.user.photoURL as string,
+          displayName: data.user.displayName as string,
+        },
+        "Facebook"
+      );
       router.push({ name: "home" });
     })
     .catch((error) => {

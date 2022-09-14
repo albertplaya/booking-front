@@ -91,11 +91,10 @@
 
 <script setup lang="ts">
 import { onMounted, ref } from "vue";
-import { date } from "quasar";
-import { useBooking } from "@/use/Booking";
 import { Booking } from "@/types/Booking";
-import { Partner } from "@/types/Partner";
+import { useBooking } from "@/use/Booking";
 import { useAuth } from "@/use/Authentication";
+import { useTracker } from "@/use/Tracker";
 import BookingModal from "@/components/booking/BookingModal.vue";
 import FilterBookingModal from "@/components/booking/FilterBookingModal.vue";
 import router from "@/router";
@@ -111,10 +110,12 @@ onMounted(() => {
   ];
   filterCriteria.value = new FilterCriteria(filterCriterias);
   listBookings();
+  trackScreen("ListBooking");
 });
 
 const { getPartner } = useAuth();
 const { listBookingsWithFilter } = useBooking();
+const { trackScreen } = useTracker();
 
 const bookings = ref<Booking[]>([]);
 const showModal = ref<boolean>(false);

@@ -159,7 +159,7 @@ const { loginPartner } = useAuth();
 const registerWithEmailAndPassword = () => {
   signInWithEmailAndPassword(getAuth(), email.value, password.value)
     .then(async (data: any) => {
-      await loginPartner(data.user.email);
+      await loginPartner(data.user.email, "Email and password");
       router.push({ name: "home" });
     })
     .catch((error) => {
@@ -171,7 +171,7 @@ const registerWithGoogle = () => {
   const provider = new GoogleAuthProvider();
   signInWithPopup(getAuth(), provider)
     .then(async (data: any) => {
-      await loginPartner(data.user.email);
+      await loginPartner(data.user.email, "Google");
       router.push({ name: "home" });
     })
     .catch((error) => {
@@ -183,7 +183,7 @@ const registerWithFacebook = () => {
   const provider = new FacebookAuthProvider();
   signInWithPopup(getAuth(), provider)
     .then(async (data: any) => {
-      await loginPartner(data.user.email);
+      await loginPartner(data.user.email, "Facebook");
       router.push({ name: "home" });
     })
     .catch((error) => {

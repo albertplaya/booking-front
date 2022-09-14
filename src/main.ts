@@ -50,7 +50,7 @@ app
   .use(router)
   .use(store)
   .use(VueMixpanel, {
-    token: "a9231ee025e12c88ce60604f93ad7f5c",
+    token: import.meta.env.VITE_MIXPANEL_TOKEN,
   })
   .component("downloadCsv", JsonCSV)
   .mount("#app");
