@@ -9,6 +9,7 @@ import store from "@/store";
 import { initializeApp } from "firebase/app";
 import * as Sentry from "@sentry/vue";
 import { BrowserTracing } from "@sentry/tracing";
+import VueMixpanel from "vue-mixpanel";
 
 loadFonts();
 
@@ -48,5 +49,8 @@ app
   .use(Quasar, quasarUserOptions)
   .use(router)
   .use(store)
+  .use(VueMixpanel, {
+    token: "a9231ee025e12c88ce60604f93ad7f5c",
+  })
   .component("downloadCsv", JsonCSV)
   .mount("#app");
