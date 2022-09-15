@@ -34,14 +34,6 @@
         :to="{ name: 'guest-list' }"
       />
       <q-btn
-        :color="currentRoute == 'account' ? 'teal' : 'black'"
-        flat
-        round
-        icon="account_circle"
-        style="font-size: 1rem"
-        :to="{ name: 'account' }"
-      />
-      <q-btn
         :color="currentRoute == 'wallet' ? 'teal' : 'black'"
         flat
         round
@@ -49,6 +41,17 @@
         style="font-size: 1rem"
         :to="{ name: 'wallet' }"
       />
+      <q-btn
+        :color="currentRoute == 'account' ? 'teal' : 'black'"
+        flat
+        round
+        style="font-size: 1rem"
+        :to="{ name: 'account' }"
+      >
+        <q-avatar size="34px">
+          <img :src="partner.picture" />
+        </q-avatar>
+      </q-btn>
     </q-footer>
   </div>
 </template>
@@ -57,8 +60,13 @@
 import { watch, ref, onMounted } from "vue";
 import { useRoute } from "vue-router";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { useAuth } from "@/use/Authentication";
+import { Partner } from "@/types/Partner";
+
+const { getPartner } = useAuth();
 
 const route = useRoute();
+const partner: Partner = getPartner();
 const currentRoute = ref<string>("");
 const userAuth = ref<boolean>(false);
 

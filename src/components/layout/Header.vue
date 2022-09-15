@@ -43,18 +43,18 @@
           <q-btn
             no-caps
             flat
-            :color="currentRoute == 'account' ? 'teal' : 'black'"
-            icon="account_circle"
-            label="Account"
-            :to="{ name: 'account' }"
-          />
-          <q-btn
-            no-caps
-            flat
             :color="currentRoute == 'wallet' ? 'teal' : 'black'"
             icon="account_balance_wallet"
             label="Wallet"
             :to="{ name: 'wallet' }"
+          />
+          <q-btn
+            no-caps
+            flat
+            :color="currentRoute == 'account' ? 'teal' : 'black'"
+            icon="account_circle"
+            label="Account"
+            :to="{ name: 'account' }"
           />
         </div>
       </div>
