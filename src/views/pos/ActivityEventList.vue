@@ -1,5 +1,5 @@
 <template>
-  <q-page class="flex justify-center bg-white" padding>
+  <q-page class="flex-1 justify-center bg-white" padding>
     <div class="q-pa-md" style="max-width: 400px">
       <div class="flex flex-row-reverse">
         <BackButton />

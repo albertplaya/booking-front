@@ -1,6 +1,6 @@
 <template>
-  <q-page class="flex justify-center bg-gray-50" padding>
-    <div style="width: 895px">
+  <q-page class="flex-1 justify-center bg-gray-50" padding>
+    <div>
       <div class="flex justify-between mb-2">
         <q-btn
           v-if="eventListButton === 'upcoming'"

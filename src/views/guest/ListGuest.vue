@@ -1,7 +1,7 @@
 <template>
-  <q-page class="flex justify-center bg-gray-50" padding>
-    <div style="width: 895px">
-      <div class="flex justify-between">
+  <q-page class="flex-1 justify-center bg-gray-50" padding>
+    <div>
+      <div class="flex items-center justify-between">
         <h3 class="text-2xl ml-2">Guests</h3>
         <q-separator />
         <q-btn

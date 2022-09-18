@@ -1,6 +1,6 @@
 <template>
   <q-header
-    class="header flex justify-center"
+    class="header justify-center flex md:hidden lg:hidden"
     v-if="currentRoute !== 'register' && currentRoute !== 'login'"
   >
     <q-toolbar class="toolbar">
@@ -12,50 +12,6 @@
             <span class="sr-only">Workflow</span>
             <img class="h-8 w-auto" src="/logo.svg" alt="" />
           </a>
-        </div>
-      </div>
-      <div>
-        <div v-if="userAuth" class="flex flex-row visible-custom">
-          <q-btn
-            no-caps
-            flat
-            :color="currentRoute == 'activity-list' ? 'teal' : 'black'"
-            icon="insert_invitation"
-            label="Activities"
-            :to="{ name: 'activity-list' }"
-          />
-          <q-btn
-            no-caps
-            flat
-            :color="currentRoute == 'booking-list' ? 'teal' : 'black'"
-            icon="confirmation_number"
-            label="Bookings"
-            :to="{ name: 'booking-list' }"
-          />
-          <q-btn
-            no-caps
-            flat
-            :color="currentRoute == 'guest-list' ? 'teal' : 'black'"
-            icon="people"
-            label="Guests"
-            :to="{ name: 'guest-list' }"
-          />
-          <q-btn
-            no-caps
-            flat
-            :color="currentRoute == 'wallet' ? 'teal' : 'black'"
-            icon="account_balance_wallet"
-            label="Wallet"
-            :to="{ name: 'wallet' }"
-          />
-          <q-btn
-            no-caps
-            flat
-            :color="currentRoute == 'account' ? 'teal' : 'black'"
-            icon="account_circle"
-            label="Account"
-            :to="{ name: 'account' }"
-          />
         </div>
       </div>
     </q-toolbar>

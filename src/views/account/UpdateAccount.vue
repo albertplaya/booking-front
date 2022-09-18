@@ -1,11 +1,11 @@
 <template>
-  <q-page padding class="flex justify-center bg-gray-50">
-    <div class="q-pa-md flex-grow" style="max-width: 400px">
+  <q-page padding class="flex-1 bg-gray-50">
+    <div class="q-pa-md flex justify-center">
       <ErrorNotification :error="error" />
       <div
         v-if="partner"
         class="q-pa-md pt-4 border border-solid rounded-md border-gray-200"
-        style="max-width: 400px"
+        style="width: 400px"
       >
         <q-form class="q-gutter-md pt-4">
           <q-input
