@@ -1,77 +1,83 @@
 <template>
-  <q-page class="flex-1 justify-center bg-white" padding>
-    <div class="q-pa-md" style="max-width: 400px">
-      <div class="flex flex-row-reverse">
-        <BackButton />
-      </div>
-      <div v-if="!events.length" class="flex justify-between mb-2">
-        <AddWhenEmptyList label="Add new event" to="event-add" />
-      </div>
-      <div v-else>
-        <div class="q-pa-md">
-          <div class="q-gutter-md">
-            <q-date
-              minimal
-              v-model="currentDate"
-              :events="eventDates"
-              :options="disabledDays"
-              :flat="true"
-              :square="true"
-              color="teal"
-            />
-          </div>
+  <q-page class="flex-1 bg-white" padding>
+    <div class="flex justify-center">
+      <div style="max-width: 400px">
+        <div class="flex flex-row-reverse">
+          <BackButton />
         </div>
-        <EventHourPillList
-          v-if="currentEvent"
-          :events="selectedEvents"
-          :current_event="currentEvent"
-          @eventChanged="selectNewCurrentEvent"
-        />
-        <div class="grid grid-cols-2 py-4 my-2 rounded-md text-l p-2 bg-grey-2">
-          <div class="flex flex-col" v-if="activity">
-            <div class="font-bold">
-              {{ activity.title }}
-            </div>
-            <div class="text-grey">
-              {{ dateUtil.formatDate(currentEvent?.start_date, "DD MMM YYYY") }}
-            </div>
-            <div class="text-grey">
-              {{ dateUtil.formatDate(currentEvent?.start_date, "HH:mm A") }} -
-              {{
-                dateUtil.formatDate(
-                  new Date(currentEvent?.start_date).setTime(
-                    new Date(currentEvent?.start_date).getTime() +
-                      currentEvent?.duration * 60000
-                  ),
-                  "HH:mm A"
-                )
-              }}
-            </div>
-          </div>
-          <div class="flex flex-col content-end">
-            <div class="flex justify-end">Total</div>
-            <div v-if="activity.price == 0" class="text-2xl font-bold">
-              FREE
-            </div>
-            <div v-else class="text-2xl font-bold">
-              {{ activity?.price / 100 }} {{ activity?.currency }}
-            </div>
-            <div class="flex justify-end">
-              {{ currentEvent?.duration }} minutes
-            </div>
-          </div>
+        <div v-if="!events.length" class="flex justify-between mb-2">
+          <AddWhenEmptyList label="Add new event" to="event-add" />
         </div>
+        <div v-else>
+          <div class="q-pa-md">
+            <div class="q-gutter-md">
+              <q-date
+                minimal
+                v-model="currentDate"
+                :events="eventDates"
+                :options="disabledDays"
+                :flat="true"
+                :square="true"
+                color="teal"
+              />
+            </div>
+          </div>
+          <EventHourPillList
+            v-if="currentEvent"
+            :events="selectedEvents"
+            :current_event="currentEvent"
+            @eventChanged="selectNewCurrentEvent"
+          />
+          <div
+            class="grid grid-cols-2 py-4 my-2 rounded-md text-l p-2 bg-grey-2"
+          >
+            <div class="flex flex-col" v-if="activity">
+              <div class="font-bold">
+                {{ activity.title }}
+              </div>
+              <div class="text-grey">
+                {{
+                  dateUtil.formatDate(currentEvent?.start_date, "DD MMM YYYY")
+                }}
+              </div>
+              <div class="text-grey">
+                {{ dateUtil.formatDate(currentEvent?.start_date, "HH:mm A") }} -
+                {{
+                  dateUtil.formatDate(
+                    new Date(currentEvent?.start_date).setTime(
+                      new Date(currentEvent?.start_date).getTime() +
+                        currentEvent?.duration * 60000
+                    ),
+                    "HH:mm A"
+                  )
+                }}
+              </div>
+            </div>
+            <div class="flex flex-col content-end">
+              <div class="flex justify-end">Total</div>
+              <div v-if="activity.price == 0" class="text-2xl font-bold">
+                FREE
+              </div>
+              <div v-else class="text-2xl font-bold">
+                {{ activity?.price / 100 }} {{ activity?.currency }}
+              </div>
+              <div class="flex justify-end">
+                {{ currentEvent?.duration }} minutes
+              </div>
+            </div>
+          </div>
 
-        <q-btn
-          v-if="currentEvent"
-          class="full-width"
-          color="teal"
-          :to="{
-            name: 'pos-activity-guest',
-            params: { eventId: currentEvent.event_id },
-          }"
-          >Book
-        </q-btn>
+          <q-btn
+            v-if="currentEvent"
+            class="full-width"
+            color="teal"
+            :to="{
+              name: 'pos-activity-guest',
+              params: { eventId: currentEvent.event_id },
+            }"
+            >Book
+          </q-btn>
+        </div>
       </div>
     </div>
   </q-page>

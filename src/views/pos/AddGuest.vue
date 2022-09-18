@@ -1,53 +1,58 @@
 <template>
-  <q-page class="flex justify-center bg-white" padding>
-    <div class="q-pa-md flex-grow" style="max-width: 400px">
-      <div class="pb-4 flex row-auto justify-between" style="min-width: 320px">
-        <h3 class="text-2xl">Add guest & pass</h3>
-        <BackButton />
-      </div>
-      <ErrorNotification :error="error" />
-      <div class="my-5" style="max-width: 400px">
-        <q-select
-          filled
-          v-model="currentGuest"
-          use-input
-          input-debounce="0"
-          label="Add guest"
-          :options="options"
-          @filter="filterByGuestName"
-          behavior="menu"
-          map-options
+  <q-page class="flex-1 bg-white" padding>
+    <div class="flex justify-center">
+      <div style="width: 400px">
+        <div
+          class="pb-4 flex row-auto justify-between"
+          style="min-width: 320px"
         >
-          <template v-slot:no-option>
-            <q-item>
-              <q-item-section class="text-grey"> No results </q-item-section>
-            </q-item>
-          </template>
-        </q-select>
-        <div v-if="guestPasses && guestPasses.length">
-          <h3 class="mt-6 text-lg font-bold">Assign pass</h3>
-          <div
-            class="flex justify-around mt-4"
-            v-for="guestPass in guestPasses"
-            :key="guestPass.pass_id"
+          <h3 class="text-2xl">Add guest & pass</h3>
+          <BackButton />
+        </div>
+        <ErrorNotification :error="error" />
+        <div class="my-5" style="width: 400px">
+          <q-select
+            filled
+            v-model="currentGuest"
+            use-input
+            input-debounce="0"
+            label="Add guest"
+            :options="options"
+            @filter="filterByGuestName"
+            behavior="menu"
+            map-options
           >
-            <GuestPassCard
-              v-if="guestPass.current_quantity < guestPass.quantity"
-              :pass="guestPass"
-              :selected="selectedPass == guestPass"
-              @click="selectPass(guestPass)"
-            />
+            <template v-slot:no-option>
+              <q-item>
+                <q-item-section class="text-grey"> No results </q-item-section>
+              </q-item>
+            </template>
+          </q-select>
+          <div v-if="guestPasses && guestPasses.length">
+            <h3 class="mt-6 text-lg font-bold">Assign pass</h3>
+            <div
+              class="flex justify-around mt-4"
+              v-for="guestPass in guestPasses"
+              :key="guestPass.pass_id"
+            >
+              <GuestPassCard
+                v-if="guestPass.current_quantity < guestPass.quantity"
+                :pass="guestPass"
+                :selected="selectedPass == guestPass"
+                @click="selectPass(guestPass)"
+              />
+            </div>
           </div>
         </div>
-      </div>
-      <div style="max-width: 400px">
-        <q-btn
-          class="float-right"
-          label="Save"
-          type="submit"
-          color="teal"
-          @click="addGuestPassAndBookingSession"
-        />
+        <div style="max-width: 400px">
+          <q-btn
+            class="float-right"
+            label="Save"
+            type="submit"
+            color="teal"
+            @click="addGuestPassAndBookingSession"
+          />
+        </div>
       </div>
     </div>
   </q-page>

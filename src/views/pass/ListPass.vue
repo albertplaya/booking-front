@@ -1,6 +1,6 @@
 <template>
-  <q-page class="flex justify-center bg-gray-50" padding>
-    <div style="width: 895px">
+  <q-page class="flex-1 bg-gray-50" padding>
+    <div>
       <div class="flex justify-between">
         <h3 class="text-2xl ml-2">Passes</h3>
         <div class="flex">

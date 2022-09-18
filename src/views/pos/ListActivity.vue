@@ -1,6 +1,6 @@
 <template>
-  <q-page class="flex-1 justify-center bg-gray-50" padding>
-    <div>
+  <q-page class="flex-1 bg-gray-50" padding>
+    <div class="flex justify-center">
       <div class="flex justify-between">
         <h3 class="text-2xl ml-2">Select activity</h3>
       </div>

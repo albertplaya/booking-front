@@ -1,87 +1,89 @@
 <template>
-  <q-page padding class="flex justify-center bg-gray-50">
-    <div class="q-pa-md flex-grow" style="max-width: 400px">
-      <div class="pb-4 flex row-auto justify-between">
-        <h3 class="text-2xl ml-2">Add pass</h3>
-        <BackButton />
-      </div>
-      <ErrorNotification :error="error" />
-      <div
-        class="q-pa-md pt-4 border border-solid rounded-md border-gray-200"
-        style="max-width: 400px"
-      >
-        <q-form v-if="pass" class="q-gutter-md pt-4">
-          <q-input
-            filled
-            v-model="pass.title"
-            label="Title"
-            lazy-rules
-            :error="formErrors.get('title') != null"
-            :error-message="formErrors.get('title')?.message"
-            :rules="[
-              (val) => (val && val.length > 0) || 'Please type something',
-            ]"
+  <q-page padding class="flex-1 bg-gray-50">
+    <div class="flex justify-center">
+      <div style="width: 400px">
+        <div class="pb-4 flex row-auto justify-between">
+          <h3 class="text-2xl ml-2">Update pass</h3>
+          <BackButton />
+        </div>
+        <ErrorNotification :error="error" />
+        <div
+          class="q-pa-md pt-4 border border-solid rounded-md border-gray-200"
+          style="width: 400px"
+        >
+          <q-form v-if="pass" class="q-gutter-md pt-4">
+            <q-input
+              filled
+              v-model="pass.title"
+              label="Title"
+              lazy-rules
+              :error="formErrors.get('title') != null"
+              :error-message="formErrors.get('title')?.message"
+              :rules="[
+                (val) => (val && val.length > 0) || 'Please type something',
+              ]"
+            />
+
+            <q-input
+              filled
+              v-model="pass.description"
+              label="Description"
+              lazy-rules
+              :error="formErrors.get('description') != null"
+              :error-message="formErrors.get('description')?.message"
+              :rules="[
+                (val) => (val && val.length > 0) || 'Please type something',
+              ]"
+            />
+
+            <q-input
+              filled
+              v-model="pass.quantity"
+              label="Quantity"
+              lazy-rules
+              autogrow
+              :error="formErrors.get('quantity') != null"
+              :error-message="formErrors.get('quantity')?.message"
+              :rules="[
+                (val) => (val && val.length > 0) || 'Please type something',
+              ]"
+            />
+
+            <q-input
+              filled
+              v-model="pass.price"
+              label="Price"
+              lazy-rules
+              autogrow
+              :error="formErrors.get('price') != null"
+              :error-message="formErrors.get('price')?.message"
+            >
+              <template v-slot:append>
+                <q-icon name="euro" />
+              </template>
+            </q-input>
+          </q-form>
+        </div>
+
+        <div class="pt-4 q-gutter-sm" style="max-width: 400px">
+          <q-btn
+            @click="updatePassAction"
+            no-caps
+            style="color: typography-primary-inverted"
+            class="float-right"
+            label="Save"
+            type="submit"
+            color="teal"
           />
-
-          <q-input
-            filled
-            v-model="pass.description"
-            label="Description"
-            lazy-rules
-            :error="formErrors.get('description') != null"
-            :error-message="formErrors.get('description')?.message"
-            :rules="[
-              (val) => (val && val.length > 0) || 'Please type something',
-            ]"
+          <q-btn
+            no-caps
+            class="float-right"
+            label="Delete"
+            type="submit"
+            color="rhubarb"
+            @click="deletePassAction"
           />
-
-          <q-input
-            filled
-            v-model="pass.quantity"
-            label="Quantity"
-            lazy-rules
-            autogrow
-            :error="formErrors.get('quantity') != null"
-            :error-message="formErrors.get('quantity')?.message"
-            :rules="[
-              (val) => (val && val.length > 0) || 'Please type something',
-            ]"
-          />
-
-          <q-input
-            filled
-            v-model="pass.price"
-            label="Price"
-            lazy-rules
-            autogrow
-            :error="formErrors.get('price') != null"
-            :error-message="formErrors.get('price')?.message"
-          >
-            <template v-slot:append>
-              <q-icon name="euro" />
-            </template>
-          </q-input>
-        </q-form>
-      </div>
-
-      <div class="pt-4 q-gutter-sm" style="max-width: 400px">
-        <q-btn
-          @click="updatePassAction"
-          no-caps
-          style="color: typography-primary-inverted"
-          class="float-right"
-          label="Save"
-          type="submit"
-          color="teal"
-        />
-        <q-btn
-          no-caps
-          class="float-right"
-          label="Delete"
-          type="submit"
-          color="rhubarb"
-          @click="deletePassAction"
-        />
+        </div>
       </div>
     </div>
   </q-page>

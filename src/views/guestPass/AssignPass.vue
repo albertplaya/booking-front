@@ -1,61 +1,63 @@
 <template>
-  <q-page padding class="flex justify-center bg-gray-50">
-    <div class="q-pa-md flex-grow" style="max-width: 400px">
-      <div class="pb-4 flex row-auto justify-between">
-        <h3 class="text-2xl ml-2">Assign pass</h3>
-        <BackButton />
-      </div>
-      <ErrorNotification :error="error" />
-      <div
-        class="q-pa-md pt-4 border border-solid bg-white rounded-md border-gray-200"
-        style="max-width: 400px"
-      >
-        <q-select
-          filled
-          v-model="selectedGuest"
-          use-input
-          input-debounce="0"
-          label="Select guest"
-          :options="options"
-          @filter="filterByGuestName"
-          behavior="menu"
-          map-options
-        >
-          <template v-slot:no-option>
-            <q-item>
-              <q-item-section class="text-grey"> No results </q-item-section>
-            </q-item>
-          </template>
-        </q-select>
-      </div>
-
-      <div v-if="!passes.length" class="flex">
-        <div
-          class="flex justify-center flex-grow text-2xl bg-gray-50 border-2 rounded-md mt-4 p-4"
-        >
-          No pass yet!
+  <q-page padding class="flex-1 bg-gray-50">
+    <div class="flex justify-center">
+      <div style="width: 400px">
+        <div class="pb-4 flex row-auto justify-between">
+          <h3 class="text-2xl ml-2">Assign pass</h3>
+          <BackButton />
         </div>
-      </div>
-      <div v-else class="flex justify-around mt-4">
-        <div v-for="pass in passes" :key="pass.pass_id">
-          <PassCard
-            :pass="pass"
-            :selected="selectedPass == pass"
-            @click="selectPass(pass)"
+        <ErrorNotification :error="error" />
+        <div
+          class="q-pa-md pt-4 border border-solid bg-white rounded-md border-gray-200"
+          style="max: 400px"
+        >
+          <q-select
+            filled
+            v-model="selectedGuest"
+            use-input
+            input-debounce="0"
+            label="Select guest"
+            :options="options"
+            @filter="filterByGuestName"
+            behavior="menu"
+            map-options
+          >
+            <template v-slot:no-option>
+              <q-item>
+                <q-item-section class="text-grey"> No results </q-item-section>
+              </q-item>
+            </template>
+          </q-select>
+        </div>
+
+        <div v-if="!passes.length" class="flex">
+          <div
+            class="flex justify-center flex-grow text-2xl bg-gray-50 border-2 rounded-md mt-4 p-4"
+          >
+            No pass yet!
+          </div>
+        </div>
+        <div v-else class="flex justify-around mt-4">
+          <div v-for="pass in passes" :key="pass.pass_id">
+            <PassCard
+              :pass="pass"
+              :selected="selectedPass == pass"
+              @click="selectPass(pass)"
+            />
+          </div>
+        </div>
+
+        <div class="pt-4" style="max-width: 400px">
+          <q-btn
+            @click="saveGuestPass"
+            no-caps
+            style="color: typography-primary-inverted"
+            class="float-right"
+            label="Save"
+            type="submit"
+            color="teal"
           />
         </div>
-      </div>
-
-      <div class="pt-4" style="max-width: 400px">
-        <q-btn
-          @click="saveGuestPass"
-          no-caps
-          style="color: typography-primary-inverted"
-          class="float-right"
-          label="Save"
-          type="submit"
-          color="teal"
-        />
       </div>
     </div>
   </q-page>
