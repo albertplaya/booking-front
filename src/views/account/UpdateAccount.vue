@@ -85,19 +85,15 @@
             ]"
           />
         </q-form>
-      </div>
-      <!--
-      <div class="pt-4" style="max-width: 400px">
         <q-btn
-          @click=""
+          class="logout_button"
+          @click="logoutAction"
           no-caps
-          style="color: typography-primary-inverted"
-          class="float-right"
-          label="Save"
+          icon="logout"
+          label="Logout"
           type="submit"
-          color="teal"
         />
-      </div>-->
+      </div>
     </div>
   </q-page>
 </template>
@@ -110,9 +106,10 @@ import router from "@/router";
 import { usePartner } from "@/use/Partner";
 import { Partner } from "@/types/Partner";
 import { useAuth } from "@/use/Authentication";
+import { getAuth, signOut } from "firebase/auth";
 
 const { get } = usePartner();
-const { getPartner } = useAuth();
+const { getPartner, removePartner } = useAuth();
 
 const partner = ref<Partner>();
 const error = ref<any>("");
@@ -129,4 +126,19 @@ const getPartnerFromApi = async (partnerId: string) => {
       return router.push({ name: "not-found" });
     });
 };
+
+const logoutAction = () => {
+  signOut(getAuth())
+    .then(async (data: any) => {
+      removePartner();
+      router.push({ name: "login" });
+    })
+    .catch((error) => {});
+};
 </script>
+<style lang="scss" scoped>
+.logout_button {
+  @apply w-full text-white;
+  background-color: $rhubarb;
+}
+</style>

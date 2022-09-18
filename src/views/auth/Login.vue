@@ -1,6 +1,9 @@
 <template>
-  <q-page padding class="flex items-center justify-center bg-gray-50">
-    <div>
+  <q-page
+    padding
+    class="absolute flex justify-center items-center w-full h-full bg-gray-50"
+  >
+    <div class="">
       <div class="flex justify-center">
         <img class="h-10 w-auto" src="/logo.svg" alt="" />
       </div>
@@ -8,7 +11,7 @@
         <div class="pb-4 flex row-auto justify-between">
           <h3 class="text-lg py-10 text-center">
             <span class="font-bold">Log in or sign up</span>
-            to your account and discover the best electric charging experience:
+            to your account and start managing your activities today:
           </h3>
         </div>
         <ErrorNotification :error="errorMessage" />
@@ -96,7 +99,7 @@
             color="teal"
           />
         </div>
-        <div v-else class="q-pa-md pt-4" style="max-width: 400px">
+        <div v-else class="q-pa-md pt-1" style="max-width: 400px">
           <q-form class="q-gutter-md pt-4">
             <q-input
               filled

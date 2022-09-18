@@ -96,5 +96,5 @@ export function useAuth() {
       .replace(/(^-+|-+$)/g, ""); // Remove extra hyphens from beginning or end of the string
   };
 
-  return { registerPartner, loginPartner, getPartner };
+  return { registerPartner, loginPartner, getPartner, removePartner };
 }
