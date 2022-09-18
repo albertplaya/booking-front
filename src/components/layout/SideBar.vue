@@ -5,11 +5,10 @@
   >
     <div class="flex justify-center">
       <a class="p-6" href="#">
-        <span class="sr-only">Workflow</span>
-        <img class="h-8 w-auto" src="/logo.svg" alt="" />
+        <img class="h-8 sm:w-auto md:w-16 lg:w-36" src="/logo.svg" alt="" />
       </a>
     </div>
-    <ul class="menu shadow bg-base-100 md:w-20 lg:w-56 p-2 rounded-box mx-4">
+    <ul class="menu shadow bg-base-100 md:w-max lg:w-56 p-2 rounded-box mx-4">
       <li class="menu-title md:hidden lg:flex">
         <span>Categories</span>
       </li>
@@ -17,6 +16,7 @@
         <li>
           <div>
             <q-icon
+              class="w-auto"
               size="25px"
               name="o_insert_invitation"
               :color="currentRoute == 'activity-list' ? 'teal' : 'black'"
@@ -117,7 +117,7 @@ watch(
 .visible-custom {
   display: none;
 }
-@media only screen and (min-width: 640px) {
+@media only screen and (min-width: 766px) {
   .visible-custom {
     display: block !important;
   }

@@ -1,5 +1,5 @@
 <template>
-  <q-page padding class="flex-1 justify-center bg-gray-50">
+  <q-page padding class="flex-1 bg-gray-50">
     <div class="flex justify-center">
       <div>
         <div class="pb-4 flex row-auto justify-between">

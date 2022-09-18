@@ -51,12 +51,4 @@ watch(
   max-width: 1200px;
   max-height: 50px;
 }
-.visible-custom {
-  display: none;
-}
-@media only screen and (min-width: 640px) {
-  .visible-custom {
-    display: block !important;
-  }
-}
 </style>

@@ -1,6 +1,6 @@
 <template>
   <div
-    class="visible sm:invisible"
+    class="flex md:hidden"
     v-if="currentRoute !== 'register' && currentRoute !== 'login'"
   >
     <q-footer
@@ -83,14 +83,3 @@ watch(
   }
 );
 </script>
-
-<style scoped>
-.visible-custom {
-  display: none;
-}
-@media only screen and (min-width: 640px) {
-  .visible-custom {
-    display: block !important;
-  }
-}
-</style>
