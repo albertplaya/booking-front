@@ -1,7 +1,7 @@
 <template>
   <q-page class="flex-1 justify-center bg-gray-50" padding>
     <div>
-      <div class="flex justify-between">
+      <div class="flex justify-between items-center">
         <h3 class="text-2xl ml-2">Activities</h3>
         <div class="flex">
           <q-btn

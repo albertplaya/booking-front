@@ -1,7 +1,7 @@
 <template>
   <q-page class="flex-1 bg-gray-50" padding>
     <div class="flex flex-col">
-      <div class="flex justify-between">
+      <div class="flex justify-between items-center">
         <h3 class="text-2xl ml-2">Wallet</h3>
         <q-separator />
         <div class="flex">
