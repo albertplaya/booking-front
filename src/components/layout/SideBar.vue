@@ -12,68 +12,24 @@
       <li class="menu-title md:hidden lg:flex">
         <span>Categories</span>
       </li>
-      <router-link :to="{ name: 'activity-list' }">
+      <router-link v-for="section in menu" :to="{ name: section.route_name }">
         <li>
           <div>
             <q-icon
               class="w-auto"
               size="25px"
-              name="o_insert_invitation"
-              :color="currentRoute == 'activity-list' ? 'teal' : 'black'"
+              :name="section.icon_name"
+              :color="currentRoute == section.route_name ? 'teal' : 'black'"
             />
-            <span class="text-lg font-medium md:hidden lg:flex">
-              Activities
+            <span
+              v-if="currentRoute == section.route_name"
+              class="text-selected"
+            >
+              {{ section.title }}
             </span>
-          </div>
-        </li>
-      </router-link>
-      <router-link :to="{ name: 'booking-list' }">
-        <li>
-          <div>
-            <q-icon
-              size="25px"
-              name="o_confirmation_number"
-              :color="currentRoute == 'booking-list' ? 'teal' : 'black'"
-            />
-            <span class="text-lg font-medium md:hidden lg:flex">
-              Bookings
+            <span v-else class="text-lg font-medium md:hidden lg:flex">
+              {{ section.title }}
             </span>
-          </div>
-        </li>
-      </router-link>
-      <router-link :to="{ name: 'guest-list' }">
-        <li>
-          <div>
-            <q-icon
-              size="25px"
-              name="o_people"
-              :color="currentRoute == 'guest-list' ? 'teal' : 'black'"
-            />
-            <span class="text-lg font-medium md:hidden lg:flex"> Guests</span>
-          </div>
-        </li>
-      </router-link>
-      <router-link :to="{ name: 'wallet' }">
-        <li>
-          <div>
-            <q-icon
-              size="25px"
-              name="o_account_balance_wallet"
-              :color="currentRoute == 'wallet' ? 'teal' : 'black'"
-            />
-            <span class="text-lg font-medium md:hidden lg:flex"> Wallet</span>
-          </div>
-        </li>
-      </router-link>
-      <router-link :to="{ name: 'account' }">
-        <li>
-          <div>
-            <q-icon
-              size="25px"
-              name="o_account_circle"
-              :color="currentRoute == 'account' ? 'teal' : 'black'"
-            />
-            <span class="text-lg font-medium md:hidden lg:flex"> Account</span>
           </div>
         </li>
       </router-link>
@@ -102,18 +58,42 @@ watch(
     currentRoute.value = route.name as string;
   }
 );
+
+const menu = [
+  {
+    title: "Activities",
+    route_name: "activity-list",
+    icon_name: "o_insert_invitation",
+  },
+  {
+    title: "Bookings",
+    route_name: "booking-list",
+    icon_name: "o_confirmation_number",
+  },
+  {
+    title: "Guests",
+    route_name: "guest-list",
+    icon_name: "o_people",
+  },
+  {
+    title: "Wallet",
+    route_name: "wallet",
+    icon_name: "o_account_balance_wallet",
+  },
+  {
+    title: "Account",
+    route_name: "account",
+    icon_name: "o_account_circle",
+  },
+];
 </script>
 
-<style scoped>
-.header {
-  @apply bg-gray-50 text-black z-40;
+<style scoped lang="scss">
+.text-selected {
+  @apply text-lg font-medium md:hidden lg:flex;
+  color: $teal;
 }
 
-.toolbar {
-  @apply flex justify-between;
-  max-width: 1200px;
-  max-height: 50px;
-}
 .visible-custom {
   display: none;
 }
