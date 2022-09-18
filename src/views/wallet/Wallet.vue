@@ -40,7 +40,7 @@
           <div class="text-lg font-semibold pl-2">EUR</div>
         </div>
       </div>
-      <div class="flex flex-row justify-center justify-around">
+      <div class="flex flex-row justify-around">
         <div
           class="wallet-booking-revenue"
           @click="showRevenue = 'totalBookingRevenueByMonth'"
