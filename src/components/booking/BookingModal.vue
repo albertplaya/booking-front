@@ -124,7 +124,7 @@ const props = defineProps({
 
 const { updateBookingStatus } = useBooking();
 
-const bookingStatus = ["booked", "paid"];
+const bookingStatus = ["booked", "paid", "canceled"];
 
 const updateBookingAndCloseModal = async () => {
   if (!props.booking) {
