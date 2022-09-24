@@ -170,8 +170,8 @@ const listGuestPass = async () => {
 };
 
 const sumTotalBookingRevenue = (): number => {
-  return bookings.value.reduce((acc, curr) => {
-    return acc + curr.price;
+  return bookings.value.reduce((acc, booking: Booking) => {
+    return booking.status === "canceled" ? acc : acc + booking.price;
   }, 0);
 };
 
@@ -182,8 +182,10 @@ const sumTotalPassRevenue = (): number => {
 };
 
 const calculateRevenueByMonth = (): void => {
-  bookings.value.map((curr) => {
-    const date = new Date(curr.start_date);
+  bookings.value.map((booking: Booking) => {
+    if (booking.status === "canceled") return;
+
+    const date = new Date(booking.start_date);
     const month = date.getMonth();
     const year = date.getFullYear();
     const key = `${month}-${year}`;
@@ -199,8 +201,8 @@ const calculateRevenueByMonth = (): void => {
         revenue: 0,
       };
     }
-    totalBookingRevenueByMonth.value[key].revenue += curr.price;
-    totalRevenueByMonth.value[key].revenue += curr.price;
+    totalBookingRevenueByMonth.value[key].revenue += booking.price;
+    totalRevenueByMonth.value[key].revenue += booking.price;
   });
 
   guestPass.value.map((curr) => {
