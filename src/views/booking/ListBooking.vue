@@ -64,10 +64,7 @@
                 </div>
               </div>
               <div class="text-lg flex justify-center">
-                <div
-                  class="text-teal px-2 py-1 rounded-md"
-                  style="background: #e8f2ed"
-                >
+                <div :class="[colorStaus[booking.status]]">
                   {{ booking.status }}
                 </div>
               </div>
@@ -134,6 +131,12 @@ const listBookingsWithFilters = async (filter: FilterCriteria) => {
   filterCriteria.value = new FilterCriteria(filterCriteriaFromUser);
   listBookings();
 };
+
+const colorStaus = {
+  booked: "booking-status-booked",
+  paid: "booking-status-paid",
+  canceled: "booking-status-canceled",
+};
 </script>
 
 <style scoped lang="scss">
@@ -143,5 +146,23 @@ const listBookingsWithFilters = async (filter: FilterCriteria) => {
 .booking:hover {
   --tw-bg-opacity: 1;
   background-color: rgba(249, 250, 251, var(--tw-bg-opacity)) !important;
+}
+
+.booking-status-booked {
+  @apply px-2 py-1 rounded-md capitalize;
+  color: $dark-wheat;
+  background-color: $light-wheat;
+}
+
+.booking-status-paid {
+  @apply px-2 py-1 rounded-md capitalize;
+  color: $dark-teal;
+  background-color: $light-teal;
+}
+
+.booking-status-canceled {
+  @apply px-2 py-1 rounded-md capitalize;
+  color: $dark-rhubarb;
+  background-color: $light-rhubarb;
 }
 </style>
