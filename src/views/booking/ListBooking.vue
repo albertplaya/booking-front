@@ -26,12 +26,6 @@
         </div>
       </div>
       <FilterBookingModal @filterOutput="listBookingsWithFilters" />
-      <BookingModal
-        v-if="selectedBooking && showModal"
-        :showModal="showModal"
-        :bookingId="selectedBooking.booking_id"
-        @closeModal="closeModalAndRefresh"
-      />
       <div v-if="!bookings.length" class="flex">
         <div
           class="flex justify-center flex-grow text-2xl bg-gray-50 border-2 rounded-md mt-4 p-4"
@@ -52,9 +46,10 @@
           bordered
         >
           <div v-for="booking in bookings" :key="booking.booking_id">
-            <div
+            <label
+              for="booking-modal"
               class="booking grid grid-cols-3 gap-4 p-2 bg-white rounded-md items-center"
-              @click="showBookingModal(booking)"
+              @click="selectedBooking = booking"
             >
               <div class="text-sm text-center">
                 {{ booking.title }}
@@ -76,7 +71,8 @@
                   {{ booking.status }}
                 </div>
               </div>
-            </div>
+            </label>
+            <BookingModal v-if="selectedBooking" :booking="selectedBooking" />
             <div
               v-if="bookings[bookings.length - 1] !== booking"
               q-space
@@ -118,14 +114,8 @@ const { listBookingsWithFilter } = useBooking();
 const { trackScreen } = useTracker();
 
 const bookings = ref<Booking[]>([]);
-const showModal = ref<boolean>(false);
-const selectedBooking = ref<Booking>();
 const filterCriteria = ref<FilterCriteria>(new FilterCriteria([]));
-
-const showBookingModal = (booking: Booking) => {
-  selectedBooking.value = booking;
-  showModal.value = true;
-};
+const selectedBooking = ref<Booking>();
 
 const listBookings = async () => {
   listBookingsWithFilter(filterCriteria.value)
@@ -142,11 +132,6 @@ const listBookingsWithFilters = async (filter: FilterCriteria) => {
     value: getPartner().partner_id,
   });
   filterCriteria.value = new FilterCriteria(filterCriteriaFromUser);
-  listBookings();
-};
-
-const closeModalAndRefresh = () => {
-  showModal.value = false;
   listBookings();
 };
 </script>

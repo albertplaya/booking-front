@@ -84,9 +84,8 @@
 import { PropType, ref } from "vue";
 import { Guest } from "@/types/Guest";
 import { useGuest } from "@/use/Guest";
-import { ErrorResponse, InputErrorResponse } from "@/types/Form/ErrorResponse";
+import { InputErrorResponse } from "@/types/Form/ErrorResponse";
 import ErrorNotification from "@/components/notification/ErrorNotification.vue";
-import router from "@/router";
 
 const props = defineProps({
   guest: {
