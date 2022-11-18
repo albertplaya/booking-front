@@ -1,10 +1,13 @@
 import { defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
+import mkcert from "vite-plugin-mkcert";
 import { quasar, transformAssetUrls } from "@quasar/vite-plugin";
 
 const path = require("path");
 export default defineConfig({
   plugins: [
+    mkcert(),
+
     vue({
       template: { transformAssetUrls },
     }),
