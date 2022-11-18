@@ -72,6 +72,7 @@
                 name: 'event-list',
                 params: { activityId: activity.activity_id },
               }"
+              @click="selectCurrentActivity(activity)"
             >
               Events
             </q-btn>
@@ -102,6 +103,7 @@ import DefaultImage from "@/components/activity/DefaultImage.vue";
 import router from "@/router";
 import { useAuth } from "@/use/Authentication";
 import { Partner } from "@/types/Partner";
+import { useActivityStore } from "@/store/ActivityStore";
 
 onMounted(() => {
   listActivities();
@@ -109,6 +111,8 @@ onMounted(() => {
 
 const { list } = useActivity();
 const { getPartner } = useAuth();
+const { setActivity } = useActivityStore();
+
 const activities = ref<Activity[]>([]);
 const partner: Partner = getPartner();
 
@@ -120,6 +124,10 @@ const listActivities = async () => {
     });
 };
 const filesUrl = (id: string) => `${import.meta.env.VITE_API_FILES}/${id}.jpg`;
+
+const selectCurrentActivity = async (activity: Activity) => {
+  setActivity(activity);
+};
 
 const landingPageUrl =
   "https://" + window.location.host.replace("app", partner.subdomain);

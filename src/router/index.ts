@@ -1,3 +1,4 @@
+import { useAuth } from "@/use/Authentication";
 import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
 import Register from "@/views/auth/Register.vue";
 import Login from "@/views/auth/Login.vue";
@@ -298,13 +299,16 @@ router.beforeEach((to, from, next) => {
 
   if (to.matched.some((record) => record.meta.requiresAuth)) {
     const auth = getAuth();
-    onAuthStateChanged(auth, (user) => {
+    onAuthStateChanged(auth, async (user) => {
       if (!user) {
-        next({ name: "register" });
+        next({ name: "login" });
+      } else {
+        next();
       }
     });
+  } else {
+    next();
   }
-  next();
 });
 
 export default router;

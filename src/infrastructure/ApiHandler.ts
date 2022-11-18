@@ -77,7 +77,7 @@ export async function getData(
   return response.json();
 }
 
-export async function deleteData(url: string = ""): Promise<any> {
+export async function deleteData(url: string = "", data = {}): Promise<any> {
   const domain: string = import.meta.env.VITE_API_URL;
   const response = await fetch(domain + url, {
     method: "DELETE",
@@ -87,6 +87,7 @@ export async function deleteData(url: string = ""): Promise<any> {
       "Content-Type": "application/json",
     },
     redirect: "follow",
+    body: JSON.stringify(data),
   });
 
   if (response.status !== 200) {

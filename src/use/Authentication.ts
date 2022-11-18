@@ -32,12 +32,13 @@ export function useAuth() {
     storePartner(newPartner);
   };
 
-  const loginPartner = async (email: string, source: string) => {
+  const loginPartner = async (email: string, source: string, token?: null) => {
     try {
       const partner: Partner = await getByEmail(email);
       if (partner) {
         trackIdentify(partner);
         trackEvent("User logged", { source: source });
+        partner.token = token;
         storePartner(partner);
         return;
       }

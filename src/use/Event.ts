@@ -12,7 +12,7 @@ import {
 export function useEvent() {
   const create = (event: Event): Promise<Event> => {
     const payload = {
-      event_id: ulid(),
+      event_id: event.event_id,
       start_date: event.start_date,
       duration: event.duration,
       capacity: event.capacity,

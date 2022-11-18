@@ -7,4 +7,5 @@ export interface Partner {
   locale: string;
   subscription_plan: string;
   subdomain: string;
+  token: string | null;
 }

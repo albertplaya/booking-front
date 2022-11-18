@@ -21,6 +21,7 @@
           @click="listUpcommingEvents"
         />
         <q-separator />
+        {{ currentActivity?.title }}
         <q-btn
           no-caps
           label="Add Event"
@@ -49,6 +50,8 @@ import { Event } from "@/types/Event";
 import AddWhenEmptyList from "@/components/button/AddWhenEmptyList.vue";
 import ListEvent from "@/components/event/ListEvent.vue";
 import router from "@/router";
+import { useActivityStore } from "@/store/ActivityStore";
+import { Activity } from "@/types/Activity";
 
 const props = defineProps({
   activityId: {
@@ -61,9 +64,11 @@ onMounted(async () => {
   listUpcommingEvents();
 });
 
+const { currentActivity } = useActivityStore();
 const { listUpcomming, listPast } = useEvent();
 const events = ref<Event[]>([]);
 const eventListButton = ref<string>("upcoming");
+const activity = ref<Activity>();
 
 const listUpcommingEvents = async () => {
   listUpcomming(props.activityId)

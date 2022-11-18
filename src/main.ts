@@ -5,11 +5,12 @@ import { loadFonts } from "@/plugins/webfontloader";
 import { Quasar } from "quasar";
 import quasarUserOptions from "@/quasar-user-options";
 import "./assets/tailwind.css";
-import store from "@/store";
 import { initializeApp } from "firebase/app";
 import * as Sentry from "@sentry/vue";
 import { BrowserTracing } from "@sentry/tracing";
 import VueMixpanel from "vue-mixpanel";
+import { createPinia } from "pinia";
+import piniaPluginPersistedstate from "pinia-plugin-persistedstate";
 
 loadFonts();
 
@@ -29,6 +30,8 @@ initializeApp(firebaseConfig);
 import JsonCSV from "vue-json-csv";
 
 const app = createApp(App);
+const pinia = createPinia();
+pinia.use(piniaPluginPersistedstate);
 
 Sentry.init({
   app,
@@ -48,7 +51,7 @@ Sentry.init({
 app
   .use(Quasar, quasarUserOptions)
   .use(router)
-  .use(store)
+  .use(pinia)
   .use(VueMixpanel, {
     token: import.meta.env.VITE_MIXPANEL_TOKEN,
   })

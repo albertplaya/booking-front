@@ -118,6 +118,9 @@ import ErrorNotification from "@/components/notification/ErrorNotification.vue";
 import router from "@/router";
 import { Event } from "@/types/Event";
 import { ErrorResponse, InputErrorResponse } from "@/types/Form/ErrorResponse";
+import { useGoogleCalendar } from "@/use/Calendar/GoogleCalendar";
+import { useAuth } from "@/use/Authentication";
+import { useActivityStore } from "@/store/ActivityStore";
 
 const props = defineProps({
   eventId: {
@@ -127,10 +130,14 @@ const props = defineProps({
 });
 
 const { get, update, remove } = useEvent();
+const { updateCalendarEvent, removeCalendarEvent } = useGoogleCalendar();
+const { getPartner } = useAuth();
+const { getActivity } = useActivityStore();
 
 const date = ref<string>("");
 const time = ref<string>("");
 const event = ref<Event>();
+const oldEvent = ref<Event>();
 const error = ref<string>("");
 const formErrors = ref(new Map<string, InputErrorResponse>());
 
@@ -142,6 +149,7 @@ const getEvent = async (eventId: string) => {
   get(eventId)
     .then((result) => {
       event.value = result;
+      oldEvent.value = result;
       const currentDate = new Date(result.start_date);
       date.value = new Intl.DateTimeFormat("fr-CA", {
         year: "numeric",
@@ -163,19 +171,24 @@ const updateEvent = () => {
     return;
   }
 
-  update({
+  const newEvent: Event = {
     event_id: props.eventId,
     capacity: event.value.capacity,
     duration: event.value.duration,
     start_date: `${date.value} ${time.value}:00`,
     activity_id: event.value.activity_id,
-  } as Event)
-    .then(() =>
+  };
+  update(newEvent)
+    .then(() => {
+      const partner = getPartner();
+      const activity = getActivity();
+      updateCalendarEvent(activity, oldEvent.value, newEvent, partner);
+
       router.push({
         name: "event-list",
         params: { activityId: event.value.activity_id },
-      })
-    )
+      });
+    })
     .catch((errorResult) => {
       if (typeof errorResult === "string") {
         error.value = errorResult;
@@ -190,6 +203,11 @@ const deleteEvent = () => {
     return;
   }
   remove(props.eventId)
+    .then(() => {
+      const partner = getPartner();
+      const activity = getActivity();
+      removeCalendarEvent(activity, oldEvent.value, partner);
+    })
     .then(() =>
       router.push({
         name: "event-list",

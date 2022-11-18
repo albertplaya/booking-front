@@ -196,9 +196,12 @@ const registerWithEmailAndPassword = () => {
 const registerWithGoogle = () => {
   googleLoading.value = true;
   const provider = new GoogleAuthProvider();
+  provider.addScope("https://www.googleapis.com/auth/calendar");
   signInWithPopup(getAuth(), provider)
     .then(async (data: any) => {
-      await loginPartner(data.user.email, "Google");
+      const credential = GoogleAuthProvider.credentialFromResult(data);
+      const token = credential.accessToken;
+      await loginPartner(data.user.email, "Google", token);
       router.push({ name: "home" });
     })
     .catch((error) => {

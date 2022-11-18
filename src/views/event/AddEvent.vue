@@ -118,6 +118,11 @@ import ErrorNotification from "@/components/notification/ErrorNotification.vue";
 import { ErrorResponse, InputErrorResponse } from "@/types/Form/ErrorResponse";
 import router from "@/router";
 import { date as dateHelper } from "quasar";
+import { useGoogleCalendar } from "@/use/Calendar/GoogleCalendar";
+import { useAuth } from "@/use/Authentication";
+import { Event } from "@/types/Event";
+import { ulid } from "ulid";
+import { useActivityStore } from "@/store/ActivityStore";
 
 const props = defineProps({
   activityId: {
@@ -126,6 +131,9 @@ const props = defineProps({
   },
 });
 const { create } = useEvent();
+const { insertCalendarEvent } = useGoogleCalendar();
+const { getPartner } = useAuth();
+const { getActivity } = useActivityStore();
 
 const date = ref<string>(dateHelper.formatDate(new Date(), "YYYY-MM-DD"));
 const time = ref<string>("12:00");
@@ -135,18 +143,23 @@ const error = ref<string>("");
 const formErrors = ref(new Map<string, InputErrorResponse>());
 
 const saveEvent = () => {
-  create({
+  const event: Event = {
+    event_id: ulid(),
     start_date: date.value + " " + time.value,
     duration: duration.value,
     capacity: capacity.value,
     activity_id: props.activityId,
-  })
-    .then(() =>
+  };
+  create(event)
+    .then(() => {
+      const partner = getPartner();
+      const activity = getActivity();
+      insertCalendarEvent(activity, event, partner);
       router.push({
         name: "event-list",
         params: { activityId: props.activityId },
-      })
-    )
+      });
+    })
     .catch((errorResult) => {
       if (typeof errorResult === "string") {
         error.value = errorResult;
