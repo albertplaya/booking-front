@@ -1,11 +1,9 @@
 const colors = require("tailwindcss/colors");
 
 module.exports = {
-  content: ["./src/**/*.{vue,js,ts}"],
-  purge: ["./index.html", "./src/**/*.{vue,js,ts,jsx,tsx}"],
+  content: ["./index.html", "./src/**/*.{vue,js,ts,jsx,tsx}"],
   presets: [],
   base: false,
-  darkMode: false, // or 'media' or 'class'
   daisyui: {
     themes: [
       {
