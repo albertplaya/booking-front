@@ -21,7 +21,6 @@
           @click="listUpcommingEvents"
         />
         <q-separator />
-        {{ currentActivity?.title }}
         <q-btn
           no-caps
           label="Add Event"

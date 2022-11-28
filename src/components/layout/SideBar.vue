@@ -38,7 +38,7 @@
 </template>
 
 <script setup lang="ts">
-import { watch, ref, computed, ComputedRef, onMounted } from "vue";
+import { watch, ref, onMounted } from "vue";
 import { useRoute } from "vue-router";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 
