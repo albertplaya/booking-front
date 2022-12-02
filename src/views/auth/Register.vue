@@ -205,6 +205,7 @@ const registerWithEmailAndPassword = () => {
 const registerWithGoogle = () => {
   googleLoading.value = true;
   const provider = new GoogleAuthProvider();
+  provider.addScope("https://www.googleapis.com/auth/calendar");
   signInWithPopup(getAuth(), provider)
     .then(async (data) => {
       await registerPartner(

@@ -6,6 +6,7 @@ import { Quasar } from "quasar";
 import quasarUserOptions from "@/quasar-user-options";
 import "./assets/tailwind.css";
 import { initializeApp } from "firebase/app";
+import { initializeAppCheck, ReCaptchaV3Provider } from "firebase/app-check";
 import * as Sentry from "@sentry/vue";
 import { BrowserTracing } from "@sentry/tracing";
 import VueMixpanel from "vue-mixpanel";
@@ -24,7 +25,12 @@ const firebaseConfig = {
   measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID,
 };
 
-initializeApp(firebaseConfig);
+const appFirebase = initializeApp(firebaseConfig);
+initializeAppCheck(appFirebase, {
+  provider: new ReCaptchaV3Provider(import.meta.env.VITE_FIREBASE_CAPTCHA),
+  isTokenAutoRefreshEnabled: true,
+});
+
 //const analytics = getAnalytics(app);
 
 import JsonCSV from "vue-json-csv";
