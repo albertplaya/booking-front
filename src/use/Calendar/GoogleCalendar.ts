@@ -15,6 +15,7 @@ export function useGoogleCalendar() {
       start_date: event.start_date,
       duration: event.duration,
       access_token: partner.token,
+      time_zone: event.time_zone,
     };
     postData(endpoints.v1.google_calendar, payload);
   };
@@ -29,6 +30,7 @@ export function useGoogleCalendar() {
       start_date: event.start_date,
       duration: event.duration,
       access_token: partner.token,
+      time_zone: event.time_zone,
     };
     deleteData(endpoints.v1.google_calendar, payload);
   };

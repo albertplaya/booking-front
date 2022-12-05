@@ -172,6 +172,14 @@ const updateEvent = () => {
     return;
   }
 
+  const deleteEvent: Event = {
+    event_id: props.eventId,
+    capacity: oldEvent.value.capacity,
+    duration: oldEvent.value.duration,
+    start_date: oldEvent.value.start_date,
+    activity_id: oldEvent.value.activity_id,
+    time_zone: timeZone.value,
+  };
   const newEvent: Event = {
     event_id: props.eventId,
     capacity: event.value.capacity,
@@ -184,7 +192,7 @@ const updateEvent = () => {
     .then(() => {
       const partner = getPartner();
       const activity = getActivity();
-      updateCalendarEvent(activity, oldEvent.value, newEvent, partner);
+      updateCalendarEvent(activity, deleteEvent, newEvent, partner);
 
       router.push({
         name: "event-list",
@@ -201,14 +209,22 @@ const updateEvent = () => {
 };
 
 const deleteEvent = () => {
-  if (!event.value) {
+  if (!oldEvent) {
     return;
   }
+  const deleteEvent: Event = {
+    event_id: props.eventId,
+    capacity: oldEvent.value.capacity,
+    duration: oldEvent.value.duration,
+    start_date: oldEvent.value.start_date,
+    activity_id: oldEvent.value.activity_id,
+    time_zone: timeZone.value,
+  };
   remove(props.eventId)
     .then(() => {
       const partner = getPartner();
       const activity = getActivity();
-      removeCalendarEvent(activity, oldEvent.value, partner);
+      removeCalendarEvent(activity, deleteEvent, partner);
     })
     .then(() =>
       router.push({
