@@ -137,6 +137,7 @@ const { getActivity } = useActivityStore();
 
 const date = ref<string>(dateHelper.formatDate(new Date(), "YYYY-MM-DD"));
 const time = ref<string>("12:00");
+const timeZone = ref<string>(Intl.DateTimeFormat().resolvedOptions().timeZone);
 const duration = ref<string>("30");
 const capacity = ref<string>("10");
 const error = ref<string>("");
@@ -149,6 +150,7 @@ const saveEvent = () => {
     duration: duration.value,
     capacity: capacity.value,
     activity_id: props.activityId,
+    time_zone: timeZone.value,
   };
   create(event)
     .then(() => {

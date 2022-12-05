@@ -136,6 +136,7 @@ const { getActivity } = useActivityStore();
 
 const date = ref<string>("");
 const time = ref<string>("");
+const timeZone = ref<string>(Intl.DateTimeFormat().resolvedOptions().timeZone);
 const event = ref<Event>();
 const oldEvent = ref<Event>();
 const error = ref<string>("");
@@ -177,6 +178,7 @@ const updateEvent = () => {
     duration: event.value.duration,
     start_date: `${date.value} ${time.value}:00`,
     activity_id: event.value.activity_id,
+    time_zone: timeZone.value,
   };
   update(newEvent)
     .then(() => {

@@ -4,4 +4,5 @@ export interface Event {
   duration: string;
   capacity: string;
   activity_id: string;
+  time_zone?: string;
 }
